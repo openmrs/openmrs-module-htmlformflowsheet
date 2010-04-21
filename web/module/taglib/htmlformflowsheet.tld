@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  
+  
+  	<description>HtmlForm Flowsheet  Taglib</description>
+	<tlib-version>1.1</tlib-version>
+	<short-name>htmlformtablib</short-name>
+	
+	  <tag>
+		<description>
+			Displays a concept based on tag, name attributes.  Convenient for getting at short names, etc...
+		</description>
+		<name>conceptFormat</name>
+		<tag-class>org.openmrs.module.htmlformflowsheet.web.taglibs.ConceptFormatTag</tag-class>
+		<attribute>
+			<name>concept</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bestShortName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>shortestName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bestName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>preferredName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nameTaggedWith</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

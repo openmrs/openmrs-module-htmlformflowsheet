@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.0//EN" "http://resources.openmrs.org/doctype/config-1.0.dtd">  -->
+<module configVersion="1.0">
+	<id>htmlformflowsheet</id>
+	<name>htmlformflowsheet</name>
+	<version>1.0</version>
+	<package>org.openmrs.module.@MODULE_ID@</package>
+	<author>PIH</author>
+	<description>
+		Back end functionality to do a "patient chart"-style workflow (as opposed to form-based workflow)
+	</description>
+
+	<activator>@MODULE_PACKAGE@.HtmlFormFlowsheetModuleActivator</activator>
+	
+	<!-- Require version 1.5 so jquery and jquery-ui are included. This could be relaxed -->
+	<require_version>1.5</require_version>
+	
+	<require_modules>
+		<require_module>org.openmrs.module.htmlformentry</require_module>
+	</require_modules>
+	
+	
+	<extension>
+		<point>org.openmrs.mdrtb.formsPortlet.links</point>
+		<class>org.openmrs.module.htmlformflowsheet.web.html.FormListLinks</class>
+	</extension>
+	
+	<globalProperty>
+		<property>htmlformflowsheet.configuration</property>
+		<defaultValue>S:Demographics:23:LAST|F:Smear:29|F:Culture:26|F:Labs:27|F:Adherence:24|F:Adverse Effects:25|F:Steering Committee:30|F:Comments:28</defaultValue>
+		<description>
+		flowsheets need these three items F (which stands for flowsheet) :Title:FormId
+        singletons need:           S:Title:FormId:Which         (where which is FIRST or LAST)
+        pipe delimited
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>htmlformflowsheet.links</property>
+		<defaultValue>Bacteriologies:/module/mdrtb/mdrtbPatientOverview.form?view=BAC|DSTs:/module/mdrtb/mdrtbPatientOverview.form?view=DST|Regimens:/module/mdrtb/mdrtbPatientOverview.form?view=REG|Treatment Outcomes:/module/mdrtb/mdrtbPatientOverview.form?view=STATUS</defaultValue>
+		<description>
+		links to appear at the top of the flowsheet.  Pipe delimited.  format is   name:link
+		</description>
+	</globalProperty>
+	
+	<dwr>
+		<allow>
+			<create creator="new" javascript="HtmlFlowsheetDWR">
+				<param name="class" value="org.openmrs.module.htmlformflowsheet.web.dwr.HtmlFormFlowsheetDWR"/>
+				<include method="voidEncounter"/>
+				<include method="getNewEncounterId"/>
+			</create>						
+		</allow>
+		<signatures>
+			<![CDATA[  ]]>
+		</signatures>	
+	</dwr>
+	
+</module>
