@@ -4,9 +4,12 @@
 	<%@ include file="/WEB-INF/template/header.jsp" %>
 </c:if>
 <c:if test="${model.fullPage == 'false'}">
+	<%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
+	<!--
 	<script>
 		var addEvent = false;
 	</script>
+	-->
 </c:if>
 
 <openmrs:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
@@ -27,13 +30,14 @@
 		$j('#patientChartTabs').tabs('select', ${model.selectTab});
 	});
 </script>
-<br/>
 <h4>
 
 	<c:if test="${model.fullPage == 'true'}">
+		<br/>
 		<span style="font-size:150%;">
 		${model.patient.personName} | 
 		${model.patient.patientIdentifier.identifier}
+		<br/>
 		</span>
 	</c:if>
 	<span style="<c:if test="${model.fullPage == 'true'}">position:absolute; right:10px; font-size:90%;</c:if>">
@@ -43,13 +47,14 @@
 	</span>
 	
 </h4>
-<br/>
 <div id="patientChartTabs" style="font-size:80%;<c:if test="${model.fullPage == 'false'}">position:absolute;</c:if>">
-	<ul>
-		<c:forEach var="tab" items="${model.tabs}" varStatus="status">
-			<li><a href="#tabContent${status.count}"><span>${tab.title}</span></a></li>
-		</c:forEach>
-	</ul>
+	<c:if test="${fn:length(model.tabs) > 1}">
+		<ul>
+			<c:forEach var="tab" items="${model.tabs}" varStatus="status">
+				<li><a href="#tabContent${status.count}"><span>${tab.title}</span></a></li>
+			</c:forEach>
+		</ul>
+	</c:if>
 	<c:forEach var="tab" items="${model.tabs}" varStatus="status">
 		<div id="tabContent${status.count}">
 			<c:choose>
@@ -60,7 +65,7 @@
 						moduleId="htmlformflowsheet"
 						url="encounterChart"
 						patientId="${model.patientId}"
-						parameters="encounterTypeId=${tab.encounterTypeId}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}"
+						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}"
 					/>
 
 				</c:when>
@@ -71,7 +76,7 @@
 						url="singleHtmlForm"
 						moduleId="htmlformflowsheet"
 						patientId="${model.patientId}"
-						parameters="formId=${tab.formId}|which=${tab.which}|view=${status.index}|defaultEncounterTypeId=${tab.defaultEncounterTypeId}"
+						parameters="formId=${tab.formId}|which=${tab.which}|view=${status.index}|defaultEncounterTypeId=${tab.defaultEncounterTypeId}|"
 					/>
 				
 				</c:when>
@@ -86,4 +91,7 @@
 </div>
 <c:if test="${model.fullPage == 'true'}">
 	<%@ include file="/WEB-INF/template/footer.jsp" %>
+</c:if>
+<c:if test="${model.fullPage == 'false'}">
+	<%@ include file="/WEB-INF/template/footerMinimal.jsp" %>
 </c:if>

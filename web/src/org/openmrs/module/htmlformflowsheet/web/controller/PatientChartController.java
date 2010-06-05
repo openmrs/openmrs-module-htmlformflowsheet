@@ -46,24 +46,30 @@ public class PatientChartController implements Controller {
 
 		ModelMap model = new ModelMap();
 		String fullPage = "true";
+		String readOnly = "false";
 		
 		String configParam = request.getParameter("configuration");
 		String linksParam = request.getParameter("links");
 		String fullPageStr = request.getParameter("fullPage");
+		String readOnlyStr = request.getParameter("readOnly");
 		
 		if (fullPageStr != null && fullPageStr.equals("false"))
 		    fullPage = "false";
+		if (readOnlyStr != null && readOnlyStr.equals("true"))
+		    readOnly = "true";
 		if (configParam != null && !configParam.equals("")){
 		    //here's the url-override of the configuration
 		    PatientChartConfiguration  pcc = HtmlFormFlowsheetUtil.buildGenericConfigurationFromStrings(configParam, linksParam);
 		    model.put("tabs", pcc.getTabs());
             model.put("links", pcc.getLinks());
+            model.put("configuration", configParam);
 		} else {
 		    //here's the default config that lives in the controller, and is directly configurable with global properties
 		    model.put("tabs", configuration.getTabs());
 	        model.put("links", configuration.getLinks());
 		}
 		model.put("fullPage", fullPage);
+		model.put("readOnly", readOnly);
 		model.put("patientId", patientId);
 		model.put("patient", patient);
 		model.put("selectTab", selectTab);

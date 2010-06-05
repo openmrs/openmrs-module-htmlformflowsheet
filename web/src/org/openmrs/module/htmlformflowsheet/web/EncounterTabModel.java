@@ -1,5 +1,6 @@
 package org.openmrs.module.htmlformflowsheet.web;
 
+//NOT USED
 public class EncounterTabModel {
 
     private Integer count;
@@ -7,6 +8,9 @@ public class EncounterTabModel {
     private Integer encounterTypeId;
     private Integer formId;
     boolean showAddAnother = true;
+    boolean showEdit = true;
+    boolean showDelete = true;
+    
     public Integer getCount() {
         return count;
     }
@@ -39,6 +43,24 @@ public class EncounterTabModel {
     }
     public void setShowAddAnother(boolean showAddAnother) {
         this.showAddAnother = showAddAnother;
+    }
+    public boolean isShowEdit() {
+        return showEdit;
+    }
+    public boolean getShowEdit() {
+        return showEdit;
+    }
+    public void setShowEdit(boolean showEdit) {
+        this.showEdit = showEdit;
+    }
+    public boolean isShowDelete() {
+        return showDelete;
+    }
+    public boolean getShowDelete() {
+        return showDelete;
+    }
+    public void setShowDelete(boolean showDelete) {
+        this.showDelete = showDelete;
     }
     
     

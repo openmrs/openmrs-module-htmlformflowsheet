@@ -53,6 +53,10 @@ public class HtmlEncounterChartContentController implements Controller {
         String portletUUID = request.getParameter("portletUUID");
         String view = request.getParameter("view");
         model.put("view", view);
+        String readOnly = request.getParameter("readOnly");
+        if (readOnly == null || readOnly.equals(""))
+            readOnly="false";
+        model.put("readOnly", readOnly);
         model.put("personId", patientId);
         
         

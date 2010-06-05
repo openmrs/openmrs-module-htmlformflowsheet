@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ taglib prefix="mpcw" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
+
 <%--
 Parameters:
 	encounterTypeId: (int, required) tells what encounter type to show in this table
@@ -57,7 +58,7 @@ Parameters:
 	}
 	
 </script>
-<table class="thinBorder" style="width:100%;">
+<table id="encContentTable${model.portletUUID}" class="thinBorder" style="width:100%;">
 	<tr>
 		<td colspan="2" style="color:darkblue">Encounter</td>
 		<c:forEach var="concept" items="${model.encounterChartConcepts}">
@@ -67,9 +68,10 @@ Parameters:
 	<c:forEach var="enc" items="${model.encounterListForChart}">
 		<tr>
 			<td style="width:38px">
+			 <c:if test="${model.readOnly == 'false'}">
 				<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 					    name="editEncounter" 
-						onclick="showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
+						onclick="resizeIFrame${model.portletUUID}(350);showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
 						title="edit" 
 						alt="edit"/>			
 				<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
@@ -77,9 +79,10 @@ Parameters:
 						onclick="voidEncounter${model.portletUUID}('${model.portletUUID}',${enc.encounterId}, confirm('<spring:message code="Are you sure you want to delete this encounter?"/>'));" 
 						title="<spring:message code="htmlformflowsheet.deleteEncounters"/>" 
 						alt="<spring:message code="htmlformflowsheet.deleteEncounters"/>"/>
+             </c:if>
 			</td>
 			<td>
-				<a href="javascript:void(0)" onClick="showEncounterPopup('${model.portletUUID}', ${enc.encounterId})">
+				<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(350);showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
 					<openmrs:formatDate date="${enc.encounterDatetime}"/>
 				</a>
 			</td>
@@ -98,10 +101,10 @@ Parameters:
 			</c:forEach>
 		</tr>
 	</c:forEach>
-	<c:if test="${model.showAddAnother != 'false'}"> 
+	<c:if test="${model.showAddAnother != 'false' && model.readOnly == 'false'}"> 
 		<tr>
 			<td colspan="${fn:length(model.encounterChartConcepts) + 2}" align="center">
-				<button onClick="showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} )"> 
+				<button onClick="resizeIFrame${model.portletUUID}(350);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );"> 
 					Add Another 
 				</button>
 			</td>
@@ -112,6 +115,25 @@ Parameters:
 <div id="encounterChartPopup${model.portletUUID}">
 	<iframe id="encounterChartIFrame${model.portletUUID}" width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto"></iframe>
 </div>
-
 <%-- Maybe show an "Add Another button --%>
+
+<script>
+
+				   try {
+						var p = parent;
+						var x = $j(parent.document).find('#iframeFor${model.formId}');
+						if (x.length == 1){
+							var frame = x[0];
+							var height = $j('#encContentTable${model.portletUUID}').outerHeight(true) + 24;
+							frame.style.height = height+'px';
+						}	
+				   } catch (exception){} 
+			   function resizeIFrame${model.portletUUID}(extraSpace){
+				   try {
+						var x = $j(parent.document).find('#iframeFor${model.formId}');
+						if (x.length == 1)
+							frame.style.height = extraSpace + 'px';
+				   } catch (exception){} 
+			    }
+</script>
 

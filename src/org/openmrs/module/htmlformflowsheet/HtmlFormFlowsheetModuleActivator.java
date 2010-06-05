@@ -16,9 +16,10 @@ package org.openmrs.module.htmlformflowsheet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
-import org.openmrs.api.FormService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Activator;
+import org.openmrs.module.htmlformentry.HtmlFormEntryService;
+import org.openmrs.module.htmlformflowsheet.handler.HtmlFormFlowsheetHandler;
 import org.openmrs.module.htmlformflowsheet.web.HtmlFormFlowsheetContextAware;
 import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
 import org.springframework.context.ApplicationContext;
@@ -56,7 +57,7 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
         // Wait for context refresh to finish
 
         ApplicationContext ac = null;
-        FormService fs = null;
+        HtmlFormEntryService fs = null;
         try {
             while (ac == null || fs == null) {
                 Thread.sleep(30000);
@@ -64,7 +65,7 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
                     try{
                         log.info("HtmlFormFlowsheet still waiting for app context and services to load...");
                         ac = HtmlFormFlowsheetContextAware.getApplicationContext();
-                        fs = Context.getFormService();
+                        fs = Context.getService(HtmlFormEntryService.class);
                     } catch (APIException apiEx){}
                 }
             }
@@ -81,7 +82,7 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
             Context.addProxyPrivilege("SQL Level Access");
             Context.addProxyPrivilege("View Forms");
             Context.addProxyPrivilege("Manage Forms");
-            onLoad();
+            onLoad(fs);
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException("Could not pre-load concepts " + ex);
@@ -110,8 +111,10 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
      * Called after module application context has been loaded. There is no authenticated
      * user so all required privileges must be added as proxy privileges
      */
-    protected void onLoad() {     
+    protected void onLoad(HtmlFormEntryService hfes) {     
         HtmlFormFlowsheetUtil.configureTabsAndLinks();
+        hfes.addHandler("htmlformflowsheet", new HtmlFormFlowsheetHandler());
+        log.info("registering htmlformflowsheet tag...");
     }
     
     /**

@@ -19,20 +19,18 @@ Parameters:
 <openmrs:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
 <openmrs:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
 <openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
-
 <openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
 	
 	<div id="encounterWidget_${model.portletUUID}" style="font-size:90%;">
-				<span>loading...</span>	
+				<span>loading...</span>
 	</div>
 	
 	
 	<script type="text/javascript">
 		var $j = jQuery.noConflict();
 		$j(document).ready(function() {
-				$j('#encounterWidget_${model.portletUUID}').load("${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}");
-			
+				$j('#encounterWidget_${model.portletUUID}').load("${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}");
 		});
 	</script>
-	
+
 
