@@ -1,10 +1,11 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
+<%@ taglib prefix="htmlformflowsheet" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
 
-<openmrs:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
-<openmrs:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
-<openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
-<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
-<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/encounterChart.js" />
+<htmlformflowsheet:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
+<htmlformflowsheet:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
+<htmlformflowsheet:htmlInclude file="/scripts/calendar/calendar.js" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/encounterChart.js" />
 
 
 <script type="text/javascript">

@@ -27,6 +27,7 @@ import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
+import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +37,7 @@ public class HtmlEncounterChartContentController implements Controller {
 
     private Log log = LogFactory.getLog(this.getClass());
     
+    public HtmlEncounterChartContentController(){super();}
 //    
 //    private Integer count;
 //    private Integer patientId;
@@ -47,7 +49,13 @@ public class HtmlEncounterChartContentController implements Controller {
         
         ModelMap model = new ModelMap();
         Integer count = Integer.valueOf(request.getParameter("count"));
-        Integer patientId = Integer.valueOf(request.getParameter("patientId"));
+        Integer patientId;
+        try {
+            patientId = Integer.valueOf(request.getParameter("patientId"));
+        } catch (Exception ex){
+            FormEntrySession fes = (FormEntrySession)  Context.getVolatileUserData(HtmlFormEntryController.FORM_IN_PROGRESS_KEY);
+            patientId = fes.getPatient().getPatientId();
+        }
         Integer encounterTypeId = Integer.valueOf(request.getParameter("encounterTypeId"));
         Integer formId = Integer.valueOf(request.getParameter("formId"));
         String portletUUID = request.getParameter("portletUUID");

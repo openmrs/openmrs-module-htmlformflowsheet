@@ -1,4 +1,5 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
+<%@ taglib prefix="htmlformflowsheet" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
 
 <c:if test="${model.fullPage == 'true'}">
 	<%@ include file="/WEB-INF/template/header.jsp" %>
@@ -12,15 +13,13 @@
 	-->
 </c:if>
 
-<openmrs:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
-<openmrs:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
-<openmrs:htmlInclude file="/scripts/dojoConfig.js"/>
-<openmrs:htmlInclude file="/scripts/dojo/dojo.js"/>
-<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/encounterChart.js" />
-<openmrs:htmlInclude file="/dwr/engine.js" />
-<openmrs:htmlInclude file="/dwr/util.js" />
-<openmrs:htmlInclude file="/dwr/interface/HtmlFlowsheetDWR.js" />
-<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
+<htmlformflowsheet:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
+<htmlformflowsheet:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/encounterChart.js" />
+<htmlformflowsheet:htmlInclude file="/dwr/engine.js" />
+<htmlformflowsheet:htmlInclude file="/dwr/util.js" />
+<htmlformflowsheet:htmlInclude file="/dwr/interface/HtmlFlowsheetDWR.js" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
 
 
 <script type="text/javascript">
@@ -63,7 +62,7 @@
 					<openmrs:portlet
 						id="encounterChart${status.count}"
 						moduleId="htmlformflowsheet"
-						url="encounterChart"
+						url="encounterChart${status.count}"
 						patientId="${model.patientId}"
 						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}"
 					/>

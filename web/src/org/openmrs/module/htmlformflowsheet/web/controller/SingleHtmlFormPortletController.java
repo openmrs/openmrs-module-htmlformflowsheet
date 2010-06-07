@@ -17,6 +17,8 @@ import org.openmrs.web.controller.PortletController;
 
 public class SingleHtmlFormPortletController extends PortletController {
 
+    public SingleHtmlFormPortletController(){super();}
+    
 	/**
      * @see org.openmrs.web.controller.PortletController#populateModel(javax.servlet.http.HttpServletRequest, java.util.Map)
      */

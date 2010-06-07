@@ -16,8 +16,10 @@
     	<property name="mappings">
             <props>
 				<prop key="**/encounterChart.portlet">EncounterChartPortletController</prop>
+				<prop key="**/encounterChart*.portlet">EncounterChartPortletController</prop>
 				<prop key="**/singleHtmlForm.portlet">SingleHtmlFormPortletController</prop>
 				<prop key="module/htmlformflowsheet/patientWidgetChart.list">TestPatientChartController</prop>
+				<prop key="module/htmlformflowsheet/patientWidgetChart*.list">TestPatientChartController</prop>
 				<prop key="module/htmlformflowsheet/encounterChartContent.list">EncounterChartContentController</prop>
 			</props>
 		</property>

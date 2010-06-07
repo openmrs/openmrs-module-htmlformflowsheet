@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
-<%@ taglib prefix="mpcw" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
+<%@ taglib prefix="htmlformflowsheet" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
 
 <%--
 Parameters:
@@ -62,7 +62,7 @@ Parameters:
 	<tr>
 		<td colspan="2" style="color:darkblue">Encounter</td>
 		<c:forEach var="concept" items="${model.encounterChartConcepts}">
-			<td style="color:darkblue"><mpcw:conceptFormat concept="${concept}" shortestName="true" /></td>
+			<td style="color:darkblue"><htmlformflowsheet:conceptFormat concept="${concept}" shortestName="true" /></td>
 		</c:forEach>
 	</tr>
 	<c:forEach var="enc" items="${model.encounterListForChart}">
@@ -90,7 +90,7 @@ Parameters:
 				<td>
 					<c:forEach var="obs" items="${model.encounterChartObs[enc][concept.conceptId]}">
 						<c:if test="${obs.valueCoded != null}">
-							<mpcw:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
+							<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
 						</c:if>
 						<c:if test="${obs.valueCoded == null}">
 							<openmrs:format obsValue="${obs}"/> 

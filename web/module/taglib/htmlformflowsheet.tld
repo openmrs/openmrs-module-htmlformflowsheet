@@ -47,4 +47,30 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<description>
+			Displays the HTML for including a javascript (.js) or stylesheet (.css) file in the HTML.
+			Keeps track of whether or not it has been output within the same request, and ensures only
+			a single include.
+		</description>
+		<name>htmlInclude</name>
+		<tag-class>org.openmrs.module.htmlformflowsheet.web.taglibs.HtmlIncludeTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>file</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>request</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>javax.servlet.http.HttpServletRequest</type>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

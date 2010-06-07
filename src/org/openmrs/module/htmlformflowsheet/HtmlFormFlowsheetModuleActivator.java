@@ -122,7 +122,6 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
      */
     protected void onShutdown() {       
     }
-    
 
 	
 }

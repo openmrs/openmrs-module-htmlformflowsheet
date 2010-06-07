@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
-<%@ taglib prefix="mpcw" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
+<%@ taglib prefix="htmlformflowsheet" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
 <%--
 Parameters:
 	encounterTypeId: (int, required) tells what encounter type to show in this table
@@ -16,13 +16,13 @@ Parameters:
 	passed from controller:
 	* encounterListForChart: list of encounters
 --%>
-<openmrs:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
-<openmrs:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
-<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
-<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
+<htmlformflowsheet:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
+<htmlformflowsheet:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
 	
 	<div id="encounterWidget_${model.portletUUID}" style="font-size:90%;">
-				<span>loading...</span>
+				<span>loading... </span>
 	</div>
 	
 	

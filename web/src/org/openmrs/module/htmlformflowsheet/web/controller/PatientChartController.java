@@ -19,11 +19,11 @@ public class PatientChartController implements Controller {
 	private String formView = "/module/htmlformflowsheet/patientChart";
 	private PatientChartConfiguration configuration;
 	
-	public PatientChartController() { }
+	public PatientChartController() {super();}
 	
 	@SuppressWarnings("unchecked")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		if (configuration == null) {
+	    if (configuration == null) {
 			throw new RuntimeException("You need to provide a configuration");
 		}
 		Integer patientId = null;
@@ -73,7 +73,6 @@ public class PatientChartController implements Controller {
 		model.put("patientId", patientId);
 		model.put("patient", patient);
 		model.put("selectTab", selectTab);
-		
 		
 		return new ModelAndView(formView, "model", model); 
 	}
