@@ -3,7 +3,7 @@
 <module configVersion="1.0">
 	<id>htmlformflowsheet</id>
 	<name>htmlformflowsheet</name>
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>PIH</author>
 	<description>
@@ -55,5 +55,10 @@
 			<![CDATA[  ]]>
 		</signatures>	
 	</dwr>
+	
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
 	
 </module>

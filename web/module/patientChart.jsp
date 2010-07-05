@@ -5,12 +5,10 @@
 	<%@ include file="/WEB-INF/template/header.jsp" %>
 </c:if>
 <c:if test="${model.fullPage == 'false'}">
-	<%@ include file="/WEB-INF/template/headerMinimal.jsp" %>
-	<!--
+	<%@ include file="/WEB-INF/view/module/htmlformflowsheet/headerMinimal.jsp" %>
 	<script>
 		var addEvent = false;
 	</script>
-	-->
 </c:if>
 
 <htmlformflowsheet:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />

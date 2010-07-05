@@ -34,7 +34,7 @@ function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId) {
 function replaceOneChar(s,c,n){
 	(s = s.split(''))[--n] = c;
 	return s.join('');
-};
+}
 function resizeHtmlFormIframe(formId, uuid){
 	var x = $j(parent.window.document).find('#iframeFor'+ formId);
 	if (x.length == 1){

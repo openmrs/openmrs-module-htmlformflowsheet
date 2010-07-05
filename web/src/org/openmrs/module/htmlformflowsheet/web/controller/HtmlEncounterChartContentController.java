@@ -37,7 +37,7 @@ public class HtmlEncounterChartContentController implements Controller {
 
     private Log log = LogFactory.getLog(this.getClass());
     
-    public HtmlEncounterChartContentController(){super();}
+//    public HtmlEncounterChartContentController(){super();}
 //    
 //    private Integer count;
 //    private Integer patientId;
@@ -53,6 +53,7 @@ public class HtmlEncounterChartContentController implements Controller {
         try {
             patientId = Integer.valueOf(request.getParameter("patientId"));
         } catch (Exception ex){
+            log.warn("htmlformflowsheet pulling patientId out of session");
             FormEntrySession fes = (FormEntrySession)  Context.getVolatileUserData(HtmlFormEntryController.FORM_IN_PROGRESS_KEY);
             patientId = fes.getPatient().getPatientId();
         }

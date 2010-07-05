@@ -20,7 +20,7 @@ Parameters:
 
 
 
-<script src='<%= request.getContextPath() %>/dwr/interface/HtmlFlowsheetDWR.js'></script>
+<!--<htmlformflowsheet:htmlInclude file="/dwr/interface/HtmlFlowsheetDWR.js" />-->
 
 <%-- If there are any encounters, we show a chart --%>
 <script type="text/javascript">
@@ -34,7 +34,27 @@ Parameters:
 				width: '95%',
 				modal: true
 		});
+
+		try {
+				var x = $j(parent.document).find('#iframeFor${model.formId}');
+				if (x.length == 1){
+					var frame = x[0];
+					$j(frame).focus();
+					var height = $j('#encContentTable${model.portletUUID}').outerHeight() + 24;
+					frame.style.height = height + 'px';
+				}	
+		} catch (exception){} 
+		
 	});
+
+   function resizeIFrame${model.portletUUID}(extraSpace){
+	   try {
+			var x = $j(parent.document).find('#iframeFor${model.formId}');
+			if (x.length == 1)
+				x[0].style.height = extraSpace + 'px';
+	   } catch (exception){} 
+    }
+
 
 	function closeEncounterChartPopup${model.portletUUID}() {	 
 		//$j("#encounterChartPopup${model.portletUUID}").dialog('close');
@@ -58,16 +78,17 @@ Parameters:
 	}
 	
 </script>
+
 <table id="encContentTable${model.portletUUID}" class="thinBorder" style="width:100%;">
 	<tr>
-		<td colspan="2" style="color:darkblue">Encounter</td>
+		<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
 		<c:forEach var="concept" items="${model.encounterChartConcepts}">
 			<td style="color:darkblue"><htmlformflowsheet:conceptFormat concept="${concept}" shortestName="true" /></td>
 		</c:forEach>
 	</tr>
 	<c:forEach var="enc" items="${model.encounterListForChart}">
-		<tr>
-			<td style="width:38px">
+		<tr style="height:30px;">
+			<td style="width:38px;">
 			 <c:if test="${model.readOnly == 'false'}">
 				<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 					    name="editEncounter" 
@@ -105,7 +126,7 @@ Parameters:
 		<tr>
 			<td colspan="${fn:length(model.encounterChartConcepts) + 2}" align="center">
 				<button onClick="resizeIFrame${model.portletUUID}(350);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );"> 
-					Add Another 
+					<spring:message code="htmlformflowsheet.addanother" />
 				</button>
 			</td>
 		</tr>	
@@ -116,24 +137,4 @@ Parameters:
 	<iframe id="encounterChartIFrame${model.portletUUID}" width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto"></iframe>
 </div>
 <%-- Maybe show an "Add Another button --%>
-
-<script>
-
-				   try {
-						var p = parent;
-						var x = $j(parent.document).find('#iframeFor${model.formId}');
-						if (x.length == 1){
-							var frame = x[0];
-							var height = $j('#encContentTable${model.portletUUID}').outerHeight(true) + 24;
-							frame.style.height = height+'px';
-						}	
-				   } catch (exception){} 
-			   function resizeIFrame${model.portletUUID}(extraSpace){
-				   try {
-						var x = $j(parent.document).find('#iframeFor${model.formId}');
-						if (x.length == 1)
-							frame.style.height = extraSpace + 'px';
-				   } catch (exception){} 
-			    }
-</script>
 
