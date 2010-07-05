@@ -32,17 +32,15 @@
 	<c:if test="${model.fullPage == 'true'}">
 		<br/>
 		<span style="font-size:150%;">
-		${model.patient.personName} | 
+			${model.patient.personName} | 
 		${model.patient.patientIdentifier.identifier}
-		<br/>
 		</span>
 	</c:if>
-	<span style="<c:if test="${model.fullPage == 'true'}">position:absolute; right:10px; font-size:90%;</c:if>">
+	<span style="<c:if test="${model.fullPage != 'false'}">position:absolute;right:10px;font-size:90%;</c:if>">
 		<c:forEach var="link" items="${model.links}" varStatus="status">
 			<a href="${pageContext.request.contextPath}${link.value}&patientId=${model.patientId}">${link.key}</a> 
 		</c:forEach>
 	</span>
-	
 </h4>
 <div id="patientChartTabs" style="font-size:80%;<c:if test="${model.fullPage == 'false'}">position:absolute;</c:if>">
 	<c:if test="${fn:length(model.tabs) > 1}">
