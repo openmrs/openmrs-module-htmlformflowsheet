@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.Controller;
 
 /**
  * Controller for Patient Charts. Should be configured by passing it a PatientChartConfiguration bean
+ * This is the root controller for the htmlformflowsheet page
  */
 public class PatientChartController implements Controller {
 	
@@ -47,16 +48,20 @@ public class PatientChartController implements Controller {
 		ModelMap model = new ModelMap();
 		String fullPage = "true";
 		String readOnly = "false";
+		String showAllEncsWithEncType = "false";
 		
 		String configParam = request.getParameter("configuration");
 		String linksParam = request.getParameter("links");
 		String fullPageStr = request.getParameter("fullPage");
 		String readOnlyStr = request.getParameter("readOnly");
+		String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
 		
 		if (fullPageStr != null && fullPageStr.equals("false"))
 		    fullPage = "false";
 		if (readOnlyStr != null && readOnlyStr.equals("true"))
 		    readOnly = "true";
+		if (showAllEncsWithEncTypeStr != null && showAllEncsWithEncTypeStr.equals("true"))
+		    showAllEncsWithEncType = "true";
 		if (configParam != null && !configParam.equals("")){
 		    //here's the url-override of the configuration
 		    PatientChartConfiguration  pcc = HtmlFormFlowsheetUtil.buildGenericConfigurationFromStrings(configParam, linksParam);
@@ -73,6 +78,7 @@ public class PatientChartController implements Controller {
 		model.put("patientId", patientId);
 		model.put("patient", patient);
 		model.put("selectTab", selectTab);
+		model.put("showAllEncsWithEncType", showAllEncsWithEncType);
 		
 		return new ModelAndView(formView, "model", model); 
 	}

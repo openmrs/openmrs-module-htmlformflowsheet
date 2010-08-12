@@ -1,18 +1,28 @@
 package org.openmrs.module.htmlformflowsheet.web.util;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Concept;
 import org.openmrs.Form;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.htmlformentry.HtmlForm;
+import org.openmrs.module.htmlformentry.HtmlFormEntryService;
+import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.htmlformflowsheet.web.EncounterChartPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.web.HtmlFormFlowsheetContextAware;
 import org.openmrs.module.htmlformflowsheet.web.PatientChartConfiguration;
 import org.openmrs.module.htmlformflowsheet.web.SingleHtmlFormPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.web.controller.PatientChartController;
 import org.springframework.context.ApplicationContext;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class HtmlFormFlowsheetUtil {
   
@@ -111,6 +121,7 @@ public class HtmlFormFlowsheetUtil {
                         ecct.setEncounterTypeId(form.getEncounterType().getEncounterTypeId());
                         ecct.setTitle(tagString[1]);
                         config.addTab(ecct);
+                        
                     } else if (tagString.length == 4){
                         //Single Form
                         SingleHtmlFormPatientChartTab shpt = new SingleHtmlFormPatientChartTab();
@@ -135,6 +146,37 @@ public class HtmlFormFlowsheetUtil {
                     }
                 }    
             }
+    }
+    
+    public static Set<Concept> getAllConceptsUsedInHtmlForm(Form form){
+        
+        HtmlForm htmlform = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
+        String xml = htmlform.getXmlData();
+        Set<Concept> concepts = new HashSet<Concept>();
+        try {
+            Document doc = HtmlFormEntryUtil.stringToDocument(xml);
+            NodeList obsnl = doc.getElementsByTagName("obs");
+            NodeList obsgroupnl = doc.getElementsByTagName("obsgroup");
+           
+        
+            for (int i = 0; i < obsnl.getLength(); i++){
+                Node node = obsnl.item(i);
+                NamedNodeMap nnm = node.getAttributes();
+                Node strNode = nnm.getNamedItem("conceptId");
+                String conceptId = strNode.getNodeValue();
+                concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
+            }
+            for (int i = 0; i < obsgroupnl.getLength(); i++){
+                Node node = obsnl.item(i);
+                NamedNodeMap nnm = node.getAttributes();
+                Node strNode = nnm.getNamedItem("groupingConceptId");
+                String conceptId = strNode.getNodeValue();
+                concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
+            }
+        } catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+        return concepts;
     }
           
 }

@@ -9,6 +9,7 @@ public class EncounterChartPatientChartTab extends PatientChartTab {
 	private Integer encounterTypeId;
 	private Integer formId;
 	private boolean showAddAnother = true;
+	private Boolean showAllWithEncType = false;
 	
 	public EncounterChartPatientChartTab() {
 	}
@@ -35,6 +36,14 @@ public class EncounterChartPatientChartTab extends PatientChartTab {
 
     public void setShowAddAnother(boolean showAddAnother) {
     	this.showAddAnother = showAddAnother;
+    }
+
+    public Boolean getShowAllWithEncType() {
+        return showAllWithEncType;
+    }
+
+    public void setShowAllWithEncType(Boolean showAllWithEncType) {
+        this.showAllWithEncType = showAllWithEncType;
     }
     
 }

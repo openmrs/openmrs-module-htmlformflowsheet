@@ -76,6 +76,7 @@ public class HtmlEncounterChartContentController implements Controller {
         model.put("patientEncounters", Context.getEncounterService().getEncountersByPatient(patient));
         model.put("formId", formId);
         model.put("encounterTypeId", encounterTypeId);
+        model.put("encounterType", Context.getEncounterService().getEncounterType(encounterTypeId));
         model.put("conceptsToShow", "");
         
         
@@ -105,6 +106,7 @@ public class HtmlEncounterChartContentController implements Controller {
             model.put("encountersByType", encountersByType);
         }
         
+
         List<Encounter> encountersToUse;
         if ("*".equals(model.get("encounterTypeId"))) {
             encountersToUse = allEncs;
@@ -114,10 +116,19 @@ public class HtmlEncounterChartContentController implements Controller {
                 encountersToUse = new ArrayList<Encounter>();
             }
         }
+        
         List<Encounter> encs = new ArrayList<Encounter>();
-        for (Encounter encTmp : encountersToUse){
-            if (encTmp.getForm() != null && encTmp.getForm().equals(form))
-                encs.add(encTmp);
+        String showAllEncsWithEncType = request.getParameter("showAllEncsWithEncType");
+        if (showAllEncsWithEncType == null || !showAllEncsWithEncType.equals("true")){
+            for (Encounter encTmp : encountersToUse){
+                if (encTmp.getForm() != null && encTmp.getForm().equals(form))
+                    encs.add(encTmp);
+            }
+            model.put("showAllEncsWithEncType", "false");
+        }   else {
+            //filter encounters by schema obs done in encounterchartcontent jsp
+            encs = encountersToUse;
+            model.put("showAllEncsWithEncType", "true");
         }
         
         model.put("encounterListForChart", encs);

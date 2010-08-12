@@ -62,8 +62,4 @@ public class EncounterTabModel {
     public void setShowDelete(boolean showDelete) {
         this.showDelete = showDelete;
     }
-    
-    
-    
-    
 }

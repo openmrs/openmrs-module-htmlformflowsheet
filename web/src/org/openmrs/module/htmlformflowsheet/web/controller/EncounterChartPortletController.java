@@ -59,7 +59,7 @@ public class EncounterChartPortletController extends PortletController {
 
         
         if (uri != null) {
-            long timeAtStart = System.currentTimeMillis();
+            //long timeAtStart = System.currentTimeMillis();
             portletPath = uri.toString();
             
             // Allowable extensions are '' (no extension) and '.portlet'
@@ -339,7 +339,7 @@ public class EncounterChartPortletController extends PortletController {
             }
             
             populateModel(request, model);
-            log.debug(portletPath + " took " + (System.currentTimeMillis() - timeAtStart) + " ms");
+            //log.debug(portletPath + " took " + (System.currentTimeMillis() - timeAtStart) + " ms");
         }
         
         portletPath = portletPath.replaceAll("0", "");
@@ -358,6 +358,13 @@ public class EncounterChartPortletController extends PortletController {
         //TODO:  unpack the portlet request, and verify formId
         String formId = (String) model.get("formId");
         model.put("formId", formId);
+        
+        String showAllEncsWithEncType = "false";
+        try {
+            showAllEncsWithEncType = (String) model.get("showAllEncsWithEncType");
+        } catch (Exception ex){}
+            model.put("showAllEncsWithEncType", showAllEncsWithEncType);
+        
         
         return new ModelAndView(portletPath, "model", model);
         
