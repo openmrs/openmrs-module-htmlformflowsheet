@@ -41,24 +41,35 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
             throw new IllegalArgumentException("Cannot find formId in "
                     + attributes);
         }
+        
+        String showAllWithEncType = null;
+        try {
+            showAllWithEncType = attributes.get("sharedEncounter");
+        } catch (Exception ex){
+            
+        }
             
         if (patient != null){
             StringBuilder sb = new StringBuilder("");
             
             sb.append("<iframe id='iframeFor" + configuration + "' name='iframeFor" + configuration + "'");
             String source = "";
+            String encounterTypeAddition = "";
+            if (showAllWithEncType != null && showAllWithEncType.equals("true")){
+                encounterTypeAddition = "&showAllEncsWithEncType=" + showAllWithEncType;
+            }
             if (!session.getContext().getMode().equals(Mode.VIEW)){
                 //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'";
+                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition +"'";
             } else {
                 //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'";
+                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "'";
             }
             sb.append(" src='/"+WebConstants.WEBAPP_NAME+"/moduleResources/htmlformflowsheet/pleaseWait.htm'  ");
             sb.append(" width='100%' frameborder='0' scrolling='no'></iframe><br/><script>window.frames['iframeFor" + configuration + "'].innerHTML = 'please wait...'; \n function iframe"+configuration+"(){window.frames['iframeFor" + configuration + "'].location = "+source+";} \n setTimeout('iframe"+configuration+"();', 1);</script>");
             
-           
             out.print(sb.toString());
+            
         } else {
             out.print("<div>You must create the patient first!</div>");
         }

@@ -60,7 +60,7 @@
 						moduleId="htmlformflowsheet"
 						url="encounterChart${status.count}"
 						patientId="${model.patientId}"
-						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}"
+						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}|showAllEncsWithEncType=${model.showAllEncsWithEncType}"
 					/>
 
 				</c:when>
@@ -71,7 +71,7 @@
 						url="singleHtmlForm"
 						moduleId="htmlformflowsheet"
 						patientId="${model.patientId}"
-						parameters="formId=${tab.formId}|which=${tab.which}|view=${status.index}|defaultEncounterTypeId=${tab.defaultEncounterTypeId}|"
+						parameters="formId=${tab.formId}|which=${tab.which}|view=${status.index}|defaultEncounterTypeId=${tab.defaultEncounterTypeId}|showAllEncsWithEncType=${model.showAllEncsWithEncType}"
 					/>
 				
 				</c:when>

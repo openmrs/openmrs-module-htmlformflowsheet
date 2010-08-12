@@ -1,4 +1,4 @@
-function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabIndex, personId, encounterTypeId,  formId) {
+function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabIndex, personId, encounterTypeId,  formId, showAllEncs) {
 	var elem = $j('#encounterChartPopup' + uuid);
 	var iframe = $j("#encounterChartIFrame" + uuid);
 	iframe.empty();
@@ -7,15 +7,18 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 	if (reloadOnClose) {	
 		//elem.dialog('option', 'close', function(event, ui) { window.location = jQuery.queryString(window.location.href, 'selectTab=' + tabIndex); });
 		elem.dialog('option', 'close', function(event, ui) { 
-		             $j('#encounterWidget_' + uuid).html("loading...");
-					 $j('#encounterWidget_' + uuid).load(openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1)); 
+             $j('#encounterWidget_' + uuid).html("loading...");
+             var pathStr = openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1);
+             if (showAllEncs)
+             	pathStr = pathStr + "&showAllEncsWithEncType=true";	
+			 $j('#encounterWidget_' + uuid).load(pathStr);
+			 repopulateEncounterSelectOptions(personId, encounterTypeId);
 		});
 	} 
 	$j('.ui-dialog-titlebar-close').mousedown(function(){
 		elem.dialog('option', 'close', function(){
 			iframe.empty();
 			resizeHtmlFormIframe(formId, uuid);
-			
 		});
 	});
 	elem.dialog('open');
@@ -23,13 +26,16 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 }
 
 function showEncounterPopup(uuid, encId, formId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId, false, "", "", "", formId);
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId, false, "", "", "", formId, false);
 }
 function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId,  formId);
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId,  formId, false);
 }
-function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl=\"'+openmrsContextPath+'/module/htmlformflowsheet/testChart.list?selectTab=' + tabIndex+ '\"&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId);
+function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId,  formId, true);
+} 
+function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl=\"'+openmrsContextPath+'/module/htmlformflowsheet/testChart.list?selectTab=' + tabIndex+ '\"&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
 }
 function replaceOneChar(s,c,n){
 	(s = s.split(''))[--n] = c;
@@ -42,3 +48,33 @@ function resizeHtmlFormIframe(formId, uuid){
 		x[0].style.height = height+'px';
 	}
 }
+
+function repopulateEncounterSelectOptions(patientId, encounterTypeId){
+	HtmlFlowsheetDWR.getAllEncsByPatientAndEncType(patientId, encounterTypeId, function(ret){
+						//todo: run the dwr:
+				var doc = parent.document;
+				var iframes = doc.getElementsByTagName("iframe");
+				try {
+					if (iframes.length > 0){
+						for (var i = 0; i < iframes.length; i++){
+							var iframe = iframes[i];
+							if (iframe.id.indexOf("iframeFor") > -1){
+								var selects = $j(iframe).contents().find(".encounterSelect");
+								for (var j = 0; j < selects.length; j++){
+									var select = selects[j];
+									//todo:  clear select
+									$j(select).children().remove();
+									$j(select).append(new Option("",0));
+									//todo:  add options to select
+									for (var k = 0; k < ret.length; k++){
+										var encounterToAdd = ret[k];
+										$j(select).append(new Option(encounterToAdd.encounterDatetime + " / " + encounterToAdd.provider + " / " + encounterToAdd.location, encounterToAdd.encounterId));
+									}
+								}
+							}
+						}
+					}
+				} catch (exception){}		
+	});
+	
+}									

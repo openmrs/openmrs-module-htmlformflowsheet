@@ -45,10 +45,12 @@
 	
 	<dwr>
 		<allow>
+			<convert converter="bean" match="org.openmrs.module.htmlformflowsheet.web.dwr.HtmlFormFlowsheetDWREncounterObj"/>
 			<create creator="new" javascript="HtmlFlowsheetDWR">
 				<param name="class" value="org.openmrs.module.htmlformflowsheet.web.dwr.HtmlFormFlowsheetDWR"/>
 				<include method="voidEncounter"/>
 				<include method="getNewEncounterId"/>
+				<include method="getAllEncsByPatientAndEncType"/>
 			</create>						
 		</allow>
 		<signatures>

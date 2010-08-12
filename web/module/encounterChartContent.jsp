@@ -61,13 +61,15 @@ Parameters:
 			$j(".ui-widget-content").dialog('close');
 	}
 	
-	function voidEncounter${model.portletUUID}(uuid, id, retVal){
+	function voidEncounter${model.portletUUID}(uuid, id, formId, retVal){
 		if (retVal == true){
-			HtmlFlowsheetDWR.voidEncounter(id ,function(ret){
-								if (!ret)
+			HtmlFlowsheetDWR.voidEncounter(id, formId, function(ret){
+								if (!ret){
 									alert('<spring:message code="htmlformflowsheet.cantdeleteencounter" />');
-								else
-									$j('#encounterWidget_' + uuid).load( openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.personId}&portletUUID=" + uuid +"&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}"); 
+								} else {
+									$j('#encounterWidget_' + uuid).load( openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.personId}&portletUUID=" + uuid +"&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}"); 
+									repopulateEncounterSelectOptions(${model.personId}, ${model.encounterTypeId});
+								}
 							});
 			
 		}
@@ -87,47 +89,77 @@ Parameters:
 		</c:forEach>
 	</tr>
 	<c:forEach var="enc" items="${model.encounterListForChart}">
-		<tr style="height:30px;">
-			<td style="width:38px;">
-			 <c:if test="${model.readOnly == 'false'}">
-				<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
-					    name="editEncounter" 
-						onclick="resizeIFrame${model.portletUUID}(350);showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
-						title="edit" 
-						alt="edit"/>			
-				<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
-					    name="voidEncounter" 
-						onclick="voidEncounter${model.portletUUID}('${model.portletUUID}',${enc.encounterId}, confirm('<spring:message code="Are you sure you want to delete this encounter?"/>'));" 
-						title="<spring:message code="htmlformflowsheet.deleteEncounters"/>" 
-						alt="<spring:message code="htmlformflowsheet.deleteEncounters"/>"/>
-             </c:if>
-			</td>
-			<td>
-				<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(350);showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
-					<openmrs:formatDate date="${enc.encounterDatetime}"/>
-				</a>
-			</td>
-			<c:forEach var="concept" items="${model.encounterChartConcepts}">
-				<td>
-					<c:forEach var="obs" items="${model.encounterChartObs[enc][concept.conceptId]}">
-						<c:if test="${obs.valueCoded != null}">
-							<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
-						</c:if>
-						<c:if test="${obs.valueCoded == null}">
-							<openmrs:format obsValue="${obs}"/> 
-						</c:if>
-						<c:if test="${obs.accessionNumber != null}"> (${obs.accessionNumber})</c:if><br/>
-					</c:forEach>
-				</td>
+		<c:set var="found" value="false"/>
+		<c:forEach var="concept" items="${model.encounterChartConcepts}">
+			<c:forEach var="obs" items="${model.encounterChartObs[enc][concept.conceptId]}">
+				<c:if test="${obs != null}">
+					<c:set var="found" value="true"/>
+				</c:if>
 			</c:forEach>
-		</tr>
+		</c:forEach>
+		<c:if test="${found == 'true'}">
+			<tr style="height:30px;">
+				<td style="width:38px;">
+				 <c:if test="${model.readOnly == 'false'}">
+					<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
+						    name="editEncounter" 
+							onclick="resizeIFrame${model.portletUUID}(350);showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
+							title="edit" 
+							alt="edit"/>			
+					<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
+						    name="voidEncounter" 
+							onclick="voidEncounter${model.portletUUID}('${model.portletUUID}',${enc.encounterId}, ${model.formId}, confirm('<spring:message code="Are you sure you want to delete this encounter?"/>'));" 
+							title="<spring:message code="htmlformflowsheet.deleteEncounters"/>" 
+							alt="<spring:message code="htmlformflowsheet.deleteEncounters"/>"/>
+	             </c:if>
+				</td>
+				<td>
+					<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(350);showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
+						<openmrs:formatDate date="${enc.encounterDatetime}"/>
+					</a>
+				</td>
+				<c:forEach var="concept" items="${model.encounterChartConcepts}">
+					<td>
+						<c:forEach var="obs" items="${model.encounterChartObs[enc][concept.conceptId]}">
+							<c:if test="${obs.valueCoded != null}">
+								<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
+							</c:if>
+							<c:if test="${obs.valueCoded == null}">
+								<openmrs:format obsValue="${obs}"/> 
+							</c:if>
+							<c:if test="${obs.accessionNumber != null}"> (${obs.accessionNumber})</c:if><br/>
+						</c:forEach>
+					</td>
+				</c:forEach>
+			</tr>
+		</c:if>
 	</c:forEach>
 	<c:if test="${model.showAddAnother != 'false' && model.readOnly == 'false'}"> 
 		<tr>
 			<td colspan="${fn:length(model.encounterChartConcepts) + 2}" align="center">
-				<button onClick="resizeIFrame${model.portletUUID}(350);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );"> 
-					<spring:message code="htmlformflowsheet.addanother" />
-				</button>
+				<div class="addAnother">
+					<c:if test="${model.showAllEncsWithEncType == 'true'}">
+						<table>
+						<tr><td style="border:0px; text-align:left"> Choose a ${model.encounterType.name} to append to: </td>
+						<td style="border:0px; text-align:left">
+						<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(350);showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );}" id="encounterSelect_${model.portletUUID}">
+						<option value="0"></option>
+						<c:forEach var="enc" items="${model.encounterListForChart}">
+							<option value="${enc.encounterId}">
+								<openmrs:formatDate date="${enc.encounterDatetime}"/> / ${enc.provider.familyName} ${enc.provider.givenName} / (${enc.location})
+							</option>	
+						</c:forEach>
+						</select></td></tr>
+						<tr><td style="border:0px; text-align:left"> Or, start a new ${model.encounterType.name}: </td>
+						<td style="border:0px; text-align:left">
+					</c:if>	
+						<button onClick="resizeIFrame${model.portletUUID}(350);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"> 
+							<spring:message code="htmlformflowsheet.addanother" />
+						</button>
+					<c:if test="${model.showAllEncsWithEncType == 'true'}">	
+						</td></tr></table>
+					</c:if>
+				</div>
 			</td>
 		</tr>	
 	</c:if>
