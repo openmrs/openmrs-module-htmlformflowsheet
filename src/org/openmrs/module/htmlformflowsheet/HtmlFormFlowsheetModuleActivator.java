@@ -111,9 +111,19 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
      * Called after module application context has been loaded. There is no authenticated
      * user so all required privileges must be added as proxy privileges
      */
-    protected void onLoad(HtmlFormEntryService hfes) {     
-        HtmlFormFlowsheetUtil.configureTabsAndLinks();
-        hfes.addHandler("htmlformflowsheet", new HtmlFormFlowsheetHandler());
+    protected void onLoad(HtmlFormEntryService hfes) { 
+        try {
+            HtmlFormFlowsheetUtil.configureTabsAndLinks();
+        } catch (Exception ex){
+            ex.printStackTrace(System.out);
+            log.error("configuration of tabs and links in htmlformflowsheet failed.");
+        }
+        try {
+            hfes.addHandler("htmlformflowsheet", new HtmlFormFlowsheetHandler());
+        } catch (Exception ex){
+            ex.printStackTrace(System.out);
+            log.error("failed to register htmlformflowsheet tag in htmlformflowsheet");
+        }
         log.info("registering htmlformflowsheet tag...");
     }
     

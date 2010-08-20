@@ -13,7 +13,7 @@
 	<activator>@MODULE_PACKAGE@.HtmlFormFlowsheetModuleActivator</activator>
 	
 	<!-- Require version 1.5 so jquery and jquery-ui are included. This could be relaxed -->
-	<require_version>1.5</require_version>
+	<require_version>1.6</require_version>
 	
 	<require_modules>
 		<require_module>org.openmrs.module.htmlformentry</require_module>
@@ -27,7 +27,7 @@
 	
 	<globalProperty>
 		<property>htmlformflowsheet.configuration</property>
-		<defaultValue>S:Demographics:23:LAST|F:Smear:29|F:Culture:26|F:Labs:27|F:Adherence:24|F:Adverse Effects:25|F:Steering Committee:30|F:Comments:28</defaultValue>
+		<defaultValue></defaultValue>
 		<description>
 		flowsheets need these three items F (which stands for flowsheet) :Title:FormId
         singletons need:           S:Title:FormId:Which         (where which is FIRST or LAST)
