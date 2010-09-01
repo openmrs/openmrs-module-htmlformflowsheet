@@ -43,6 +43,14 @@
 		</description>
 	</globalProperty>
 	
+	<globalProperty>
+		<property>htmlformflowsheet.showMdrtbCatIVLink</property>
+		<defaultValue>false</defaultValue>
+		<description>
+			adds the cat IV treatment card link to the form list in the mdrtb module.  valid values are blank, true, false
+		</description>
+	</globalProperty>
+	
 	<dwr>
 		<allow>
 			<convert converter="bean" match="org.openmrs.module.htmlformflowsheet.web.dwr.HtmlFormFlowsheetDWREncounterObj"/>
