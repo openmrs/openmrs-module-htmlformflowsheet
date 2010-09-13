@@ -140,7 +140,7 @@ Parameters:
 				<div class="addAnother">
 					<c:if test="${model.showAllEncsWithEncType == 'true'}">
 						<table>
-						<tr><td style="border:0px; text-align:left"> Choose a ${model.encounterType.name} to append to: </td>
+						<tr><td style="border:0px; text-align:left"> Append a row to an existing visit: </td>
 						<td style="border:0px; text-align:left">
 						<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(350);showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );}" id="encounterSelect_${model.portletUUID}">
 						<option value="0"></option>
@@ -150,7 +150,7 @@ Parameters:
 							</option>	
 						</c:forEach>
 						</select></td></tr>
-						<tr><td style="border:0px; text-align:left"> Or, start a new ${model.encounterType.name}: </td>
+						<tr><td style="border:0px; text-align:left"> Or, start a new visit: </td>
 						<td style="border:0px; text-align:left">
 					</c:if>	
 						<button onClick="resizeIFrame${model.portletUUID}(350);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"> 
