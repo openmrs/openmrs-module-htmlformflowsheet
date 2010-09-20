@@ -35,7 +35,7 @@ function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, e
 	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId,  formId, true);
 } 
 function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl=\"'+openmrsContextPath+'/module/htmlformflowsheet/testChart.list?selectTab=' + tabIndex+ '\"&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
 }
 function replaceOneChar(s,c,n){
 	(s = s.split(''))[--n] = c;
