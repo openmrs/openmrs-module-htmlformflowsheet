@@ -108,10 +108,10 @@ public class EncounterChartPortletController extends PortletController {
                         model.put("patient", p);
                         
                         // add encounters if this user can view them
-                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS))
+                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS) && p != null)
                             model.put("patientEncounters", Context.getEncounterService().getEncountersByPatient(p));
                         
-                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS)) {
+                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS) && p != null) {
                             List<Obs> patientObs = Context.getObsService().getObservationsByPerson(p);
                             model.put("patientObs", patientObs);
                             Obs latestWeight = null;
@@ -206,7 +206,7 @@ public class EncounterChartPortletController extends PortletController {
                         }
                         model.put("patientReasonForExit", reasonForExitObs);
                         
-                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ORDERS)) {
+                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ORDERS) && p != null) {
                             List<DrugOrder> drugOrderList = Context.getOrderService().getDrugOrdersByPatient(p);
                             model.put("patientDrugOrders", drugOrderList);
                             List<DrugOrder> currentDrugOrders = new ArrayList<DrugOrder>();
@@ -228,7 +228,7 @@ public class EncounterChartPortletController extends PortletController {
                         }
                         
                         if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PROGRAMS)
-                                && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENT_PROGRAMS)) {
+                                && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENT_PROGRAMS) && p != null) {
                             model.put("patientPrograms", Context.getProgramWorkflowService().getPatientPrograms(p, null,
                                 null, null, null, null, false));
                             model.put("patientCurrentPrograms", Context.getProgramWorkflowService().getPatientPrograms(p,

@@ -27,13 +27,6 @@ public class PatientChartController implements Controller {
 	    if (configuration == null) {
 			throw new RuntimeException("You need to provide a configuration");
 		}
-		Integer patientId = null;
-		try{
-		    patientId = Integer.valueOf(request.getParameter("patientId"));
-		} catch (Exception ex){
-		    throw new RuntimeException("You must provide a patientId.");
-		}
-		Patient patient = Context.getPatientService().getPatient(patientId);
 		
 		Integer selectTab = 0;
 		try {
@@ -41,8 +34,13 @@ public class PatientChartController implements Controller {
 		} catch (Exception ex){}
 		
 		
+		
 		if (configuration.getTabs() == null || configuration.getTabs().size() == 0){
-		    HtmlFormFlowsheetUtil.configureTabsAndLinks();
+		    try{
+		        HtmlFormFlowsheetUtil.configureTabsAndLinks();
+		    } catch (Exception ex){
+	            throw new RuntimeException("there was an error configuring the default tabs and links.  Please verify the values in the global property htmlformflowsheet.configuration.");
+	        }
 		}
 
 		ModelMap model = new ModelMap();
@@ -74,11 +72,23 @@ public class PatientChartController implements Controller {
 	        model.put("links", configuration.getLinks());
 		}
 		model.put("fullPage", fullPage);
-		model.put("readOnly", readOnly);
+	    model.put("selectTab", selectTab);
+	    model.put("showAllEncsWithEncType", showAllEncsWithEncType);
+	    
+	    //redirect to a dummy html if no patientId for edit htmlform page
+		Integer patientId = null;
+		Patient patient = null;
+        try{
+            patientId = Integer.valueOf(request.getParameter("patientId"));
+            patient = Context.getPatientService().getPatient(patientId);
+        } catch (Exception ex){ 
+            patientId = 0;
+            patient = new Patient();
+            readOnly = "true";
+        }
+        model.put("readOnly", readOnly);
 		model.put("patientId", patientId);
 		model.put("patient", patient);
-		model.put("selectTab", selectTab);
-		model.put("showAllEncsWithEncType", showAllEncsWithEncType);
 		
 		return new ModelAndView(formView, "model", model); 
 	}

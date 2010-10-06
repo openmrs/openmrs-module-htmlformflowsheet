@@ -21,6 +21,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
+import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
@@ -73,7 +74,8 @@ public class HtmlEncounterChartContentController implements Controller {
         Patient patient = Context.getPatientService().getPatient(patientId);
         model.put("patient", patient);
         //TODO:  read-only version?
-        model.put("patientEncounters", Context.getEncounterService().getEncountersByPatient(patient));
+        if (patient != null)
+            model.put("patientEncounters", Context.getEncounterService().getEncountersByPatient(patient));
         model.put("formId", formId);
         model.put("encounterTypeId", encounterTypeId);
         model.put("encounterType", Context.getEncounterService().getEncounterType(encounterTypeId));
@@ -145,6 +147,8 @@ public class HtmlEncounterChartContentController implements Controller {
                 HtmlForm htmlForm = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
                 Patient p = (Patient) model.get("patient");
                 try {
+                    if (p == null)
+                        p = HtmlFormEntryUtil.getFakePerson();
                     FormEntrySession fes = new FormEntrySession(p, null, Mode.ENTER, htmlForm);
                     HtmlFormSchema schema = fes.getContext().getSchema();
                     for (HtmlFormSection section : schema.getSections()) {
