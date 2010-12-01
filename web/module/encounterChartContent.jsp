@@ -125,7 +125,8 @@ Parameters:
 								<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
 							</c:if>
 							<c:if test="${obs.valueCoded == null}">
-								<openmrs:format obsValue="${obs}"/> 
+								<!-- HERE:  ugh... this is going to need a custom tag handler for valueNumerics --->
+								<htmlformflowsheet:obsFormat obs="${obs}"/> 
 							</c:if>
 							<c:if test="${obs.accessionNumber != null}"> (${obs.accessionNumber})</c:if><br/>
 						</c:forEach>

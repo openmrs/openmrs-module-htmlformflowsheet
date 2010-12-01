@@ -73,4 +73,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<description>
+			Renders an Obs value as a string.
+		</description>
+		<name>obsFormat</name>
+		<tag-class>org.openmrs.module.htmlformflowsheet.web.taglibs.ObsFormat</tag-class>
+		<attribute>
+			<name>obs</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

@@ -201,8 +201,9 @@ public class HtmlEncounterChartContentController implements Controller {
             concepts.add(of.getQuestion());
         } else if (field instanceof ObsGroup){
             ObsGroup og = (ObsGroup) field;
-            for (ObsField ofInner : og.getChildren()){
-                concepts.add(ofInner.getQuestion());
+            for (HtmlFormField ofInner:og.getChildren()){
+                ObsField of = (ObsField) ofInner;
+                concepts.add(of.getQuestion());
             }
         } else {
             log.debug(field.getClass() + " not yet implemented");
