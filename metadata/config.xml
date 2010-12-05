@@ -56,7 +56,7 @@
 	</globalProperty>
 	
 	<globalProperty>
-		<property>htmlformflowsheet.PatientChartFormIds</property>
+		<property>htmlformflowsheet.patientChartFormIds</property>
 		<defaultValue></defaultValue>
 		<description>
 			Comma delimited formIds of all htmlforms that are the *parent* forms for patient charts.  Do not list

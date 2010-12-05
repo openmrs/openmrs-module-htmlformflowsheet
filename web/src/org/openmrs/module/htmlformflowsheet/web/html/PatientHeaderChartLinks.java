@@ -24,7 +24,7 @@ public class PatientHeaderChartLinks extends Extension {
         try {
         String patientId = this.getParameterMap().get("patientId");
         Patient p = Context.getPatientService().getPatient(Integer.valueOf(patientId));
-        String gp = Context.getAdministrationService().getGlobalProperty("htmlformflowsheet.PatientChartFormIds");
+        String gp = Context.getAdministrationService().getGlobalProperty("htmlformflowsheet.patientChartFormIds");
         for (StringTokenizer st = new StringTokenizer(gp, ","); st.hasMoreTokens(); ) {
             String s = st.nextToken().trim();
             Form form = Context.getFormService().getForm(Integer.valueOf(s));
