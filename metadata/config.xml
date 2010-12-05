@@ -3,7 +3,7 @@
 <module configVersion="1.0">
 	<id>htmlformflowsheet</id>
 	<name>htmlformflowsheet</name>
-	<version>1.1.5</version>
+	<version>1.1.6</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>PIH</author>
 	<description>
@@ -23,6 +23,10 @@
 	<extension>
 		<point>org.openmrs.mdrtb.formsPortlet.links</point>
 		<class>org.openmrs.module.htmlformflowsheet.web.html.FormListLinks</class>
+	</extension>
+	<extension>
+		<point>org.openmrs.patientDashboard.afterLastEncounter</point>
+		<class>org.openmrs.module.htmlformflowsheet.web.html.PatientHeaderChartLinks</class>
 	</extension>
 	
 	<globalProperty>
@@ -48,6 +52,15 @@
 		<defaultValue>false</defaultValue>
 		<description>
 			adds the cat IV treatment card link to the form list in the mdrtb module.  valid values are blank, true, false
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>htmlformflowsheet.PatientChartFormIds</property>
+		<defaultValue></defaultValue>
+		<description>
+			Comma delimited formIds of all htmlforms that are the *parent* forms for patient charts.  Do not list
+				patient chart sub forms in this list.
 		</description>
 	</globalProperty>
 	
