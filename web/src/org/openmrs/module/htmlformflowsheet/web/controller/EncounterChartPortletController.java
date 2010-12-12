@@ -13,13 +13,13 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptNumeric;
 import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
+import org.openmrs.Form;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Person;
@@ -29,9 +29,9 @@ import org.openmrs.User;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
 import org.openmrs.order.RegimenSuggestion;
 import org.openmrs.util.OpenmrsConstants;
-import org.openmrs.web.WebConstants;
 import org.openmrs.web.controller.PortletController;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -355,9 +355,11 @@ public class EncounterChartPortletController extends PortletController {
         
         String uuid = (String) model.get("portletUUID");
         model.put("portletUUID", uuid.replace("-", ""));
-        //TODO:  unpack the portlet request, and verify formId
+        
+       
         String formId = (String) model.get("formId");
-        model.put("formId", formId);
+        Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
+        model.put("formId", form.getFormId());
         
         String showAllEncsWithEncType = "false";
         try {

@@ -155,7 +155,12 @@ Parameters:
 						<td style="border:0px; text-align:left">
 					</c:if>	
 						<button onClick="resizeIFrame${model.portletUUID}(350);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"> 
-							<spring:message code="htmlformflowsheet.addanother" />
+							<c:if test="${!empty model.addAnotherButtonLabel}">
+								${model.addAnotherButtonLabel}
+							</c:if>
+							<c:if test="${empty model.addAnotherButtonLabel}">
+								<spring:message code="htmlformflowsheet.addanother" />
+							</c:if>		
 						</button>
 					<c:if test="${model.showAllEncsWithEncType == 'true'}">	
 						</td></tr></table>

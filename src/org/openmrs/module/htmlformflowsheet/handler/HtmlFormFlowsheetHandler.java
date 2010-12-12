@@ -1,15 +1,19 @@
 package org.openmrs.module.htmlformflowsheet.handler;
 
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Form;
 import org.openmrs.Patient;
 import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
 import org.openmrs.module.htmlformentry.handler.TagHandler;
+import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
 import org.openmrs.web.WebConstants;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -32,9 +36,10 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
         
         String configuration = null;
         Patient patient = session.getPatient();
-        
         try {
             configuration = attributes.get("formId");
+            Form form = HtmlFormFlowsheetUtil.getFormFromString(configuration);
+            configuration = HtmlFormFlowsheetUtil.getFormIdAsString(form);
             if (configuration == null)
                 throw new RuntimeException("htmlformflowsheet tag must have a formId attribute in your htmlform xml.");
         } catch (Exception ex){
@@ -48,6 +53,15 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
         } catch (Exception ex){
             
         }
+        
+        String addAnotherButtonLabel = (String) attributes.get("addAnotherButtonLabel");
+        try {
+            if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("")){
+                addAnotherButtonLabel = URI.create(addAnotherButtonLabel).toString();
+            }    
+        } catch (Exception ex){
+            ex.fillInStackTrace();
+        }
             
         if (patient != null){
             StringBuilder sb = new StringBuilder("");
@@ -60,10 +74,10 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
             }
             if (!session.getContext().getMode().equals(Mode.VIEW)){
                 //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition +"'";
+                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
             } else {
                 //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "'";
+                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
             }
             sb.append(" src='/"+WebConstants.WEBAPP_NAME+"/moduleResources/htmlformflowsheet/pleaseWait.htm'  ");
             sb.append(" width='100%' frameborder='0' scrolling='no'></iframe><br/><script>window.frames['iframeFor" + configuration + "'].innerHTML = 'please wait...'; \n function iframe"+configuration+"(){window.frames['iframeFor" + configuration + "'].location = "+source+";} \n setTimeout('iframe"+configuration+"();', 1);</script>");

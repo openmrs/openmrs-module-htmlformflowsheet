@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.openmrs.Encounter;
 import org.openmrs.Form;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformflowsheet.web.SingleHtmlFormPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.web.SingleHtmlFormPatientChartTab.Which;
+import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.controller.PortletController;
 
@@ -28,7 +28,7 @@ public class SingleHtmlFormPortletController extends PortletController {
     	model.put("portletUUID", uuid.replace("-", ""));
     	
     	SingleHtmlFormPatientChartTab.Which which = SingleHtmlFormPatientChartTab.Which.valueOf((String) model.get("which"));
-    	Form form = Context.getFormService().getForm(Integer.valueOf((String) model.get("formId")));
+    	Form form = HtmlFormFlowsheetUtil.getFormFromString((String) model.get("formId"));
     	List<Encounter> allEncs = (List<Encounter>) model.get("patientEncounters");
     	Encounter theOne = null;
     	if (allEncs != null && allEncs.size() > 0){

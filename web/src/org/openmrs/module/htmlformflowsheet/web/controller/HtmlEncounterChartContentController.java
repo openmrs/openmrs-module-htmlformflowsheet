@@ -29,6 +29,7 @@ import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
+import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,11 +46,11 @@ public class HtmlEncounterChartContentController implements Controller {
 //    private Integer encounterTypeId;
 //    private Integer formId;
 //    boolean showAddAnother = true;
+      
     
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         ModelMap model = new ModelMap();
-        Integer count = Integer.valueOf(request.getParameter("count"));
         Integer patientId;
         try {
             patientId = Integer.valueOf(request.getParameter("patientId"));
@@ -59,7 +60,15 @@ public class HtmlEncounterChartContentController implements Controller {
             patientId = fes.getPatient().getPatientId();
         }
         Integer encounterTypeId = Integer.valueOf(request.getParameter("encounterTypeId"));
-        Integer formId = Integer.valueOf(request.getParameter("formId"));
+        
+        String formId = request.getParameter("formId");
+        String addAnotherButtonLabel = (String) request.getParameter("addAnotherButtonLabel");
+        if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
+            model.put("addAnotherButtonLabel", addAnotherButtonLabel); 
+        }    
+        Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
+        formId = HtmlFormFlowsheetUtil.getFormIdAsString(form);
+        
         String portletUUID = request.getParameter("portletUUID");
         String view = request.getParameter("view");
         model.put("view", view);
@@ -85,7 +94,6 @@ public class HtmlEncounterChartContentController implements Controller {
         
         
         List<Encounter> allEncs = (List<Encounter>) model.get("patientEncounters");
-        Form form = Context.getFormService().getForm(formId);
         Map<Integer, List<Encounter>> encountersByType = (Map<Integer, List<Encounter>>) model.get("encountersByType");
         
         if (encountersByType == null) {

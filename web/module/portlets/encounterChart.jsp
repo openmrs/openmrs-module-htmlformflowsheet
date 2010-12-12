@@ -20,16 +20,21 @@ Parameters:
 <htmlformflowsheet:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
 <htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
 <htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
+<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlEncode.js" />
 	
 	<div id="encounterWidget_${model.portletUUID}" style="font-size:90%;">
-				<span>loading... </span>
+				<span>loading...</span>
 	</div>
 	
 	
 	<script type="text/javascript">
 		var $j = jQuery.noConflict();
+		var st = "";
+		<c:if test="${!empty model.addAnotherButtonLabel}">
+			st = $j.URLEncode("${model.addAnotherButtonLabel}");
+		</c:if>
 		$j(document).ready(function() {
-				$j('#encounterWidget_${model.portletUUID}').load("${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}");
+				$j('#encounterWidget_${model.portletUUID}').load('${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&addAnotherButtonLabel='+st);
 		});
 	</script>
 

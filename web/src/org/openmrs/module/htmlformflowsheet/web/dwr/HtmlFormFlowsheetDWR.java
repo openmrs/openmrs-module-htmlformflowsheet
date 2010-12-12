@@ -24,14 +24,14 @@ public class HtmlFormFlowsheetDWR {
 
     protected final Log log = LogFactory.getLog(getClass());
     
-    public boolean voidEncounter(String encIdSt, Integer formId){
+    public boolean voidEncounter(String encIdSt, String formId){
         try{
             EncounterService es = Context.getEncounterService();
             Integer encId = Integer.valueOf(encIdSt);
 
                 //first void all schema obs in encounter
                 Encounter enc = es.getEncounter(encId);
-                Form form = Context.getFormService().getForm(formId);
+                Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
                 Set<Concept> concepts = HtmlFormFlowsheetUtil.getAllConceptsUsedInHtmlForm(form);
                
                 for (Obs o : enc.getAllObs()){

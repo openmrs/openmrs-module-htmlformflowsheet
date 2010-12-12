@@ -3,7 +3,7 @@
 <module configVersion="1.0">
 	<id>htmlformflowsheet</id>
 	<name>htmlformflowsheet</name>
-	<version>1.1.6</version>
+	<version>1.1.7</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>PIH</author>
 	<description>
@@ -60,7 +60,8 @@
 		<defaultValue></defaultValue>
 		<description>
 			Comma delimited formIds of all htmlforms that are the *parent* forms for patient charts.  Do not list
-				patient chart sub forms in this list.
+				patient chart sub forms in this list.  If you would like for links to be displayed, you can add entries
+				of the following format:   formId:programId1|programId2,formId:programId1, programIds
 		</description>
 	</globalProperty>
 	

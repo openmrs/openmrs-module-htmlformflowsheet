@@ -34,7 +34,6 @@ public class HtmlFormFlowsheetUtil {
      *
      */
     public static void configureTabsAndLinks(){
-        ApplicationContext ac = null;
         try {
             PatientChartConfiguration config = getConfiguration();
             configureTabsAndLinks(config);
@@ -116,7 +115,7 @@ public class HtmlFormFlowsheetUtil {
                         //Flowsheet
                         EncounterChartPatientChartTab ecct = new EncounterChartPatientChartTab();
                         ecct.setShowAddAnother(true);
-                        Form form = Context.getFormService().getForm(Integer.valueOf(tagString[2]));
+                        Form form = getFormFromString(tagString[2]);
                         ecct.setFormId(form.getFormId());
                         ecct.setEncounterTypeId(form.getEncounterType().getEncounterTypeId());
                         ecct.setTitle(tagString[1]);
@@ -125,7 +124,7 @@ public class HtmlFormFlowsheetUtil {
                     } else if (tagString.length == 4){
                         //Single Form
                         SingleHtmlFormPatientChartTab shpt = new SingleHtmlFormPatientChartTab();
-                        Form form = Context.getFormService().getForm(Integer.valueOf(tagString[2]));
+                        Form form = getFormFromString(tagString[2]);
                         shpt.setFormId(form.getFormId());
                         shpt.setDefaultEncounterTypeId(form.getEncounterType().getEncounterTypeId());
                         shpt.setTitle(tagString[1]);
@@ -177,6 +176,46 @@ public class HtmlFormFlowsheetUtil {
             throw new RuntimeException(ex);
         }
         return concepts;
+    }
+    
+    /**
+     * 
+     * Get form by formId or UUID
+     * 
+     * @param s
+     * @return either form, or new Form()
+     */
+    public static Form getFormFromString(String s){
+        if (s != null && !s.equals("")){
+            Form form = Context.getFormService().getFormByUuid(s);
+            if (form != null)
+                return form;
+            else {
+                try {
+                    Integer formId = Integer.valueOf(s);
+                    form = Context.getFormService().getForm(formId);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                    throw new RuntimeException("The value you have passed in for formId:" + s + " is invalid");
+                }
+            }
+            return form;
+        }
+        return new Form();
+    }
+    
+    /**
+     * 
+     * Simple util for getting a formId as a String, avoiding potential null pointer exceptions.
+     * 
+     * @param form
+     * @return
+     */
+    public static String getFormIdAsString(Form form){
+        if (form == null || form.getFormId() == null)
+            return "";
+        else
+            return form.getFormId().toString();
     }
           
 }

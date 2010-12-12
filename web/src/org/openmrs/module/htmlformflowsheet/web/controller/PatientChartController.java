@@ -1,5 +1,8 @@
 package org.openmrs.module.htmlformflowsheet.web.controller;
 
+import java.net.URI;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,6 +42,7 @@ public class PatientChartController implements Controller {
 		    try{
 		        HtmlFormFlowsheetUtil.configureTabsAndLinks();
 		    } catch (Exception ex){
+		        ex.printStackTrace();
 	            throw new RuntimeException("there was an error configuring the default tabs and links.  Please verify the values in the global property htmlformflowsheet.configuration.");
 	        }
 		}
@@ -74,11 +78,15 @@ public class PatientChartController implements Controller {
 		model.put("fullPage", fullPage);
 	    model.put("selectTab", selectTab);
 	    model.put("showAllEncsWithEncType", showAllEncsWithEncType);
+	    String addAnotherButtonLabel = (String) request.getParameter("addAnotherButtonLabel");
+	    if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
+	       model.put("addAnotherButtonLabel", addAnotherButtonLabel);
+	    }    
 	    
 	    //redirect to a dummy html if no patientId for edit htmlform page
 		Integer patientId = null;
 		Patient patient = null;
-        try{
+        try {
             patientId = Integer.valueOf(request.getParameter("patientId"));
             patient = Context.getPatientService().getPatient(patientId);
         } catch (Exception ex){ 
