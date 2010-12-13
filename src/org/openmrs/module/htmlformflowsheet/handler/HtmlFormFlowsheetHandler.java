@@ -1,7 +1,6 @@
 package org.openmrs.module.htmlformflowsheet.handler;
 
 import java.io.PrintWriter;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
         String addAnotherButtonLabel = (String) attributes.get("addAnotherButtonLabel");
         try {
             if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("")){
-                addAnotherButtonLabel = URI.create(addAnotherButtonLabel).toString();
+                addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
             }    
         } catch (Exception ex){
             ex.fillInStackTrace();
