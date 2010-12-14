@@ -56,6 +56,7 @@ public class PatientChartController implements Controller {
 		String linksParam = request.getParameter("links");
 		String fullPageStr = request.getParameter("fullPage");
 		String readOnlyStr = request.getParameter("readOnly");
+		String windowHeight = request.getParameter("windowHeight");
 		String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
 		
 		if (fullPageStr != null && fullPageStr.equals("false"))
@@ -97,6 +98,9 @@ public class PatientChartController implements Controller {
         model.put("readOnly", readOnly);
 		model.put("patientId", patientId);
 		model.put("patient", patient);
+		if (windowHeight == null || windowHeight.equals(""))
+		    windowHeight = "400";  //default window size
+		model.put("windowHeight", windowHeight);
 		
 		return new ModelAndView(formView, "model", model); 
 	}

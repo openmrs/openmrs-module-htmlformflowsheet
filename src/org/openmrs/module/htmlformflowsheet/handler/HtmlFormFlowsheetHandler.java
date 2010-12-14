@@ -61,6 +61,8 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
         } catch (Exception ex){
             ex.fillInStackTrace();
         }
+        
+        String windowHeight = (String) attributes.get("windowHeight");
             
         if (patient != null){
             StringBuilder sb = new StringBuilder("");
@@ -73,10 +75,10 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
             }
             if (!session.getContext().getMode().equals(Mode.VIEW)){
                 //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
+                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&windowHeight=" + windowHeight + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
             } else {
                 //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
+                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&windowHeight=" + windowHeight + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
             }
             sb.append(" src='/"+WebConstants.WEBAPP_NAME+"/moduleResources/htmlformflowsheet/pleaseWait.htm'  ");
             sb.append(" width='100%' frameborder='0' scrolling='no'></iframe><br/><script>window.frames['iframeFor" + configuration + "'].innerHTML = 'please wait...'; \n function iframe"+configuration+"(){window.frames['iframeFor" + configuration + "'].location = "+source+";} \n setTimeout('iframe"+configuration+"();', 1);</script>");

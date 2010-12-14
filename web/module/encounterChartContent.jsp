@@ -103,7 +103,7 @@ Parameters:
 				 <c:if test="${model.readOnly == 'false'}">
 					<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 						    name="editEncounter" 
-							onclick="resizeIFrame${model.portletUUID}(400);showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
+							onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
 							title="edit" 
 							alt="edit"/>			
 					<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
@@ -114,7 +114,7 @@ Parameters:
 	             </c:if>
 				</td>
 				<td>
-					<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(400);showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
+					<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
 						<openmrs:formatDate date="${enc.encounterDatetime}"/>
 					</a>
 				</td>
@@ -143,7 +143,7 @@ Parameters:
 						<table>
 						<tr><td style="border:0px; text-align:left"> Append a row to an existing visit: </td>
 						<td style="border:0px; text-align:left">
-						<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(400);showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );}" id="encounterSelect_${model.portletUUID}">
+						<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(${model.windowHeight});showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId} );}" id="encounterSelect_${model.portletUUID}">
 						<option value="0"></option>
 						<c:forEach var="enc" items="${model.encounterListForChart}">
 							<option value="${enc.encounterId}">
@@ -154,7 +154,7 @@ Parameters:
 						<tr><td style="border:0px; text-align:left"> Or, start a new visit: </td>
 						<td style="border:0px; text-align:left">
 					</c:if>	
-						<button onClick="resizeIFrame${model.portletUUID}(400);showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"> 
+						<button onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"> 
 							<c:if test="${!empty model.addAnotherButtonLabel}">
 								${model.addAnotherButtonLabel}
 							</c:if>

@@ -66,6 +66,10 @@ public class HtmlEncounterChartContentController implements Controller {
         if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
             model.put("addAnotherButtonLabel", addAnotherButtonLabel); 
         }    
+        String windowHeight = (String) request.getParameter("windowHeight");
+        if (windowHeight == null || windowHeight.equals("") || windowHeight.equals("null"))
+            windowHeight = "400";
+        model.put("windowHeight", Integer.valueOf(windowHeight));
         Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
         formId = HtmlFormFlowsheetUtil.getFormIdAsString(form);
         
