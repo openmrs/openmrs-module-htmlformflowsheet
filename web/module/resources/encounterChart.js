@@ -28,11 +28,11 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 function showEncounterPopup(uuid, encId, formId) {
 	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId +'&formId='+formId, false, "", "", "", formId, false);
 }
-function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId,  formId, false);
+function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, encType) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, encType);
 }
 function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId,  formId, true);
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, true);
 } 
 function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs) {
 	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);

@@ -1,6 +1,7 @@
 package org.openmrs.module.htmlformflowsheet.web.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Form;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
@@ -27,6 +29,7 @@ import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
+import org.openmrs.module.htmlformentry.schema.ObsFieldAnswer;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
 import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
@@ -38,15 +41,6 @@ import org.springframework.web.servlet.mvc.Controller;
 public class HtmlEncounterChartContentController implements Controller {
 
     private Log log = LogFactory.getLog(this.getClass());
-    
-//    public HtmlEncounterChartContentController(){super();}
-//    
-//    private Integer count;
-//    private Integer patientId;
-//    private Integer encounterTypeId;
-//    private Integer formId;
-//    boolean showAddAnother = true;
-      
     
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
@@ -60,7 +54,6 @@ public class HtmlEncounterChartContentController implements Controller {
             patientId = fes.getPatient().getPatientId();
         }
         Integer encounterTypeId = Integer.valueOf(request.getParameter("encounterTypeId"));
-        
         String formId = request.getParameter("formId");
         String addAnotherButtonLabel = (String) request.getParameter("addAnotherButtonLabel");
         if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
@@ -72,7 +65,6 @@ public class HtmlEncounterChartContentController implements Controller {
         model.put("windowHeight", Integer.valueOf(windowHeight));
         Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
         formId = HtmlFormFlowsheetUtil.getFormIdAsString(form);
-        
         String portletUUID = request.getParameter("portletUUID");
         String view = request.getParameter("view");
         model.put("view", view);
@@ -81,122 +73,112 @@ public class HtmlEncounterChartContentController implements Controller {
             readOnly="false";
         model.put("readOnly", readOnly);
         model.put("personId", patientId);
-        
-        
         model.put("portletUUID", portletUUID.replace("-", ""));
         Patient patient = Context.getPatientService().getPatient(patientId);
         model.put("patient", patient);
         //TODO:  read-only version?
-        if (patient != null)
-            model.put("patientEncounters", Context.getEncounterService().getEncountersByPatient(patient));
         model.put("formId", formId);
         model.put("encounterTypeId", encounterTypeId);
         model.put("encounterType", Context.getEncounterService().getEncounterType(encounterTypeId));
         model.put("conceptsToShow", "");
-        
-        
-        
-        
-        List<Encounter> allEncs = (List<Encounter>) model.get("patientEncounters");
-        Map<Integer, List<Encounter>> encountersByType = (Map<Integer, List<Encounter>>) model.get("encountersByType");
-        
-        if (encountersByType == null) {
-            // map from encounterTypeId to list of encounters of that type 
-            encountersByType = new HashMap<Integer, List<Encounter>>();
-            
-            if (allEncs != null) {
-                for (Encounter e : allEncs) {
-                    if (e.getEncounterType() != null){
-                        Integer id = e.getEncounterType().getEncounterTypeId();
-                        List<Encounter> list = encountersByType.get(id);
-                        if (list == null) {
-                            list = new ArrayList<Encounter>();
-                            encountersByType.put(id, list);
-                        }
-                        list.add(e);    
-                    }    
-                }
-            }
-            model.put("encountersByType", encountersByType);
-        }
-        
 
-        List<Encounter> encountersToUse;
-        if ("*".equals(model.get("encounterTypeId"))) {
-            encountersToUse = allEncs;
-        } else {
-            encountersToUse = encountersByType.get(encounterTypeId);
-            if (encountersToUse == null) {
-                encountersToUse = new ArrayList<Encounter>();
-            }
-        }
         
+        //LOAD ALL ENCS
         List<Encounter> encs = new ArrayList<Encounter>();
         String showAllEncsWithEncType = request.getParameter("showAllEncsWithEncType");
         if (showAllEncsWithEncType == null || !showAllEncsWithEncType.equals("true")){
-            for (Encounter encTmp : encountersToUse){
-                if (encTmp.getForm() != null && encTmp.getForm().equals(form))
-                    encs.add(encTmp);
-            }
+            //if showAllEncsWithEncType is false or null then restrict encounters by formId
+            encs = Context.getEncounterService().getEncounters(patient, null, null, null, Collections.singleton(form), null, null, false);
             model.put("showAllEncsWithEncType", "false");
-        }   else {
-            //filter encounters by schema obs done in encounterchartcontent jsp
-            encs = encountersToUse;
+        }   else if ("*".equals(model.get("encounterTypeId"))) {
+            //show all encounters
+            encs = Context.getEncounterService().getEncountersByPatient(patient);
             model.put("showAllEncsWithEncType", "true");
-        }
-        
-        model.put("encounterListForChart", encs);
+        } else {
+            // map from encounterTypeId to list of encounters of that type 
+            EncounterType et = Context.getEncounterService().getEncounterType(encounterTypeId);
+            encs = Context.getEncounterService().getEncounters(patient, null, null, null, null, Collections.singleton(et), null, false);
+            model.put("showAllEncsWithEncType", "true");
+        } 
+
         // now figure out which concepts we want to display as columns
-        Set<Concept> concepts = new LinkedHashSet<Concept>();
+        Set<Map<Concept,String>> concepts = new LinkedHashSet<Map<Concept,String>>();
+        Set<Map<Concept,String>> conceptAnswers = new LinkedHashSet<Map<Concept,String>>();
         {
             String conceptsToShowString = (String) model.get("conceptsToShow");
             if (StringUtils.hasText(conceptsToShowString)) {
                 for (String idAsString : conceptsToShowString.split(",")) {
-                    Concept c = Context.getConceptService().getConceptByIdOrName(idAsString);
-                    concepts.add(c);
+                    Concept c = Context.getConceptService().getConcept(idAsString);
+                    Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
+                    conceptAndNameString.put(c, c.getBestShortName(Context.getLocale()).getName());
+                    concepts.add(conceptAndNameString);
                 }
             } else if (form != null) {
                 HtmlForm htmlForm = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
                 Patient p = (Patient) model.get("patient");
+                FormEntrySession fes = null;
                 try {
                     if (p == null)
                         p = HtmlFormEntryUtil.getFakePerson();
-                    FormEntrySession fes = new FormEntrySession(p, null, Mode.ENTER, htmlForm);
+                    fes = new FormEntrySession(p, null, Mode.VIEW, htmlForm);
                     HtmlFormSchema schema = fes.getContext().getSchema();
                     for (HtmlFormSection section : schema.getSections()) {
                         for (HtmlFormField field : section.getFields()) {
-                            fieldHelper(field, concepts);
+                            fieldHelper(field, concepts, conceptAnswers);
                         }
                     }
                 } catch (Exception ex) {
                     log.error("Failure inspecting form " + form.getFormId() + " schema for obs " + ex);
                     ex.printStackTrace();
+                } finally {
+                    fes = null;
                 }
             }
         }
         
         // now go through the Obs in the encounters we want to view and find the ones that will go in the table
         Map<Encounter, Map<Integer, List<Obs>>> encounterToObsMap = new HashMap<Encounter, Map<Integer,List<Obs>>>();
-        for (Encounter e : encountersToUse) {
+        //encounter, conceptId, obs
+        for (Encounter e : encs) {
             Map<Integer, List<Obs>> holder = new HashMap<Integer, List<Obs>>();
             encounterToObsMap.put(e, holder);
-            for (Concept c : concepts) {
-                holder.put(c.getConceptId(), new ArrayList<Obs>());
+            for (Map<Concept,String> c : concepts) {
+                holder.put(c.keySet().iterator().next().getConceptId(), new ArrayList<Obs>());
             }
             for (Obs o : e.getObs()) {
                 Concept c = o.getConcept();
-                if (concepts.contains(c)) {
-                    holder.get(c.getConceptId()).add(o);
+                for (Map<Concept, String> m : concepts){
+                    if (m.keySet().contains(c)) {
+                        holder.get(c.getConceptId()).add(o);
+                        break;
+                    }
                 }
+                //TODO:  this is wrong.
                 for (Obs oInner : o.getGroupMembers()){
                     Concept cInner = oInner.getConcept();
                     holder.get(cInner.getConceptId()).add(o);
                 }
             }
         }
+        
+        model.put("encounterListForChart", encs);
         model.put("encounterChartConcepts", concepts);
         model.put("encounterChartObs", encounterToObsMap);
         
+        Map<Encounter,Boolean> foundEncounters = new HashMap<Encounter,Boolean>();
+        for (Encounter enc: encs){
+            Boolean found = false;
+            for (Map<Concept,String> m : concepts){
+                Concept c = m.keySet().iterator().next();
+                if (encounterToObsMap.get(enc).get(c.getConceptId()).size() > 0){
+                    found = true;
+                    break;
+                }   
+            }
+            foundEncounters.put(enc, found);
+        }
+        model.put("foundEncounters", foundEncounters);
+        model.put("conceptAnswers", conceptAnswers);
         return new ModelAndView("/module/htmlformflowsheet/encounterChartContent", "model", model);
     }
     
@@ -207,15 +189,30 @@ public class HtmlEncounterChartContentController implements Controller {
      * @param field
      * @param concepts
      */
-    private void fieldHelper(HtmlFormField field, Set<Concept> concepts) {
+    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Set<Map<Concept,String>> conceptAnswers) {
         if (field instanceof ObsField) {
             ObsField of = (ObsField) field;
-            concepts.add(of.getQuestion());
+            Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
+            String name = of.getName();
+            if (name != null)
+                name = name.toUpperCase();
+            conceptAndNameString.put(of.getQuestion(),name);
+            concepts.add(conceptAndNameString);
+            List<ObsFieldAnswer> answerList = of.getAnswers();
+            if (answerList != null && answerList.size() > 0){
+                for (ObsFieldAnswer ofa : answerList){
+                    Map<Concept,String> answConceptAndNameString = new HashMap<Concept,String>();
+                    String answName = ofa.getDisplayName();
+                    if (ofa.getConcept() != null){
+                        answConceptAndNameString.put(ofa.getConcept(),answName);
+                        conceptAnswers.add(answConceptAndNameString);
+                    } 
+                }
+            }
         } else if (field instanceof ObsGroup){
             ObsGroup og = (ObsGroup) field;
             for (HtmlFormField ofInner:og.getChildren()){
-                ObsField of = (ObsField) ofInner;
-                concepts.add(of.getQuestion());
+                fieldHelper(ofInner, concepts, conceptAnswers);
             }
         } else {
             log.debug(field.getClass() + " not yet implemented");

@@ -16,9 +16,7 @@ Parameters:
 	passed from controller:
 	* encounterListForChart: list of encounters
 --%>
-<htmlformflowsheet:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
-<htmlformflowsheet:htmlInclude file="/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js" />
-<htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
+
 <htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlTools.js" />
 <htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlEncode.js" />
 	

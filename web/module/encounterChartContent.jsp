@@ -76,34 +76,39 @@ Parameters:
 	}
 	
 	function editHTMLForm${model.portletUUID}(encId,view){
-		window.location = '${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?encounterId=' + encId + '&mode=EDIT&returnUrl=${pageContext.request.contextPath}/module/htmlformflowsheet/testChart.list?selectTab=' + view;
+		window.location = '${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?encounterId=' + encId + '&mode=EDIT&returnUrl=${pageContext.request.contextPath}/module/htmlformflowsheet/testChart.list?showAllEncsWithEncType=${model.showAllEncsWithEncType}&selectTab=' + view;
 	}
 	
 </script>
-
 <table id="encContentTable${model.portletUUID}" class="thinBorder" style="width:100%;">
 	<tr>
 		<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
-		<c:forEach var="concept" items="${model.encounterChartConcepts}">
-			<td style="color:darkblue"><htmlformflowsheet:conceptFormat concept="${concept}" shortestName="true" /></td>
+		<c:forEach var="concept" items="${model.encounterChartConcepts}"><!-- Each concept is a map with the concept itself and the name string from the form-->
+			<td style="color:darkblue">
+					<c:forEach var="entry" items="${concept}">
+					     <c:if test="${empty entry.value || entry.value == ''}">
+						 	 <htmlformflowsheet:conceptFormat concept="${entry.key}" bestShortName="true" />
+						 </c:if>
+						 <c:if test="${!empty entry.value && entry.value != ''}">
+						 	 ${entry.value}
+						 </c:if>
+				    </c:forEach>		
+			</td>
 		</c:forEach>
 	</tr>
 	<c:forEach var="enc" items="${model.encounterListForChart}">
 		<c:set var="found" value="false"/>
-		<c:forEach var="concept" items="${model.encounterChartConcepts}">
-			<c:forEach var="obs" items="${model.encounterChartObs[enc][concept.conceptId]}">
-				<c:if test="${obs != null}">
-					<c:set var="found" value="true"/>
-				</c:if>
-			</c:forEach>
-		</c:forEach>
+		<c:if test="${model.foundEncounters[enc] == 'true'}">
+			<c:set var="found" value="true"/>
+        </c:if>
+		
 		<c:if test="${found == 'true'}">
 			<tr style="height:30px;">
-				<td style="width:38px;">
+				<td style="width:38px;"> 
 				 <c:if test="${model.readOnly == 'false'}">
 					<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 						    name="editEncounter" 
-							onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId})"
+							onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"
 							title="edit" 
 							alt="edit"/>			
 					<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
@@ -118,19 +123,35 @@ Parameters:
 						<openmrs:formatDate date="${enc.encounterDatetime}"/>
 					</a>
 				</td>
-				<c:forEach var="concept" items="${model.encounterChartConcepts}">
-					<td>
-						<c:forEach var="obs" items="${model.encounterChartObs[enc][concept.conceptId]}">
-							<c:if test="${obs.valueCoded != null}">
-								<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
-							</c:if>
-							<c:if test="${obs.valueCoded == null}">
-								<!-- HERE:  ugh... this is going to need a custom tag handler for valueNumerics --->
-								<htmlformflowsheet:obsFormat obs="${obs}"/> 
-							</c:if>
-							<c:if test="${obs.accessionNumber != null}"> (${obs.accessionNumber})</c:if><br/>
-						</c:forEach>
-					</td>
+				<c:forEach var="conceptAndNameMap" items="${model.encounterChartConcepts}">
+					<c:forEach var="conceptAndStrings" items="${conceptAndNameMap}">
+						<td>
+							<!--  TODO:  HERE  use answerLabel if String not nothing or null --->
+							<c:forEach var="obs" items="${model.encounterChartObs[enc][conceptAndStrings.key.conceptId]}">
+								<c:if test="${obs.valueCoded != null}">
+								    <c:set var="useConceptName" value="true"/>
+									        <c:forEach var="concept" items="${model.conceptAnswers}"><!-- Each concept is a map with the concept itself and the name string from the form-->
+												<c:forEach var="entry" items="${concept}">
+					     								<c:if test="${obs.valueCoded.conceptId == entry.key.conceptId}">
+					     									<c:if test="${!empty entry.value && entry.value != ''}">
+					     											${entry.value}
+					     											<c:set var="useConceptName" value="false"/>
+					     									</c:if>
+					     								</c:if>
+					     						</c:forEach>
+					     					</c:forEach>			
+									<c:if test="${useConceptName == 'true'}">  
+										<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
+									</c:if>	
+								</c:if>
+								<c:if test="${obs.valueCoded == null}">
+									<!-- HERE:  ugh... this is going to need a custom tag handler for valueNumerics --->
+									<htmlformflowsheet:obsFormat obs="${obs}"/> 
+								</c:if>
+								<c:if test="${obs.accessionNumber != null}"> (${obs.accessionNumber})</c:if><br/>
+							</c:forEach>
+						</td>
+					</c:forEach>
 				</c:forEach>
 			</tr>
 		</c:if>
