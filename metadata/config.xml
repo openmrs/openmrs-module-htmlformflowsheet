@@ -10,7 +10,7 @@
 		Back end functionality to do a "patient chart"-style workflow (as opposed to form-based workflow)
 	</description>
 
-	<activator>@MODULE_PACKAGE@.HtmlFormFlowsheetModuleActivator</activator>
+	<activator>org.openmrs.module.htmlformflowsheet.activator.HtmlFormFlowsheetModuleActivator</activator>
 	
 	<!-- Require version 1.5 so jquery and jquery-ui are included. This could be relaxed -->
 	<require_version>1.6</require_version>
@@ -62,6 +62,14 @@
 			Comma delimited formIds of all htmlforms that are the *parent* forms for patient charts.  Do not list
 				patient chart sub forms in this list.  If you would like for links to be displayed, you can add entries
 				of the following format:   formId:programId1|programId2,formId:programId1, programIds
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>htmlformflowsheet.drugDiscontinueReason</property>
+		<defaultValue></defaultValue>
+		<description>
+			The conceptId or UUID of the concept representing reasons for dicontinuing a drug order.
 		</description>
 	</globalProperty>
 	

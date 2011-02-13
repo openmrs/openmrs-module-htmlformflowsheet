@@ -2,7 +2,9 @@ package org.openmrs.module.htmlformflowsheet.web.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
+import org.openmrs.Drug;
+import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Form;
 import org.openmrs.Obs;
+import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformentry.FormEntrySession;
@@ -25,6 +30,8 @@ import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
+import org.openmrs.module.htmlformentry.schema.DrugOrderAnswer;
+import org.openmrs.module.htmlformentry.schema.DrugOrderField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
@@ -32,7 +39,8 @@ import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsFieldAnswer;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
-import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetService;
+import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,8 +71,8 @@ public class HtmlEncounterChartContentController implements Controller {
         if (windowHeight == null || windowHeight.equals("") || windowHeight.equals("null"))
             windowHeight = "400";
         model.put("windowHeight", Integer.valueOf(windowHeight));
-        Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
-        formId = HtmlFormFlowsheetUtil.getFormIdAsString(form);
+        Form form = HtmlFormFlowsheetWebUtils.getFormFromString(formId);
+        formId = HtmlFormFlowsheetWebUtils.getFormIdAsString(form);
         String portletUUID = request.getParameter("portletUUID");
         String view = request.getParameter("view");
         model.put("view", view);
@@ -103,6 +111,8 @@ public class HtmlEncounterChartContentController implements Controller {
 
         // now figure out which concepts we want to display as columns
         Set<Map<Concept,String>> concepts = new LinkedHashSet<Map<Concept,String>>();
+        List<DrugOrderField> searchDrugs = new ArrayList<DrugOrderField>();
+        Map<Drug, String> drugNames = new HashMap<Drug, String>();
         Set<Map<Concept,String>> conceptAnswers = new LinkedHashSet<Map<Concept,String>>();
         {
             String conceptsToShowString = (String) model.get("conceptsToShow");
@@ -124,7 +134,7 @@ public class HtmlEncounterChartContentController implements Controller {
                     HtmlFormSchema schema = fes.getContext().getSchema();
                     for (HtmlFormSection section : schema.getSections()) {
                         for (HtmlFormField field : section.getFields()) {
-                            fieldHelper(field, concepts, conceptAnswers);
+                            fieldHelper(field, concepts, conceptAnswers, searchDrugs, drugNames);
                         }
                     }
                 } catch (Exception ex) {
@@ -161,6 +171,67 @@ public class HtmlEncounterChartContentController implements Controller {
             }
         }
         
+        //use searchDrugs to build list of drugOrders, order by start_date asc, exclude encounters already in the list
+        Set<Drug> drugSet = new HashSet<Drug>();
+        for (DrugOrderField df : searchDrugs){
+            for (DrugOrderAnswer doa : df.getDrugOrderAnswers()){
+                if (doa.getDrug() != null)
+                    drugSet.add(doa.getDrug());
+            }
+        }
+        List<DrugOrder> drugOrders = null;
+        if (drugSet.size() > 0)
+            drugOrders = Context.getService(HtmlFormFlowsheetService.class).getDrugOrders(patient, drugSet, encs, false);
+        //pull DrugOrders out of encounterList to initialize any lazy loading
+        for (Encounter eTmp : encs){
+            for (Order o : eTmp.getOrders()){
+                if (o instanceof DrugOrder){
+                    DrugOrder doTmp = (DrugOrder) o;
+                }    
+            }
+        }
+        
+        List<Encounter> dummyEncs = new ArrayList<Encounter>();
+        if (drugOrders != null){
+            for (DrugOrder doTmp : drugOrders){
+                
+                Encounter encDummy = null;
+                if (doTmp.getEncounter() != null)
+                    encDummy = Context.getEncounterService().getEncounter(doTmp.getEncounter().getEncounterId());
+    
+                if (encDummy == null){
+                    encDummy = new Encounter();
+                    encDummy.setEncounterDatetime(doTmp.getStartDate());
+                    Context.evictFromSession(encDummy);
+                }
+                encDummy.addOrder(doTmp);
+                dummyEncs.add(encDummy);
+            }    
+        }
+        //reorder encounters
+        if (dummyEncs.size() > 0){
+            //if not in encounterListForChart, add dummy encounters (or actual) with the encounters (dangerous)?
+            encs.addAll(dummyEncs);
+            Collections.sort(encs, new Comparator<Encounter>() {
+                public int compare(Encounter left, Encounter right) {
+                    return left.getEncounterDatetime().compareTo(right.getEncounterDatetime());
+                 } 
+             });
+        }
+        
+        Map<Encounter, Set<DrugOrder>> encsToDrugOrders = new HashMap<Encounter, Set<DrugOrder>>();
+        for (Encounter enc: encs){
+            for (Order o : enc.getOrders()){
+                if (o instanceof DrugOrder){
+                    if (!encsToDrugOrders.containsKey(enc))
+                        encsToDrugOrders.put(enc, new LinkedHashSet<DrugOrder>());
+                    Set<DrugOrder> oSet = encsToDrugOrders.get(enc);
+                    oSet.add((DrugOrder) o);
+                }
+            }
+        }
+        model.put("encounterToDrugOrderMap", encsToDrugOrders);
+        model.put("drugNames", drugNames);
         model.put("encounterListForChart", encs);
         model.put("encounterChartConcepts", concepts);
         model.put("encounterChartObs", encounterToObsMap);
@@ -170,10 +241,26 @@ public class HtmlEncounterChartContentController implements Controller {
             Boolean found = false;
             for (Map<Concept,String> m : concepts){
                 Concept c = m.keySet().iterator().next();
-                if (encounterToObsMap.get(enc).get(c.getConceptId()).size() > 0){
+                if (c.getConceptId() != null && encounterToObsMap.get(enc) != null && encounterToObsMap.get(enc).get(c.getConceptId()).size() > 0){
                     found = true;
                     break;
-                }   
+                } 
+            }
+            //match on drugOrders:
+            if (enc.getOrders() != null && found == false){
+                Set<Order> oSet = enc.getOrders();
+                for (Order o : oSet){
+                    if (o instanceof DrugOrder){
+                        for (Map<Concept,String> m : concepts){
+                            Concept c = m.keySet().iterator().next();
+                            DrugOrder drugO = (DrugOrder) o;
+                            if (drugO.getDrug() != null && c.getUuid().contains(drugO.getDrug().getName())){
+                                found = true;
+                                break;
+                            }
+                        }    
+                    }
+                }
             }
             foundEncounters.put(enc, found);
         }
@@ -189,7 +276,7 @@ public class HtmlEncounterChartContentController implements Controller {
      * @param field
      * @param concepts
      */
-    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Set<Map<Concept,String>> conceptAnswers) {
+    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Set<Map<Concept,String>> conceptAnswers, List<DrugOrderField> searchDrugs, Map<Drug, String> drugNames) {
         if (field instanceof ObsField) {
             ObsField of = (ObsField) field;
             Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
@@ -212,8 +299,29 @@ public class HtmlEncounterChartContentController implements Controller {
         } else if (field instanceof ObsGroup){
             ObsGroup og = (ObsGroup) field;
             for (HtmlFormField ofInner:og.getChildren()){
-                fieldHelper(ofInner, concepts, conceptAnswers);
+                fieldHelper(ofInner, concepts, conceptAnswers, searchDrugs, drugNames);
             }
+        } else if (field instanceof DrugOrderField){
+            DrugOrderField dof = (DrugOrderField) field;
+            searchDrugs.add(dof);
+            {
+                //SUPER HACK -- adding drug matching key to concept UUID field.  These Concepts are never meant to be saved...
+                Map<Concept,String> answConceptAndNameString = new HashMap<Concept,String>();
+                Concept dummyC = new Concept();
+                Context.evictFromSession(dummyC);
+                String tmp = "";
+                //adding display names to string to match to
+                for (DrugOrderAnswer doa :dof.getDrugOrderAnswers()){
+                    tmp = tmp + doa.getDrug().getName() + "-";
+                    //load up drug to displayName object:
+                    drugNames.put(doa.getDrug(), doa.getDisplayName());
+                }
+                dummyC.setUuid(tmp);
+                answConceptAndNameString.put(dummyC,Context.getMessageSourceService().getMessage("DrugOrder.drug"));
+                //added to concepts to create a row.  Concept.UUID will contain list of drug names.
+                concepts.add(answConceptAndNameString);
+            }
+            
         } else {
             log.debug(field.getClass() + " not yet implemented");
         }

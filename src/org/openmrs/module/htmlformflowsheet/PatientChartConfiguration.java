@@ -1,4 +1,4 @@
-package org.openmrs.module.htmlformflowsheet.web;
+package org.openmrs.module.htmlformflowsheet;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

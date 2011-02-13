@@ -1,25 +1,6 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ taglib prefix="htmlformflowsheet" uri="/WEB-INF/view/module/htmlformflowsheet/taglib/htmlformflowsheet.tld" %>
 
-<%--
-Parameters:
-	encounterTypeId: (int, required) tells what encounter type to show in this table
-					 use the special value '*' to signify all encounters regardless of type
-	conceptsToShow: (comma-separated list of concept ids) tells what concepts to show the
-					obs of in the table. If not specified, then all concepts will be extracted
-					from the specified form (not yet implemented)
-	showAddAnother: (boolean, default = true) if 'false', there's no option for "add another"
-	formId: which form to use for the "add another"
---%>
-
-<%--
-	(Internal documentation)
-	passed from controller:
-	* encounterListForChart: list of encounters
---%>
-
-
-
 <!--<htmlformflowsheet:htmlInclude file="/dwr/interface/HtmlFlowsheetDWR.js" />-->
 
 <%-- If there are any encounters, we show a chart --%>
@@ -80,6 +61,7 @@ Parameters:
 	}
 	
 </script>
+${encounters}
 <table id="encContentTable${model.portletUUID}" class="thinBorder" style="width:100%;">
 	<tr>
 		<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
@@ -96,6 +78,7 @@ Parameters:
 			</td>
 		</c:forEach>
 	</tr>
+	<c:set var="usedDrugOrders" value=""/>
 	<c:forEach var="enc" items="${model.encounterListForChart}">
 		<c:set var="found" value="false"/>
 		<c:if test="${model.foundEncounters[enc] == 'true'}">
@@ -105,7 +88,7 @@ Parameters:
 		<c:if test="${found == 'true'}">
 			<tr style="height:30px;">
 				<td style="width:38px;"> 
-				 <c:if test="${model.readOnly == 'false'}">
+				 <c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">
 					<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 						    name="editEncounter" 
 							onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType});"
@@ -119,14 +102,20 @@ Parameters:
 	             </c:if>
 				</td>
 				<td>
-					<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
+					<c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">
+						<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId})">
+							<openmrs:formatDate date="${enc.encounterDatetime}"/>
+						</a>
+					</c:if>
+					<c:if test="${model.readOnly == 'true' || empty enc.encounterId}">
 						<openmrs:formatDate date="${enc.encounterDatetime}"/>
-					</a>
+					</c:if>
 				</td>
-				<c:forEach var="conceptAndNameMap" items="${model.encounterChartConcepts}">
-					<c:forEach var="conceptAndStrings" items="${conceptAndNameMap}">
+				<c:forEach var="conceptAndNameMap" items="${model.encounterChartConcepts}"> <!-- Set<Map<Concept,String>> -->
+					<c:forEach var="conceptAndStrings" items="${conceptAndNameMap}"> <!-- unpacks Concept to String mapping -->
 						<td>
 							<!--  TODO:  HERE  use answerLabel if String not nothing or null --->
+							<c:set var="matched" value="false"/>
 							<c:forEach var="obs" items="${model.encounterChartObs[enc][conceptAndStrings.key.conceptId]}">
 								<c:if test="${obs.valueCoded != null}">
 								    <c:set var="useConceptName" value="true"/>
@@ -149,7 +138,38 @@ Parameters:
 									<htmlformflowsheet:obsFormat obs="${obs}"/> 
 								</c:if>
 								<c:if test="${obs.accessionNumber != null}"> (${obs.accessionNumber})</c:if><br/>
+								<c:set var="matched" value="true"/>
 							</c:forEach>
+							<c:if test="${matched == 'false'}">
+								<c:forEach var="drugOrder" items="${model.encounterToDrugOrderMap[enc]}">
+									<!-- look for concept match in drugOrders -->
+									<c:if test="${fn:contains(conceptAndStrings.key.uuid, drugOrder.drug.name) == true}">
+										<c:if test="${fn:contains(usedDrugOrders,drugOrder.orderId) == false}">	
+											<c:if test="${empty enc.encounterId}">
+											<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
+						   						 name="editEncounter" 
+												 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType})"
+												 title="edit" 
+												 alt="edit"/>
+											</c:if>	 
+											<c:if test="${!empty drugNames[drugOrder.drug]}">
+												${drugNames[drugOrder.drug]}
+											</c:if>
+											<c:if test="${empty drugNames[drugOrder.drug]}">
+												${drugOrder.drug.name} 
+											</c:if>
+											<c:set var="expireDate" value="${drugOrder.discontinuedDate}"/>
+											<c:if test="${empty expireDate}">
+												<c:set var="expireDate" value="${drugOrder.autoExpireDate}"/>
+											</c:if>
+											<c:if test="${enc.encounterDatetime != drugOrder.startDate || !empty expireDate}"> 
+												(<openmrs:formatDate date="${drugOrder.startDate}" /> <spring:message code="htmlformflowsheet.through" /> <c:if test="${empty expireDate}">- </c:if><c:if test="${!empty expireDate}"><openmrs:formatDate date="${expireDate}" /></c:if>)
+											</c:if>
+											<c:set var="usedDrugOrders" value="${usedDrugOrders},${drugOrder.orderId}"/>
+										</c:if>
+									</c:if>	
+								</c:forEach>							
+							</c:if>
 						</td>
 					</c:forEach>
 				</c:forEach>

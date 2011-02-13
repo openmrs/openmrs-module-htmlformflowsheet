@@ -58,12 +58,13 @@
 	<classpathentry kind="lib" path="/openmrs-1.5.x/lib/tomcat/catalina-ant.jar"/>
 	<classpathentry exported="true" kind="lib" path="/openmrs-1.5.x/lib/tomcat/tools.jar"/>
 	<classpathentry kind="lib" path="/openmrs-1.5.x/lib/tomcat/servlet-api.jar" sourcepath="/openmrs-source/apache-tomcat-5.5.20-src.zip"/>
-	<classpathentry kind="lib" path="lib-common/htmlformentry.jar"/>
 	<classpathentry kind="lib" path="lib-common/openmrs-api-1.6.2.12911-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.6.2.12911-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.6.2.12911-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/simple-xml-1.6.1-mod.jar"/>
 	<classpathentry kind="lib" path="lib-common/spring-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib-common/spring-webmvc.jar"/>
+	<classpathentry kind="lib" path="lib-common/htmlformentry-1.7.2.jar"/>
+	<classpathentry kind="lib" path="dist/htmlformflowsheet-1.1.8.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

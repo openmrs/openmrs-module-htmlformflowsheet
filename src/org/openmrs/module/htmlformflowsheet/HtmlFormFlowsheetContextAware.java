@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.htmlformflowsheet.web;
+package org.openmrs.module.htmlformflowsheet;
 
 import javax.servlet.ServletContext;
 

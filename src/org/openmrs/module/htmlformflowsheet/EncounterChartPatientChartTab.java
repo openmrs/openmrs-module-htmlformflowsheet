@@ -1,4 +1,4 @@
-package org.openmrs.module.htmlformflowsheet.web;
+package org.openmrs.module.htmlformflowsheet;
 
 /**
  * A tab that shows a table of existing encounters, and an optional "Add another" button

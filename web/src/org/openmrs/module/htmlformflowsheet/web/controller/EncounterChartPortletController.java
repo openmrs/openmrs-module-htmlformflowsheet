@@ -16,7 +16,7 @@ import org.openmrs.Form;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
+import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.controller.PortletController;
 import org.springframework.web.servlet.ModelAndView;
@@ -342,7 +342,7 @@ public class EncounterChartPortletController extends PortletController {
         
        
         String formId = (String) model.get("formId");
-        Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
+        Form form = HtmlFormFlowsheetWebUtils.getFormFromString(formId);
         model.put("formId", form.getFormId());
         
         String showAllEncsWithEncType = "false";

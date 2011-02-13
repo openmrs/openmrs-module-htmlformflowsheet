@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.htmlformflowsheet;
+package org.openmrs.module.htmlformflowsheet.activator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,9 +19,9 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Activator;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
-import org.openmrs.module.htmlformflowsheet.handler.HtmlFormFlowsheetHandler;
-import org.openmrs.module.htmlformflowsheet.web.HtmlFormFlowsheetContextAware;
-import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetContextAware;
+import org.openmrs.module.htmlformflowsheet.handlers.HtmlFormFlowsheetHandler;
+import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.springframework.context.ApplicationContext;
 
 
@@ -113,7 +113,7 @@ public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
      */
     protected void onLoad(HtmlFormEntryService hfes) { 
         try {
-            HtmlFormFlowsheetUtil.configureTabsAndLinks();
+            HtmlFormFlowsheetWebUtils.configureTabsAndLinks();
         } catch (Exception ex){
             ex.printStackTrace(System.out);
             log.error("configuration of tabs and links in htmlformflowsheet failed.");

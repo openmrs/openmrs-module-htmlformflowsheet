@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.htmlformflowsheet.web.PatientChartConfiguration;
-import org.openmrs.module.htmlformflowsheet.web.util.HtmlFormFlowsheetUtil;
+import org.openmrs.module.htmlformflowsheet.PatientChartConfiguration;
+import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -37,7 +37,7 @@ public class PatientChartController implements Controller {
 		
 		if (configuration.getTabs() == null || configuration.getTabs().size() == 0){
 		    try{
-		        HtmlFormFlowsheetUtil.configureTabsAndLinks();
+		        HtmlFormFlowsheetWebUtils.configureTabsAndLinks();
 		    } catch (Exception ex){
 		        ex.printStackTrace();
 	            throw new RuntimeException("there was an error configuring the default tabs and links.  Please verify the values in the global property htmlformflowsheet.configuration.");
@@ -64,7 +64,7 @@ public class PatientChartController implements Controller {
 		    showAllEncsWithEncType = "true";
 		if (configParam != null && !configParam.equals("")){
 		    //here's the url-override of the configuration
-		    PatientChartConfiguration  pcc = HtmlFormFlowsheetUtil.buildGenericConfigurationFromStrings(configParam, linksParam);
+		    PatientChartConfiguration  pcc = HtmlFormFlowsheetWebUtils.buildGenericConfigurationFromStrings(configParam, linksParam);
 		    model.put("tabs", pcc.getTabs());
             model.put("links", pcc.getLinks());
             model.put("configuration", configParam);

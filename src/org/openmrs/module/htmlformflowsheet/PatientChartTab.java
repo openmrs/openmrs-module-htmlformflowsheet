@@ -1,4 +1,4 @@
-package org.openmrs.module.htmlformflowsheet.web;
+package org.openmrs.module.htmlformflowsheet;
 
 /**
  * Configuration for a tab on a patient chart
