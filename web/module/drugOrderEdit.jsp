@@ -77,9 +77,9 @@
 				<input type="text" name="refAutoExpireDate" id="autoExpireDate" value="<openmrs:formatDate date="${model.drugOrder.autoExpireDate}" />" size="10" onClick='showCalendar(this)'/>
 			</td>
 			<td>
-				<input type="text" name="refDiscontinuedDate" id="discontinuedDate" value="<openmrs:formatDate date="${model.drugOrder.discontinuedDate}" />" size="10" onClick='showCalendar(this)'/>
+				<input type="text" name="refDiscontinedDate" id="discontinuedDate" value="<openmrs:formatDate date="${model.drugOrder.discontinuedDate}" />" size="10" onClick='showCalendar(this)'/>
 			</td>
-			<td>
+			<td>  
 				<select name="refDiscontinueReason" id="discontinueReason">
 					<option value=""> </option>
 					<c:forEach var="reason" items="${discontinueReasons}">

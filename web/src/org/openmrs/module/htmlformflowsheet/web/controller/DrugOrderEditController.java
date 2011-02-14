@@ -138,12 +138,26 @@ public class DrugOrderEditController  {
             @RequestParam(value="refStartDate", required=false) String startDateStr,
             @RequestParam(value="refAutoExpireDate", required=false) String autoExpireDateStr,
             @RequestParam(value="refDiscontinedDate", required=false) String discontinuedDateStr,
-            @RequestParam(value="redDiscontinueReason", required=false) String discontinueReason,
+            @RequestParam(value="refDiscontinueReason", required=false) String discontinueReason,
             @RequestParam(value="refInstructions", required=false) String instructions,
             @RequestParam(value="refPrn", required=false) Boolean prn,
             @RequestParam(value="refVoided", required=false) Boolean voided,
             @RequestParam(value="refVoidReason", required=false) String voidReason
             ){
+//                System.out.println("closeAfterSubmission " + closeAfterSubmission);
+//                System.out.println("drugOrderId " + drugOrderId);
+//                System.out.println("drugNameStr " + drugNameStr);
+//                System.out.println("dose " + dose);
+//                System.out.println("frequency " + frequency);
+//                System.out.println("startDateStr " + startDateStr);
+//                System.out.println("autoExpireDateStr " + autoExpireDateStr);
+//                System.out.println("discontinuedDateStr " + discontinuedDateStr);
+//                System.out.println("discontinueReason " + discontinueReason);
+//                System.out.println("instructions " + instructions);
+//                System.out.println("prn " + prn);
+//                System.out.println("voided " + voided);
+//                System.out.println("voidReason " + voidReason);
+                
                 DrugOrder dor = (DrugOrder) Context.getOrderService().getOrder(Integer.valueOf(drugOrderId)); 
                 boolean shouldSave = false;
                 if (drugNameStr != null && !drugNameStr.equals("")){
@@ -160,7 +174,7 @@ public class DrugOrderEditController  {
                         dor.setVoidReason("htmlformflowsheet - drug removed");
                         dor.setDateVoided(new Date());
                         shouldSave = true;
-                    } else if (dor.getDrug().getDrugId().equals(drug.getDrugId())){
+                    } else if (!OpenmrsUtil.nullSafeEquals(dor.getDrug().getDrugId(), drug.getDrugId())){
                         dor.setDrug(drug);
                         shouldSave = true;
                     }   
