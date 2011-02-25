@@ -37,8 +37,8 @@ function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, e
 function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs) {
 	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
 }
-function showDrugOrderEditPopup(uuid, drugOrderId, personId, tabIndex, encounterTypeId, formId, showAllEncs){
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformflowsheet/drugOrderEdit.form?patientId=' + personId + '&drugOrderId=' + drugOrderId + '&dialogToClose=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
+function showDrugOrderEditPopup(uuid, drugOrderId, personId, tabIndex, encounterTypeId, formId, showAllEncs, drugSet){
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformflowsheet/drugOrderEdit.form?patientId=' + personId + '&drugSet='+ drugSet + '&drugOrderId=' + drugOrderId + '&dialogToClose=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
 }
 
 function replaceOneChar(s,c,n){

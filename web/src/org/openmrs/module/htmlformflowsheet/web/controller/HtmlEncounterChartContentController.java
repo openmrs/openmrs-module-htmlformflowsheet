@@ -230,6 +230,7 @@ public class HtmlEncounterChartContentController implements Controller {
                 }
             }
         }
+        model.put("drugSet", drugSet);//HERE -- pass these through to the non-encounter drug order page...
         model.put("encounterToDrugOrderMap", encsToDrugOrders);
         model.put("drugNames", drugNames);
         model.put("encounterListForChart", encs);

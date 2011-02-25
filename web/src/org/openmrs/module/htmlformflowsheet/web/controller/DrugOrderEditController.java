@@ -40,8 +40,21 @@ public class DrugOrderEditController  {
      private Log log = LogFactory.getLog(this.getClass());
 
      @ModelAttribute("allDrugs")
-     public Map<Drug, String> populateDrugTypes() {
-         List<Drug> drugs = Context.getConceptService().getAllDrugs();
+     public Map<Drug, String> populateDrugTypes(@RequestParam(value="drugSet", required=true) String drugSet) {
+         String[] st = drugSet.split(",");
+         List<Drug> drugs = new ArrayList<Drug>();
+         for (int i = 0; i < st.length; i++){
+             String drugId = st[i];
+             if (drugId != ""){
+                 try {
+                     Drug drug = Context.getConceptService().getDrug(drugId);
+                     if (drug != null)
+                         drugs.add(drug);
+                 } catch (Exception ex){
+                     log.warn("Unable to load drug " + drugId);
+                 }
+             }
+         }
          //remove non-voided
          List<Drug> ret = new ArrayList<Drug>();
          for (Drug d : drugs){

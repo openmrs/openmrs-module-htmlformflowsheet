@@ -61,7 +61,7 @@
 	}
 	
 </script>
-${encounters}
+
 <table id="encContentTable${model.portletUUID}" class="thinBorder" style="width:100%;">
 	<tr>
 		<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
@@ -148,7 +148,7 @@ ${encounters}
 											<c:if test="${empty enc.encounterId}">
 											<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 						   						 name="editEncounter" 
-												 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType})"
+												 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>')"
 												 title="edit" 
 												 alt="edit"/>
 											</c:if>	 

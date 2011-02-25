@@ -15,7 +15,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
-import org.openmrs.module.htmlformentry.schema.DrugOrderField;
 import org.openmrs.module.htmlformflowsheet.EncounterChartPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetContextAware;
 import org.openmrs.module.htmlformflowsheet.PatientChartConfiguration;
@@ -238,7 +237,8 @@ public class HtmlFormFlowsheetWebUtils {
                      ecct.setShowAddAnother(true);
                      Form form = HtmlFormFlowsheetWebUtils.getFormFromString(tagString[2]);
                      ecct.setFormId(form.getFormId());
-                     ecct.setEncounterTypeId(form.getEncounterType().getEncounterTypeId());
+                     if (form.getEncounterType() != null)
+                         ecct.setEncounterTypeId(form.getEncounterType().getEncounterTypeId());
                      ecct.setTitle(tagString[1]);
                      config.addTab(ecct);
                      
