@@ -102,28 +102,36 @@ public class HtmlFormFlowsheetWebUtils {
             NodeList obsnl = doc.getElementsByTagName("obs");
             NodeList obsgroupnl = doc.getElementsByTagName("obsgroup");
            
-        
-            for (int i = 0; i < obsnl.getLength(); i++){
-                Node node = obsnl.item(i);
-                NamedNodeMap nnm = node.getAttributes();
-                Node strNode = nnm.getNamedItem("conceptId");
-                String conceptId = strNode.getNodeValue();
-                concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
-                
-                strNode = nnm.getNamedItem("conceptIds");
-                String conceptIds = strNode.getNodeValue();
-                for (StringTokenizer st = new StringTokenizer(conceptIds, ","); st.hasMoreTokens(); ) {
-                    String s = st.nextToken().trim();
-                    Concept concept = HtmlFormEntryUtil.getConcept(s);
-                    concepts.add(concept);
-                }    
-            }
-            for (int i = 0; i < obsgroupnl.getLength(); i++){
-                Node node = obsnl.item(i);
-                NamedNodeMap nnm = node.getAttributes();
-                Node strNode = nnm.getNamedItem("groupingConceptId");
-                String conceptId = strNode.getNodeValue();
-                concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
+            if (obsnl != null){
+                for (int i = 0; i < obsnl.getLength(); i++){
+                    Node node = obsnl.item(i);
+                    NamedNodeMap nnm = node.getAttributes();
+                    Node strNode = nnm.getNamedItem("conceptId");
+                    if (strNode != null){
+                        String conceptId = strNode.getNodeValue();
+                        concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
+                    }
+                    strNode = nnm.getNamedItem("conceptIds");
+                    if (strNode != null){
+                        String conceptIds = strNode.getNodeValue();
+                        for (StringTokenizer st = new StringTokenizer(conceptIds, ","); st.hasMoreTokens(); ) {
+                            String s = st.nextToken().trim();
+                            Concept concept = HtmlFormEntryUtil.getConcept(s);
+                            concepts.add(concept);
+                        }    
+                    }
+                }
+            }    
+            if (obsgroupnl != null){
+                for (int i = 0; i < obsgroupnl.getLength(); i++){
+                    Node node = obsnl.item(i);
+                    NamedNodeMap nnm = node.getAttributes();
+                    Node strNode = nnm.getNamedItem("groupingConceptId");
+                    if (strNode != null){
+                        String conceptId = strNode.getNodeValue();
+                        concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
+                    }
+                }
             }
         } catch (Exception ex){
             throw new RuntimeException(ex);
@@ -140,24 +148,28 @@ public class HtmlFormFlowsheetWebUtils {
          Document doc = HtmlFormEntryUtil.stringToDocument(xml);
          NodeList obsnl = doc.getElementsByTagName("drugOrder");
          
-         for (int i = 0; i < obsnl.getLength(); i++){
-             Node node = obsnl.item(i);
-             NamedNodeMap nnm = node.getAttributes();
-             Node strNode = nnm.getNamedItem("drugNames");
-             String drugNamesString = strNode.getNodeValue();
-             StringTokenizer tokenizer = new StringTokenizer(drugNamesString, ",");
-             while (tokenizer.hasMoreElements()) {
-                 String drugName = (String) tokenizer.nextElement();
-                 Drug drug = null;
-                 // pattern to match a uuid, i.e., five blocks of alphanumerics separated by hyphens
-                 if (Pattern.compile("\\w+-\\w+-\\w+-\\w+-\\w+").matcher(drugName.trim()).matches()) {
-                     drug = Context.getConceptService().getDrugByUuid(drugName.trim());
-                 } else {
-                     drug = Context.getConceptService().getDrugByNameOrId(drugName.trim());           
+         if (obsnl != null){
+             for (int i = 0; i < obsnl.getLength(); i++){
+                 Node node = obsnl.item(i);
+                 NamedNodeMap nnm = node.getAttributes();
+                 Node strNode = nnm.getNamedItem("drugNames");
+                 if (strNode != null){
+                     String drugNamesString = strNode.getNodeValue();
+                     StringTokenizer tokenizer = new StringTokenizer(drugNamesString, ",");
+                     while (tokenizer.hasMoreElements()) {
+                         String drugName = (String) tokenizer.nextElement();
+                         Drug drug = null;
+                         // pattern to match a uuid, i.e., five blocks of alphanumerics separated by hyphens
+                         if (Pattern.compile("\\w+-\\w+-\\w+-\\w+-\\w+").matcher(drugName.trim()).matches()) {
+                             drug = Context.getConceptService().getDrugByUuid(drugName.trim());
+                         } else {
+                             drug = Context.getConceptService().getDrugByNameOrId(drugName.trim());           
+                         }
+                         if (drug != null)
+                             drugs.add(drug);
+                     }    
                  }
-                 if (drug != null)
-                     drugs.add(drug);
-             }    
+             }
          }
      } catch (Exception ex){
          throw new RuntimeException(ex);
