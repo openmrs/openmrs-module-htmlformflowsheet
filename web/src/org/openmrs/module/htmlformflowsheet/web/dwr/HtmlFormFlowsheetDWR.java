@@ -91,6 +91,7 @@ public class HtmlFormFlowsheetDWR {
                 es.saveEncounter(enc);
             }     
         } catch (Exception ex){
+            ex.printStackTrace();
             return false;
         }
         return true;
