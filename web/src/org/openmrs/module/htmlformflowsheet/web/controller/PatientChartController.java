@@ -48,6 +48,7 @@ public class PatientChartController implements Controller {
 		String fullPage = "true";
 		String readOnly = "false";
 		String showAllEncsWithEncType = "false";
+		String showHtmlFormInstead = "false";
 		
 		String configParam = request.getParameter("configuration");
 		String linksParam = request.getParameter("links");
@@ -55,7 +56,9 @@ public class PatientChartController implements Controller {
 		String readOnlyStr = request.getParameter("readOnly");
 		String windowHeight = request.getParameter("windowHeight");
 		String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
-		
+		String showHtmlFormInsteadStr = request.getParameter("showHtmlFormInstead");
+		if (showHtmlFormInsteadStr != null && showHtmlFormInsteadStr.equals("true"))
+		    showHtmlFormInstead = "true";	
 		if (fullPageStr != null && fullPageStr.equals("false"))
 		    fullPage = "false";
 		if (readOnlyStr != null && readOnlyStr.equals("true"))
@@ -76,6 +79,7 @@ public class PatientChartController implements Controller {
 		model.put("fullPage", fullPage);
 	    model.put("selectTab", selectTab);
 	    model.put("showAllEncsWithEncType", showAllEncsWithEncType);
+	    model.put("showHtmlFormInstead", showHtmlFormInstead);
 	    String addAnotherButtonLabel = (String) request.getParameter("addAnotherButtonLabel");
 	    if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
 	       model.put("addAnotherButtonLabel", addAnotherButtonLabel);

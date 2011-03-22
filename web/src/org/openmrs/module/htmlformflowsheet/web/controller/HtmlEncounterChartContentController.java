@@ -67,6 +67,11 @@ public class HtmlEncounterChartContentController implements Controller {
         if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
             model.put("addAnotherButtonLabel", addAnotherButtonLabel); 
         }    
+        String showHtmlFormInsteadStr = (String) request.getParameter("showHtmlFormInstead");
+        String showHtmlFormInstead = "false";
+        if (showHtmlFormInsteadStr != null && showHtmlFormInsteadStr.equals("true"))
+            showHtmlFormInstead = "true";
+        model.put("showHtmlFormInstead", showHtmlFormInstead);
         String windowHeight = (String) request.getParameter("windowHeight");
         if (windowHeight == null || windowHeight.equals("") || windowHeight.equals("null"))
             windowHeight = "400";

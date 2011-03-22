@@ -1,4 +1,4 @@
-function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabIndex, personId, encounterTypeId,  formId, showAllEncs) {
+function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead) {
 	var elem = $j('#encounterChartPopup' + uuid);
 	var iframe = $j("#encounterChartIFrame" + uuid);
 	iframe.empty();
@@ -8,7 +8,7 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 		//elem.dialog('option', 'close', function(event, ui) { window.location = jQuery.queryString(window.location.href, 'selectTab=' + tabIndex); });
 		elem.dialog('option', 'close', function(event, ui) { 
              $j('#encounterWidget_' + uuid).html("loading...");
-             var pathStr = openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1);
+             var pathStr = openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1) + "&showHtmlFormInstead=" + showHtmlFormInstead;
              if (showAllEncs)
              	pathStr = pathStr + "&showAllEncsWithEncType=true";	
 			 $j('#encounterWidget_' + uuid).load(pathStr);
@@ -25,20 +25,20 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 	$j(iframe).attr("src", url);
 }
 
-function showEncounterPopup(uuid, encId, formId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId +'&formId='+formId, false, "", "", "", formId, false);
+function showEncounterPopup(uuid, encId, formId, showHtmlFormInstead) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId +'&formId='+formId, false, "", "", "", formId, false, showHtmlFormInstead);
 }
-function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, encType) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, encType);
+function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, encType, showHtmlFormInstead) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, encType, showHtmlFormInstead);
 }
-function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, true);
+function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, showHtmlFormInstead) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, true, showHtmlFormInstead);
 } 
-function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
+function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs, showHtmlFormInstead) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead);
 }
-function showDrugOrderEditPopup(uuid, drugOrderId, personId, tabIndex, encounterTypeId, formId, showAllEncs, drugSet){
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformflowsheet/drugOrderEdit.form?patientId=' + personId + '&drugSet='+ drugSet + '&drugOrderId=' + drugOrderId + '&dialogToClose=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs);
+function showDrugOrderEditPopup(uuid, drugOrderId, personId, tabIndex, encounterTypeId, formId, showAllEncs, drugSet, showHtmlFormInstead){
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformflowsheet/drugOrderEdit.form?patientId=' + personId + '&drugSet='+ drugSet + '&drugOrderId=' + drugOrderId + '&dialogToClose=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead);
 }
 
 function replaceOneChar(s,c,n){
@@ -49,7 +49,9 @@ function resizeHtmlFormIframe(formId, uuid){
 	var x = $j(parent.window.document).find('#iframeFor'+ formId);
 	if (x.length == 1){
 		var height = $j('#encContentTable'+uuid).outerHeight(true) + 24;
-		x[0].style.height = height+'px';
+		x[0].style.height = height + 'px';
+		//var height = x.contentWindow.document.body.offsetHeight + 24;
+		//x.style.height = height + 'px';
 	}
 }
 

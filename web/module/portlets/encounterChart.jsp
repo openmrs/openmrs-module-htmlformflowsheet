@@ -32,7 +32,7 @@ Parameters:
 			st = $j.URLEncode("${model.addAnotherButtonLabel}");
 		</c:if>
 		$j(document).ready(function() {
-				$j('#encounterWidget_${model.portletUUID}').load('${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&windowHeight=${model.windowHeight}&addAnotherButtonLabel='+st);
+				$j('#encounterWidget_${model.portletUUID}').load('${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&windowHeight=${model.windowHeight}&showHtmlFormInstead=${model.showHtmlFormInstead}&addAnotherButtonLabel='+st);
 		});
 	</script>
 

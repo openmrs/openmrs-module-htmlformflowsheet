@@ -60,7 +60,7 @@
 						moduleId="htmlformflowsheet"
 						url="encounterChart${status.count}"
 						patientId="${model.patientId}"
-						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|addAnotherButtonLabel=${model.addAnotherButtonLabel}|windowHeight=${model.windowHeight}"
+						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|addAnotherButtonLabel=${model.addAnotherButtonLabel}|windowHeight=${model.windowHeight}|showHtmlFormInstead=${model.showHtmlFormInstead}"
 					/>
 
 				</c:when>
