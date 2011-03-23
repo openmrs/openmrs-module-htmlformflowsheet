@@ -56,7 +56,7 @@ public class PatientChartController implements Controller {
 		String readOnlyStr = request.getParameter("readOnly");
 		String windowHeight = request.getParameter("windowHeight");
 		String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
-		String showHtmlFormInsteadStr = request.getParameter("showHtmlFormInstead");
+		String showHtmlFormInsteadStr = request.getParameter("showHtmlForm");
 		if (showHtmlFormInsteadStr != null && showHtmlFormInsteadStr.equals("true"))
 		    showHtmlFormInstead = "true";	
 		if (fullPageStr != null && fullPageStr.equals("false"))
