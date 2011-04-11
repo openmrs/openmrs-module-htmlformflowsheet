@@ -37,10 +37,10 @@
 			<fileset dir="lib-common">
 				<include name="**/*.jar"/>
 			</fileset>
-			<fileset dir="../openmrs-1.5.x/lib">
+			<fileset dir="../openmrs-1.6.x/lib">
 							<include name="**/*.jar"/>
 						</fileset>
-						<fileset dir="../openmrs-1.5.x/dist">
+						<fileset dir="../openmrs-1.6.x/dist">
 							<include name="**/*.jar"/>
 						</fileset>
 		</path>

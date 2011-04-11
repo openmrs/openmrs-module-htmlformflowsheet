@@ -12,11 +12,11 @@
 
 	<activator>org.openmrs.module.htmlformflowsheet.activator.HtmlFormFlowsheetModuleActivator</activator>
 	
-	<!-- Require version 1.5 so jquery and jquery-ui are included. This could be relaxed -->
-	<require_version>1.6</require_version>
+	<require_version>1.6.2</require_version>
 	
 	<require_modules>
 		<require_module>org.openmrs.module.htmlformentry</require_module>
+		<version>1.7.2</version>
 	</require_modules>
 	
 	
@@ -69,7 +69,7 @@
 		<property>htmlformflowsheet.drugDiscontinueReason</property>
 		<defaultValue></defaultValue>
 		<description>
-			The conceptId or UUID of the concept representing reasons for dicontinuing a drug order.
+			The conceptId or UUID of the concept representing reasons for discontinuing a drug order.
 		</description>
 	</globalProperty>
 	
