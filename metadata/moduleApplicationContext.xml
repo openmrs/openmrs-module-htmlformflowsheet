@@ -27,12 +27,12 @@
 		</property>
 	</bean>
     
-    <bean id="EncounterChartPortletController" class="@MODULE_PACKAGE@.web.controller.EncounterChartPortletController"/>
-    <bean id="SingleHtmlFormPortletController" class="@MODULE_PACKAGE@.web.controller.SingleHtmlFormPortletController"/>
-    <bean id="EncounterChartContentController" class="@MODULE_PACKAGE@.web.controller.HtmlEncounterChartContentController"/>
-    <bean id="TestPatientChartController" class="@MODULE_PACKAGE@.web.controller.PatientChartController">
+    <bean id="EncounterChartPortletController" class="org.openmrs.module.htmlformflowsheet.web.controller.EncounterChartPortletController"/>
+    <bean id="SingleHtmlFormPortletController" class="org.openmrs.module.htmlformflowsheet.web.controller.SingleHtmlFormPortletController"/>
+    <bean id="EncounterChartContentController" class="org.openmrs.module.htmlformflowsheet.web.controller.HtmlEncounterChartContentController"/>
+    <bean id="TestPatientChartController" class="org.openmrs.module.htmlformflowsheet.web.controller.PatientChartController">
     	<property name="configuration">
-    		<bean class="@MODULE_PACKAGE@.PatientChartConfiguration"/>
+    		<bean class="org.openmrs.module.htmlformflowsheet.PatientChartConfiguration"/>
     	</property>
     </bean>
     <bean class="org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetContextAware" />
@@ -128,7 +128,6 @@
         <property name="iconFilename" value="/moduleResources/ui/springmvc/images/application64.png"/>
     </bean>
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-    <context:component-scan base-package="@MODULE_PACKAGE@" />
     -->
     <context:component-scan base-package="org.openmrs.module.htmlformflowsheet" />
 </beans>

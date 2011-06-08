@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Form;
@@ -78,7 +79,7 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
         //addAnotherButtonLabel
         String addAnotherButtonLabel = (String) attributes.get("addAnotherButtonLabel");
         try {
-            if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("")){
+            if (!StringUtils.isEmpty(addAnotherButtonLabel)){
                 addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
             }    
         } catch (Exception ex){
@@ -91,7 +92,7 @@ public class HtmlFormFlowsheetHandler  implements TagHandler {
         //showHtmlForm
         String showHtmlFormInstead = "false";
         String showHtmlFormInsteadStr = (String) attributes.get("showHtmlForm");
-        if (showHtmlFormInsteadStr != null && showHtmlFormInsteadStr.equals("true"))
+        if (!StringUtils.isEmpty(showHtmlFormInsteadStr) && showHtmlFormInsteadStr.equals("true"))
             showHtmlFormInstead = "true";
         
         //readOnly
