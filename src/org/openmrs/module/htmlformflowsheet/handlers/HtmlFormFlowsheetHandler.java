@@ -2,6 +2,8 @@ package org.openmrs.module.htmlformflowsheet.handlers;
 
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +13,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Form;
 import org.openmrs.Patient;
-import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
+import org.openmrs.module.htmlformentry.FormEntrySession;
+import org.openmrs.module.htmlformentry.HtmlForm;
+import org.openmrs.module.htmlformentry.handler.AbstractTagHandler;
 import org.openmrs.module.htmlformentry.handler.AttributeDescriptor;
-import org.openmrs.module.htmlformentry.handler.TagHandler;
 import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.openmrs.web.WebConstants;
 import org.w3c.dom.NamedNodeMap;
@@ -37,14 +40,16 @@ import org.w3c.dom.Node;
  * readOnly (optional, default = 'false') -- if true, will render the htmlformflowsheet, but without the 
  *              'Add Another' button, or edit links.  in htmlformentry VIEW mode, this is always false.
  */
-public class HtmlFormFlowsheetHandler  implements TagHandler {
+public class HtmlFormFlowsheetHandler  extends AbstractTagHandler {
 
     /** The logger to use with this class */
     protected final Log log = LogFactory.getLog(getClass());
 
-    public List<AttributeDescriptor> getAttributeDescriptors(){
-    	return null;
-    }
+    protected List<AttributeDescriptor> createAttributeDescriptors() {
+		List<AttributeDescriptor> attributeDescriptors = new ArrayList<AttributeDescriptor>();
+		attributeDescriptors.add(new AttributeDescriptor("formId", Form.class));
+		return Collections.unmodifiableList(attributeDescriptors);
+	}
     
     public boolean doStartTag(FormEntrySession session, PrintWriter out, Node parent, Node node) {
         Map<String, String> attributes = new HashMap<String, String>();        
