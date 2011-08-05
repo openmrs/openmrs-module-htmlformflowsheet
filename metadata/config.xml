@@ -12,7 +12,7 @@
 
 	<activator>org.openmrs.module.htmlformflowsheet.activator.HtmlFormFlowsheetModuleActivator</activator>
 	
-	<require_version>1.6.2</require_version>
+	<require_version>1.6.3</require_version>
 	
 	<require_modules>
 		<require_module>org.openmrs.module.htmlformentry</require_module>
