@@ -3,7 +3,7 @@
 <module configVersion="1.0">
 	<id>htmlformflowsheet</id>
 	<name>htmlformflowsheet</name>
-	<version>1.1.91</version>
+	<version>1.1.92</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>PIH</author>
 	<description>
@@ -12,7 +12,7 @@
 
 	<activator>org.openmrs.module.htmlformflowsheet.activator.HtmlFormFlowsheetModuleActivator</activator>
 	
-	<require_version>1.6.3</require_version>
+	<require_version>1.6.2</require_version>
 	
 	<require_modules>
 		<require_module>org.openmrs.module.htmlformentry</require_module>
