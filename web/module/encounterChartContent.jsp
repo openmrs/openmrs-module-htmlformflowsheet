@@ -209,7 +209,7 @@
 				<div class="addAnother">
 					<c:if test="${model.showAllEncsWithEncType == 'true'}">
 						<table>
-						<c:if test="${!empty model.encounterListForChart">
+						<c:if test="${!empty model.encounterListForChart}">
 							<tr><td style="border:0px; text-align:left"> Append a row to an existing visit: </td>
 							<td style="border:0px; text-align:left">
 							<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(${model.windowHeight});showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId},${model.showHtmlFormInstead} );}" id="encounterSelect_${model.portletUUID}">
