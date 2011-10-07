@@ -33,37 +33,35 @@ public class SingleHtmlFormPortletController extends PortletController {
     	SingleHtmlFormPatientChartTab.Which which = SingleHtmlFormPatientChartTab.Which.valueOf((String) model.get("which"));
     	Form form = HtmlFormFlowsheetWebUtils.getFormFromString((String) model.get("formId"));
     	Object o = request.getAttribute("org.openmrs.portlet.patientId");
-    	Patient p = new Patient();
+    	Patient p = null;
         if (o != null) {
             Integer patientId = (Integer) o;
-            if (!model.containsKey("patient")) {
-                // we can't continue if the user can't view patients
-                if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
-                    p = Context.getPatientService().getPatient(patientId);
-                }    
-            }        
-        }            
-    	List<Encounter> allEncs = Context.getEncounterService().getEncountersByPatient(p);
-    	Encounter theOne = null;
-    	if (allEncs != null && allEncs.size() > 0){
-        	if (which == Which.FIRST) {
-        		for (Encounter e : allEncs) {
-        			if (OpenmrsUtil.nullSafeEquals(form, e.getForm())) {
-        				theOne = e;
-        				break;
-        			}
-        		}
-        	} else if (which == Which.LAST) {
-        		for (ListIterator<Encounter> iter = allEncs.listIterator(allEncs.size()); iter.hasPrevious(); ) {
-        			Encounter e = iter.previous();
-        			if (OpenmrsUtil.nullSafeEquals(form, e.getForm())) {
-        				theOne = e;
-        				break;
-        			}
-        		}
-        	}
-    	}	
-    	model.put("encounterToDisplay", theOne);   
+            p = Context.getPatientService().getPatient(patientId);     
+        }       
+        if (p != null){
+	    	List<Encounter> allEncs = Context.getEncounterService().getEncountersByPatient(p);
+	    	Encounter theOne = null;
+	    	if (allEncs != null && allEncs.size() > 0){
+	        	if (which == Which.FIRST) {
+	        		for (Encounter e : allEncs) {
+	        			if (OpenmrsUtil.nullSafeEquals(form, e.getForm())) {
+	        				theOne = e;
+	        				break;
+	        			}
+	        		}
+	        	} else if (which == Which.LAST) {
+	        		for (ListIterator<Encounter> iter = allEncs.listIterator(allEncs.size()); iter.hasPrevious(); ) {
+	        			Encounter e = iter.previous();
+	        			if (OpenmrsUtil.nullSafeEquals(form, e.getForm())) {
+	        				theOne = e;
+	        				break;
+	        			}
+	        		}
+	        	}
+	    	}
+	    	model.put("encounterToDisplay", theOne); 
+        }
+    	  
     	model.put("which", which);
     }
 

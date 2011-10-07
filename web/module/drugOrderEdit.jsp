@@ -140,7 +140,9 @@
 			</td>
 		</tr>
 	</table>		
-	<input type="submit"/>
+	
+	<spring:message code="general.general.submit" var="submitname" text="submit" scope="page"/>
+	<input type="submit" value="${submitname}"/>
 	
 	</form>
 <%@ include file="/WEB-INF/template/footerMinimal.jsp" %>

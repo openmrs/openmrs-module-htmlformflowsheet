@@ -91,6 +91,19 @@ public class HtmlFormFlowsheetHandler  extends AbstractTagHandler {
             ex.fillInStackTrace();
         }
         
+        //for backward-compatibility:  TODO: Get rid of this soon...
+        if (StringUtils.isEmpty(addAnotherButtonLabel)){
+	        addAnotherButtonLabel = (String) attributes.get("addNewButtonLabel");
+	        try {
+	            if (!StringUtils.isEmpty(addAnotherButtonLabel)){
+	                addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
+	            }    
+	        } catch (Exception ex){
+	            ex.fillInStackTrace();
+	        }
+        }
+        
+        
         //windowHeight
         String windowHeight = (String) attributes.get("windowHeight");
         

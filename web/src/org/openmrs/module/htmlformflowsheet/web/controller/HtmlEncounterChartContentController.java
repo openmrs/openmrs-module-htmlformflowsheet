@@ -59,6 +59,8 @@ public class HtmlEncounterChartContentController implements Controller {
         } catch (Exception ex){
             log.warn("htmlformflowsheet pulling patientId out of session");
             FormEntrySession fes = (FormEntrySession)  Context.getVolatileUserData(HtmlFormEntryController.FORM_IN_PROGRESS_KEY);
+            if (fes == null || fes.getPatient() == null)
+            		throw new RuntimeException("Unable to pull patientId out of URL.  Please verify patientId in the url you're using to access this page.");
             patientId = fes.getPatient().getPatientId();
         }
         Integer encounterTypeId = Integer.valueOf(request.getParameter("encounterTypeId"));
@@ -113,6 +115,8 @@ public class HtmlEncounterChartContentController implements Controller {
             encs = Context.getEncounterService().getEncounters(patient, null, null, null, null, Collections.singleton(et), null, false);
             model.put("showAllEncsWithEncType", "true");
         } 
+        
+        //TODO:  TRIM ENCOUNTER ON NO MATCH IN FORM.
 
         // now figure out which concepts we want to display as columns
         Set<Map<Concept,String>> concepts = new LinkedHashSet<Map<Concept,String>>();
@@ -242,6 +246,7 @@ public class HtmlEncounterChartContentController implements Controller {
         model.put("encounterChartConcepts", concepts);
         model.put("encounterChartObs", encounterToObsMap);
         
+        //check to see if there's a match (i.e. its worth showing this row because there's a match on an obs or a drug order.)
         Map<Encounter,Boolean> foundEncounters = new HashMap<Encounter,Boolean>();
         for (Encounter enc: encs){
             Boolean found = false;

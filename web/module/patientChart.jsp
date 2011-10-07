@@ -18,6 +18,7 @@
 <htmlformflowsheet:htmlInclude file="/dwr/util.js" />
 <htmlformflowsheet:htmlInclude file="/dwr/interface/HtmlFlowsheetDWR.js" />
 <htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/smoothness.css" />
+<htmlformflowsheet:htmlInclude file="/scripts/calendar/calendar.js" />
 
 
 <script type="text/javascript">
@@ -60,12 +61,11 @@
 						moduleId="htmlformflowsheet"
 						url="encounterChart${status.count}"
 						patientId="${model.patientId}"
-						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|configuration=${model.configuration}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|addAnotherButtonLabel=${model.addAnotherButtonLabel}|windowHeight=${model.windowHeight}|showHtmlFormInstead=${model.showHtmlFormInstead}"
+						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|addAnotherButtonLabel=${model.addAnotherButtonLabel}|windowHeight=${model.windowHeight}|showHtmlFormInstead=${model.showHtmlFormInstead}"
 					/>
 
 				</c:when>
 				<c:when test="${tab.class.simpleName == 'SingleHtmlFormPatientChartTab'}">
-				
 					<openmrs:portlet
 						id="singleForm${status.count}" 
 						url="singleHtmlForm"

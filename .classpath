@@ -30,11 +30,12 @@
 	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/slf4j/slf4j-log4j12-1.5.6.jar"/>
 	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/asm/asm-1.5.3.jar"/>
 	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/cglib/cglib-2.1_3.jar"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/tomcat/catalina.jar" sourcepath="/openmrs-source/apache-tomcat-5.5.20-src.zip"/>
+	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/velocity/velocity-1.6-beta1.jar" sourcepath="/openmrs-source/velocity-1.6-beta1.zip"/>
 	<classpathentry kind="lib" path="lib-common/openmrs-api-1.6.2.15986-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.6.2.15986-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.6.2.15986-dev.jar"/>
 	<classpathentry kind="lib" path="lib-common/ant-contrib-1.0b2.jar"/>
-	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/tomcat/catalina.jar" sourcepath="/openmrs-source/apache-tomcat-5.5.20-src.zip"/>
 	<classpathentry kind="lib" path="lib-common/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="lib-common/commons-io-1.4.jar"/>
 	<classpathentry kind="lib" path="lib-common/commons-lang-2.4.jar"/>
@@ -49,7 +50,6 @@
 	<classpathentry kind="lib" path="lib-common/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib-common/xmlunit-1.2.jar"/>
 	<classpathentry kind="lib" path="lib-common"/>
-	<classpathentry kind="lib" path="/openmrs-1.6.x/lib/velocity/velocity-1.6-beta1.jar" sourcepath="/openmrs-source/velocity-1.6-beta1.zip"/>
-	<classpathentry kind="lib" path="lib-common/htmlformentry-1.7.2.jar"/>
+	<classpathentry kind="lib" path="lib-common/htmlformentry-1.7.3.999.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

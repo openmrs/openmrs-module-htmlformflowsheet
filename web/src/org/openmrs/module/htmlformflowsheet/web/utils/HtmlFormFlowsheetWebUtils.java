@@ -12,9 +12,14 @@ import org.openmrs.Drug;
 import org.openmrs.Form;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
+import org.openmrs.module.htmlformentry.schema.HtmlFormField;
+import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
+import org.openmrs.module.htmlformentry.schema.ObsField;
+import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.module.htmlformflowsheet.EncounterChartPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetContextAware;
 import org.openmrs.module.htmlformflowsheet.PatientChartConfiguration;
@@ -95,54 +100,58 @@ public class HtmlFormFlowsheetWebUtils {
  public static Set<Concept> getAllConceptsUsedInHtmlForm(Form form){
         
         HtmlForm htmlform = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
-        String xml = htmlform.getXmlData();
+        
+        
         Set<Concept> concepts = new HashSet<Concept>();
         try {
-            Document doc = HtmlFormEntryUtil.stringToDocument(xml);
-            NodeList obsnl = doc.getElementsByTagName("obs");
-            NodeList obsgroupnl = doc.getElementsByTagName("obsgroup");
-           
-            if (obsnl != null){
-                for (int i = 0; i < obsnl.getLength(); i++){
-                    Node node = obsnl.item(i);
-                    NamedNodeMap nnm = node.getAttributes();
-                    Node strNode = nnm.getNamedItem("conceptId");
-                    if (strNode != null){
-                        String conceptId = strNode.getNodeValue();
-                        concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
-                    }
-                    strNode = nnm.getNamedItem("conceptIds");
-                    if (strNode != null){
-                        String conceptIds = strNode.getNodeValue();
-                        for (StringTokenizer st = new StringTokenizer(conceptIds, ","); st.hasMoreTokens(); ) {
-                            String s = st.nextToken().trim();
-                            Concept concept = HtmlFormEntryUtil.getConcept(s);
-                            concepts.add(concept);
-                        }    
-                    }
-                }
-            }    
-            if (obsgroupnl != null){
-                for (int i = 0; i < obsgroupnl.getLength(); i++){
-                    Node node = obsnl.item(i);
-                    NamedNodeMap nnm = node.getAttributes();
-                    Node strNode = nnm.getNamedItem("groupingConceptId");
-                    if (strNode != null){
-                        String conceptId = strNode.getNodeValue();
-                        concepts.add(HtmlFormEntryUtil.getConcept(conceptId));
-                    }
-                }
-            }
+        	 FormEntrySession session = new FormEntrySession(HtmlFormEntryUtil.getFakePerson(), htmlform);
+        	 HtmlFormSchema schema = session.getContext().getSchema();
+        	 for (HtmlFormField  hff : schema.getAllFields()){
+        		 findConceptsHelper(hff, concepts);
+        	 }
+        	
+        	
         } catch (Exception ex){
             throw new RuntimeException(ex);
         }
         return concepts;
     }
  
+	 private static void findConceptsHelper(HtmlFormField hff, Set<Concept> concepts){
+		 if (hff instanceof ObsField){
+			 ObsField of = (ObsField) hff;
+			 Concept c = of.getQuestion();
+			 if (c != null)
+				 concepts.add(c);
+			 else if (of.getQuestion() == null) { 
+				 //TODO:  use of.getQuestions() once new htmlformentry 1.7.4 comes out
+			 }
+		 }
+		 if (hff instanceof ObsGroup){ 
+			 ObsGroup og = (ObsGroup) hff;
+			 Concept c = og.getConcept();
+			 if (c != null)
+				 concepts.add(c);
+			 if (og.getChildren() != null){
+				 for (HtmlFormField childHff: og.getChildren()){
+					 findConceptsHelper(childHff, concepts);
+				 }
+			 }
+			 
+		 }
+	 }
+ 
+ 
  public static Set<Drug> getAllDrugsUsedInHtmlForm(Form form){
      
      HtmlForm htmlform = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
      String xml = htmlform.getXmlData();
+     try {
+	        FormEntrySession session = new FormEntrySession(HtmlFormEntryUtil.getFakePerson(), htmlform);
+	        xml = session.createForm(xml); //this applies macros
+     } catch (Exception ex){
+     	//pass
+     }
      Set<Drug> drugs = new HashSet<Drug>();
      try {
          Document doc = HtmlFormEntryUtil.stringToDocument(xml);

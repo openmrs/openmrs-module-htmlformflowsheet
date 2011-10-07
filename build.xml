@@ -168,19 +168,19 @@
 	<target name="update-jsps-dave">
 			<property environment="env" />
 			<copy
-				todir="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet">
+				todir="/usr/local/tomcat6/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet">
 				<fileset dir="web/module" includes="*.jsp" />
 			</copy>
 			<copy
-				todir="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet/resources">
+				todir="/usr/local/tomcat6/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet/resources">
 				<fileset dir="web/module/resources" includes="*" />
 			</copy>
 			<copy
-				todir="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet/portlets">
+				todir="/usr/local/tomcat6/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet/portlets">
 				<fileset dir="web/module/portlets" includes="*" />
 			</copy>
 			<copy
-						todir="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet/taglib">
+						todir="/usr/local/tomcat6/webapps/openmrs/WEB-INF/view/module/htmlformflowsheet/taglib">
 						<fileset dir="web/module/taglib" includes="*" />
 			</copy>
 	</target>

@@ -29,7 +29,7 @@ public class HtmlFormFlowsheetDWR {
     
     public boolean voidEncounter(String encIdSt, String formId){
         try{
-            
+
             EncounterService es = Context.getEncounterService();
             Integer encId = Integer.valueOf(encIdSt);
 
@@ -39,6 +39,7 @@ public class HtmlFormFlowsheetDWR {
             Set<Concept> concepts = HtmlFormFlowsheetWebUtils.getAllConceptsUsedInHtmlForm(form);
             Set<Drug> drugs = HtmlFormFlowsheetWebUtils.getAllDrugsUsedInHtmlForm(form);
            
+            
             for (Obs o : enc.getAllObs()){
                 for (Concept c : concepts){
                     if (o.getConcept().getConceptId().equals(c.getConceptId())){
