@@ -31,10 +31,13 @@
 <h4>
 
 	<c:if test="${model.fullPage == 'true'}">
-		<br/>
-		<span style="font-size:150%;">
-			${model.patient.personName} | 
-		${model.patient.patientIdentifier.identifier}
+		<c:if test="${model.title != ''}">
+			<span style="font-size:130%;">${model.title}</span><br/><br/>
+		</c:if>
+		<span style="font-size:115%;">
+			${model.patient.familyName} ${model.patient.givenName} ${model.patient.middleName} |
+			 <openmrs:formatDate date="${model.patient.birthdate}"/> |  
+			${model.patient.patientIdentifier.identifier} 
 		</span>
 	</c:if>
 	<span style="<c:if test="${model.fullPage != 'false'}">position:absolute;right:10px;font-size:90%;</c:if>">

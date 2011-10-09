@@ -49,6 +49,7 @@ public class PatientChartController implements Controller {
 	
 			
 			String fullPage = "true";
+			String title = "";
 			String readOnly = "false";
 			String showAllEncsWithEncType = "false";
 			String showHtmlFormInstead = "false";
@@ -60,6 +61,7 @@ public class PatientChartController implements Controller {
 			String windowHeight = request.getParameter("windowHeight");
 			String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
 			String showHtmlFormInsteadStr = request.getParameter("showHtmlForm");
+			String titleStr = request.getParameter("title");
 			if (showHtmlFormInsteadStr != null && showHtmlFormInsteadStr.equals("true"))
 			    showHtmlFormInstead = "true";	
 			if (fullPageStr != null && fullPageStr.equals("false"))
@@ -68,6 +70,8 @@ public class PatientChartController implements Controller {
 			    readOnly = "true";
 			if (showAllEncsWithEncTypeStr != null && showAllEncsWithEncTypeStr.equals("true"))
 			    showAllEncsWithEncType = "true";
+			if (titleStr != null)
+				title = titleStr;
 			if (configParam != null && !configParam.equals("")){
 			    //here's the url-override of the configuration
 			    PatientChartConfiguration  pcc = HtmlFormFlowsheetWebUtils.buildGenericConfigurationFromStrings(configParam, linksParam);
@@ -82,6 +86,7 @@ public class PatientChartController implements Controller {
 		    model.put("selectTab", selectTab);
 		    model.put("showAllEncsWithEncType", showAllEncsWithEncType);
 		    model.put("showHtmlFormInstead", showHtmlFormInstead);
+		    model.put("title", title);
 		    String addAnotherButtonLabel = (String) request.getParameter("addAnotherButtonLabel");
 		    if (addAnotherButtonLabel != null && !addAnotherButtonLabel.equals("") && !addAnotherButtonLabel.equals("null")){
 		       model.put("addAnotherButtonLabel", addAnotherButtonLabel);
