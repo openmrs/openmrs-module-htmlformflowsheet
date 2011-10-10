@@ -86,4 +86,16 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<description>
+			Returns the result of getName on a Program.  Will accept uuid, name, idthe uuid or ID of the program
+		</description>
+		<name>programName</name>
+		<tag-class>org.openmrs.module.htmlformflowsheet.web.taglibs.ProgramName</tag-class>
+		<attribute>
+			<name>program</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

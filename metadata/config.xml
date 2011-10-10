@@ -72,6 +72,16 @@
 			The conceptId or UUID of the concept representing reasons for discontinuing a drug order.
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>htmlformflowsheet.programConfigurationMap</property>
+		<defaultValue>{}</defaultValue>
+		<description>
+			This property represents the EXACT javascript syntax for a map from programID to htmlformflowsheet url configuration.  
+			For example, {8:"configuration=S:DDB:76:LAST,F:VISITS:77",9:"configuration=S:DDB:88:LAST,F:VISITS:89"}
+			means that there are two mapped programs -- program 8 and program 9.  For each of these programs, the url parameters to add are 
+			defined in the values for each key.
+		</description>
+	</globalProperty>
 	
 	<dwr>
 		<allow>
@@ -81,6 +91,12 @@
 				<include method="voidEncounter"/>
 				<include method="getNewEncounterId"/>
 				<include method="getAllEncsByPatientAndEncType"/>
+			</create>	
+			<create creator="new" javascript="HtmlFormFlowhseetFindPatient">
+				<param name="class" value="org.openmrs.module.htmlformflowsheet.web.dwr.HtmlFormFlowhseetFindPatient"/>
+				<include method="findPatients"/>
+				<include method="findPeople"/>
+				<include method="findAllPeople"/>
 			</create>						
 		</allow>
 		<signatures>

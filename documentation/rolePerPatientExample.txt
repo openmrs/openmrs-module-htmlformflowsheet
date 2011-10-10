@@ -1,0 +1,54 @@
+<!--
+
+DT:  This is a template for what you can put into the role-based homepage module
+to create htmlformflowsheet-based apps.  This is dependent on the global property htmlformflowsheet.programConfigurationMap
+which must be set correctly for this to work.
+
+-->
+<h3>MY HOMEPAGE</h3><br/>
+
+<!-- 1. For the FIND PATIENT PORTLET, set the list of programs in the portlet parameters to the programIds for which you want to make tabbed interfaces.
+In this example, the four programs for which i have tabbed configurations are programs 1,2,3, and 4 -->
+
+<openmrs:portlet id="htmlformflowsheetFindPatient" url="htmlformflowsheetFindPatient" parameters="size=full|postURL=|showIncludeVoided=false|viewType=shortEdit|program=1,2,3,4" moduleId="htmlformflowsheet"/>
+
+<br/><br/>
+
+
+<!-- 2. For the CREATE PATIENT widget, set the values of your radio buttons to the programIds for which you have configured tabbed interfaces in the global property. -->
+
+<openmrs:globalProperty key="htmlformflowsheet.programConfigurationMap" var="createPatientMapString" />
+
+
+<div>
+    <b class="boxHeader"><spring:message code="Patient.create" /></b>
+	<div class="box" style="padding: 15px 15px 15px 15px;">
+		Asthma: <input type="radio" name="createPatientProgram" value="1">	
+		Epylepsy: <input type="radio"  name="createPatientProgram" value="2">
+		<!--  you can add as many radio buttons here as you want... --->
+		<br />
+		<a href="#" onClick="buildURL();"><spring:message code="Patient.create" /></a>
+	</div>
+</div>
+
+<!-- Here you MUST set the formId for the create patient form in the declaration of createPatientHtmlFormId -->
+<script>
+
+	var createPatientLinkMap=${createPatientMapString};
+	var createPatientHtmlFormId=16;
+	function buildURL(){
+		if ($j("input[name='createPatientProgram']:checked") == null || $j("input[name='createPatientProgram']:checked").length == 0){
+	    	alert("You must choose a program.");
+	  		return;
+	    } else {
+	    	//get the configuration from the map and build url and then send
+	    	var p = $j("input[name='createPatientProgram']:checked").val();
+	    	if (createPatientLinkMap[p] == null){
+	    		alert("invalid programID.  Please check your Global Property!");
+	    		return;	
+	    	}	
+	    	window.location='${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?formId=' + createPatientHtmlFormId + '&mode=enter&returnUrl=${pageContext.request.contextPath}/module/htmlformflowsheet/patientWidgetChart.list?' + createPatientLinkMap[p];
+	    }
+	}
+	
+</script>
