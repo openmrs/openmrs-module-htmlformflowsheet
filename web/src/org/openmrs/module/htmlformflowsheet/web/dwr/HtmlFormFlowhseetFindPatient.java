@@ -50,7 +50,8 @@ public class HtmlFormFlowhseetFindPatient {
 	    		for (PatientProgram pp : pps){
 	    			//if lazy loading is going to be necessary?:
 	    			//restrictedPatients.add(Context.getPatientService().getPatient(pp.getPatient().getPatientId()));
-	    			restrictedPatients.add(pp.getPatient());
+	    			if (!restrictedPatients.contains(pp.getPatient()))
+	    				restrictedPatients.add(pp.getPatient());
 	    		}
 	    		patients = restrictedPatients;
         	} catch (Exception ex){
