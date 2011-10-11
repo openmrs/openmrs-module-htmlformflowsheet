@@ -7,7 +7,7 @@
 <openmrs:htmlInclude file="/dwr/interface/DWRAlertService.js" />
 <htmlformflowsheet:htmlInclude file="/scripts/jquery/jquery-1.3.2.min.js" />
 <script src='<%= request.getContextPath() %>/dwr/interface/HtmlFormFlowhseetFindPatient.js'></script>
-
+<openmrs:htmlInclude file="/moduleResources/htmlformflowsheet/htmlFormFlowsheet.css"/>
 
 
 <openmrs:globalProperty key="use_patient_attribute.healthCenter" var="useHealthCenter"/>
@@ -96,7 +96,7 @@
 	   		    	//get the configuration from the map and build url and then send
 	   		    	var p = $j("input[name='programs']:checked").val();
 	   		    	if (programLinkMap[p] == null){
-	   		    		alert("invalid programID.  Please check your Global Property!");
+	   		    		alert("invalid programID.  Please tell your local administrator to fix the global property htmlformflowsheet.programConfigurationMap");
 	   		    		return;	
 	   		    	}	
 	   		    	window.location='${pageContext.request.contextPath}/module/htmlformflowsheet/patientWidgetChart.list?patientId=' + input + "&" + programLinkMap[p];
