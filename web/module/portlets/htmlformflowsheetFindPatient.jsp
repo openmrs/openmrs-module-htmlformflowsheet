@@ -30,12 +30,12 @@
 		var showLoading = 0;
 		var $j = jQuery.noConflict();		
 		$j(document).ready(function(){
-   				$j('#results').css('display','none');
-   				$j('#searchBox').val('');
-   					$j('#searchBox').keyup(function(){
-   						if ($j('#searchBox').val().length > 2){
+   				$j('#results_${model.portletUUID}').css('display','none');
+   				$j('#searchBox_${model.portletUUID}').val('');
+   					$j('#searchBox_${model.portletUUID}').keyup(function(){
+   						if ($j('#searchBox_${model.portletUUID}').val().length > 2){
    							//verify radio buttons are selected:
-   							if ($j("input[name='programs']:checked") == null || $j("input[name='programs']:checked").length == 0){
+   							if ($j("input[name='programs_${model.portletUUID}']:checked") == null || $j("input[name='programs_${model.portletUUID}']:checked").length == 0){
    				   		    	alert("You must choose a program.");
    				   		  		return;
    				   		    }
@@ -43,7 +43,7 @@
    				   		    	alert("Please select a 'restrict search' option.");
    				   		  		return;
    				   		    }
-	   						HtmlFormFlowhseetFindPatient.findPatients($j('#searchBox').val(), $j("input[name='restrictByProgram']:checked").val(),$j("input[name='programs']:checked").val() ,false, function(ret){
+	   						HtmlFormFlowhseetFindPatient.findPatients($j('#searchBox_${model.portletUUID}').val(), $j("input[name='restrictByProgram']:checked").val(),$j("input[name='programs_${model.portletUUID}']:checked").val() ,false, function(ret){
 	   						from = 0; 
 	   						to = jumps-1; 
 							if (ret.length <= to)
@@ -53,7 +53,7 @@
 	   						drawTable(savedRet);});
    						}
    						else {
-   	   						$j('#results').hide();
+   	   						$j('#results_${model.portletUUID}').hide();
    						}
    			});	
  		});
@@ -84,17 +84,17 @@
 		<c:choose>
 			<c:when test="${not empty model.callback}">
 				${model.callback}(mappedRet[input]);
-				$j('#results').css('display','none');
-	   			$j('#searchBox').val('');
+				$j('#results_${model.portletUUID}').css('display','none');
+	   			$j('#searchBox_${model.portletUUID}').val('');
 	   		</c:when>
 	   		<c:otherwise>
 
-	   		    if ($j("input[name='programs']:checked") == null || $j("input[name='programs']:checked").length == 0){
+	   		    if ($j("input[name='programs_${model.portletUUID}']:checked") == null || $j("input[name='programs_${model.portletUUID}']:checked").length == 0){
 	   		    	alert("You must choose a program.");
 	   		  		return;
 	   		    } else {
 	   		    	//get the configuration from the map and build url and then send
-	   		    	var p = $j("input[name='programs']:checked").val();
+	   		    	var p = $j("input[name='programs_${model.portletUUID}']:checked").val();
 	   		    	if (programLinkMap[p] == null){
 	   		    		alert("invalid programID.  Please tell your local administrator to fix the global property htmlformflowsheet.programConfigurationMap");
 	   		    		return;	
@@ -319,7 +319,7 @@
    										if (ret.length == 0){
    								 		//no records found:
    								 		var cellFucsNoRecords = [function(){
-   								 		var sb = document.getElementById("searchBox");
+   								 		var sb = document.getElementById("searchBox_${model.portletUUID}");
    								 		var searchText = sb.value;
    								 		return "<div><Br>&nbsp;&nbsp;&nbsp;<spring:message code="htmlformflowsheet.nopatientsfound"/> <i>"+searchText+"</i>.</div>";
    								 		}];
@@ -335,7 +335,7 @@
    								 $j('table.resTable tbody tr').attr('onmouseout','javascript:mouseOut(this); refresh(this);');
    								 addRowEventsFindPatient();
    								 fixHeader();
-   								 $j('#results').css('display','');		
+   								 $j('#results_${model.portletUUID}').css('display','');		
    								} 				
    				}
    				
@@ -443,8 +443,9 @@ function useMdrtbLoadingMessage(message) {
 }
 	</script>
 
+
+<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/index.htm"/>
 <c:if test="${model.authenticatedUser != null}">
-	<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/index.htm" />
 
 	<c:choose>
 		<c:when test="${model.size=='mini'}">
@@ -453,8 +454,8 @@ function useMdrtbLoadingMessage(message) {
 					<c:when test="${!empty model.labelCode}"><span style="font-weight:bold"><spring:message code="${model.labelCode}"/></span></c:when>
 					<c:otherwise><span style="font-weight:bold"><spring:message code="Patient.find"/></span></c:otherwise>
 				</c:choose>
-				<input type="text" value="" id="searchBox" name="searchBox">
-				<div id="results" style="position:absolute; z-index:1000; border:2px solid black; background-color:#CCCCCC; ${model.resultStyle}">
+				<input type="text" value="" id="searchBox_${model.portletUUID}" name="searchBox_${model.portletUUID}">
+				<div id="results_${model.portletUUID}" style="position:absolute; z-index:1000; border:2px solid black; background-color:#CCCCCC; ${model.resultStyle}">
 					<table id="resTable" class="resTable" cellpadding="2" cellspacing="0" style="border-collapse: collapse">
 						<thead id="resTableHeader" class="resTableHeader"/>	
 						<tbody class="resTableBody" id="resTableBody" style="vertical-align: center"/>
@@ -473,7 +474,7 @@ function useMdrtbLoadingMessage(message) {
 				        <td> 
 							
 							   <c:forEach var="program" items="${model.program}">
-							          <input type="radio" name="programs" value="${program}" autocomplete='off'/>
+							          <input type="radio" name="programs_${model.portletUUID}" value="${program}" autocomplete='off'/>
 							          <htmlformflowsheet:programName program="${program}"/>&nbsp;&nbsp;
 							   </c:forEach>
 						  </td> 
@@ -493,9 +494,9 @@ function useMdrtbLoadingMessage(message) {
 					<td/>
 					</tr>	
 					</table>
-					<input type="text" value="" id="searchBox" name="searchBox" style="width:50%;">   &nbsp;&nbsp;<br>
+					<input type="text" value="" id="searchBox_${model.portletUUID}" name="searchBox_${model.portletUUID}" style="width:50%;">   &nbsp;&nbsp;<br>
 
-					<div id="results">
+					<div id="results_${model.portletUUID}">
 						<table id="resTable" class="resTable" cellpadding="2" cellspacing="0" style="border-collapse: collapse">
 							<thead id="resTableHeader" class="resTableHeader"/>	
 							<tbody class="resTableBody" id="resTableBody" style="vertical-align: center"/>
@@ -507,10 +508,70 @@ function useMdrtbLoadingMessage(message) {
 		</c:otherwise>
 	</c:choose>
 
+	<script>
+	 function init() {
+	 useMdrtbLoadingMessage('<spring:message code="htmlformflowsheet.loadingmessage"/>');
+	 }
+	 window.onload=init;
+	</script>
+	 <br/>
+	
+	<!-- CREATE PATIENT -->
+	<openmrs:globalProperty key="htmlformflowsheet.programConfigurationMap" var="createPatientMapString" />
+	
+	<c:if test="${!empty model.createPatientFormId && !empty createPatientMapString}">
+				
+				<div>
+				    <b class="boxHeader"><spring:message code="Patient.create" /></b>
+					<div class="box" style="padding: 15px 15px 15px 15px;">
+						<c:forEach var="program" items="${model.program}">
+								<input type="radio" name="createPatientProgram_${model.portletUUID}" value="${program}" autocomplete='off'/>
+							    <htmlformflowsheet:programName program="${program}"/><br/>
+						</c:forEach>
+						<!--  you can add as many radio buttons here as you want... --->
+						<br />
+						<a href="#" onClick="buildURL();"><spring:message code="Patient.create" /></a>
+					</div>
+				</div>
+				
+				<script>
+					var createPatientLinkMap=${createPatientMapString};
+					
+					var createPatientHtmlFormId=${model.createPatientFormId};
+					function buildURL(){
+						if ($j("input[name='createPatientProgram_${model.portletUUID}']:checked") == null || $j("input[name='createPatientProgram_${model.portletUUID}']:checked").length == 0){
+					    	alert("You must choose a program.");
+					  		return;
+					    } else {
+					    	//get the configuration from the map and build url and then send
+					    	var p = $j("input[name='createPatientProgram_${model.portletUUID}']:checked").val();
+					    	if (createPatientLinkMap[p] == null){
+					    		alert("invalid programID.  Please check your Global Property!");
+					    		return;	
+					    	}	
+					    	window.location='${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?formId=' + createPatientHtmlFormId + '&mode=enter&returnUrl=${pageContext.request.contextPath}/module/htmlformflowsheet/patientWidgetChart.list?' + createPatientLinkMap[p];
+					    }
+					}
+					
+				</script>
+	</c:if>
+	
+	<c:if test="${empty model.createPatientFormId}">
+		<br><span style="color:red;">Cannot show create patient box.  Missing the createPatientFormId in the portlet parameters.</span> <br>
+	</c:if>
+	<c:if test="${empty createPatientMapString}">
+	    <br><span style="color:red;">Cannot show create patient box.  Global property htmlformflowsheet.programConfigurationMap is empty. </span> <br>
+	</c:if>
+
+
 </c:if>
-<script>
- function init() {
- useMdrtbLoadingMessage('<spring:message code="htmlformflowsheet.loadingmessage"/>');
- }
- window.onload=init;
-</script>
+
+
+
+
+
+
+
+
+
+

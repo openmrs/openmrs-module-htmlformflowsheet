@@ -37,7 +37,7 @@ public class EncounterChartPortletController extends PortletController {
         // find the portlet that was identified in the openmrs:portlet taglib
         Object uri = request.getAttribute("javax.servlet.include.servlet_path");
         String portletPath = "";
-        Map<String, Object> model =  new HashMap<String, Object>();;
+        Map<String, Object> model =  new HashMap<String, Object>();
 
         
         if (uri != null) {

@@ -1,54 +1,30 @@
-<!--
-
-DT:  This is a template for what you can put into the role-based homepage module
-to create htmlformflowsheet-based apps.  This is dependent on the global property htmlformflowsheet.programConfigurationMap
-which must be set correctly for this to work.
-
+<!--    
+       This is a template for what you can put into the role-based homepage module
+       to create htmlformflowsheet-based apps.  This is dependent on the global property 
+       htmlformflowsheet.programConfigurationMap
+       which must be set correctly for this to work.
 -->
-<h3>MY HOMEPAGE</h3><br/>
 
-<!-- 1. For the FIND PATIENT PORTLET, set the list of programs in the portlet parameters to the programIds for which you want to make tabbed interfaces.
-In this example, the four programs for which i have tabbed configurations are programs 1,2,3, and 4 -->
+<!-- Set whatever title you want -->
+<h3>Non Communicable Disease (NCD) Homepage</h3><br/>
 
-<openmrs:portlet id="htmlformflowsheetFindPatient" url="htmlformflowsheetFindPatient" parameters="size=full|postURL=|showIncludeVoided=false|viewType=shortEdit|program=1,2,3,4" moduleId="htmlformflowsheet"/>
+<!--  Here, you must  set two properties.  
 
-<br/><br/>
+       First, where you see program=5,6 change these values to all of the programs
+       in the global property htmlformflowsheet.programConfigurationMap for which you want this role to be able to 
+       access the homepage.  You *can't* add properties here that aren't pre-configured in the global property - they 
+       won't work.
 
+       Second, where you see createPatientFormId=16, change this value to the formId (found under Admin/Manage
+       Forms) of the create patient htmlform that you'd like to use for this program.  If you do not wish for this role
+       to be able to use the 'create patient' dialogues, you can leave this parameter out, but you will see a benign 
+       error message instead.
+-->
 
-<!-- 2. For the CREATE PATIENT widget, set the values of your radio buttons to the programIds for which you have configured tabbed interfaces in the global property. -->
+     <openmrs:portlet 
+          id="htmlformflowsheetFindPatient" 
+          url="htmlformflowsheetFindPatient" 
+          parameters="size=full|postURL=|showIncludeVoided=false|viewType=shortEdit|program=5,6|createPatientFormId=16" 
+          moduleId="htmlformflowsheet"
+     />
 
-<openmrs:globalProperty key="htmlformflowsheet.programConfigurationMap" var="createPatientMapString" />
-
-
-<div>
-    <b class="boxHeader"><spring:message code="Patient.create" /></b>
-	<div class="box" style="padding: 15px 15px 15px 15px;">
-		Asthma: <input type="radio" name="createPatientProgram" value="1">	
-		Epylepsy: <input type="radio"  name="createPatientProgram" value="2">
-		<!--  you can add as many radio buttons here as you want... --->
-		<br />
-		<a href="#" onClick="buildURL();"><spring:message code="Patient.create" /></a>
-	</div>
-</div>
-
-<!-- Here you MUST set the formId for the create patient form in the declaration of createPatientHtmlFormId -->
-<script>
-
-	var createPatientLinkMap=${createPatientMapString};
-	var createPatientHtmlFormId=16;
-	function buildURL(){
-		if ($j("input[name='createPatientProgram']:checked") == null || $j("input[name='createPatientProgram']:checked").length == 0){
-	    	alert("You must choose a program.");
-	  		return;
-	    } else {
-	    	//get the configuration from the map and build url and then send
-	    	var p = $j("input[name='createPatientProgram']:checked").val();
-	    	if (createPatientLinkMap[p] == null){
-	    		alert("invalid programID.  Please check your Global Property!");
-	    		return;	
-	    	}	
-	    	window.location='${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?formId=' + createPatientHtmlFormId + '&mode=enter&returnUrl=${pageContext.request.contextPath}/module/htmlformflowsheet/patientWidgetChart.list?' + createPatientLinkMap[p];
-	    }
-	}
-	
-</script>

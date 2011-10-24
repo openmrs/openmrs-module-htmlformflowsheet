@@ -10,7 +10,7 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
              $j('#encounterWidget_' + uuid).html("loading...");
              var pathStr = openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1) + "&showHtmlFormInstead=" + showHtmlFormInstead;
              if (showAllEncs)
-             	pathStr = pathStr + "&showAllEncsWithEncType=true";	
+             	pathStr = pathStr + "&showAllEncsWithEncType=true";
 			 $j('#encounterWidget_' + uuid).load(pathStr);
 			 repopulateEncounterSelectOptions(personId, encounterTypeId);
 		});
@@ -56,8 +56,8 @@ function resizeHtmlFormIframe(formId, uuid){
 }
 
 function repopulateEncounterSelectOptions(patientId, encounterTypeId){
+
 	HtmlFlowsheetDWR.getAllEncsByPatientAndEncType(patientId, encounterTypeId, function(ret){
-						//todo: run the dwr:
 				var doc = parent.document;
 				var iframes = doc.getElementsByTagName("iframe");
 				try {
@@ -82,5 +82,4 @@ function repopulateEncounterSelectOptions(patientId, encounterTypeId){
 					}
 				} catch (exception){}		
 	});
-	
 }									
