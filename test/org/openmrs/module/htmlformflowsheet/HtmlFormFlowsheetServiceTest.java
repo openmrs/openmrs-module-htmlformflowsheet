@@ -14,6 +14,7 @@ import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.Order;
 import org.openmrs.Patient;
+import org.openmrs.Program;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
@@ -73,43 +74,43 @@ public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest
         
         //should return 3 drug orders for drug1 with empty encs
         List<DrugOrder> doList = hffs.getDrugOrders(patient, Collections.singleton(drug1), encs, false);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
+            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
         }
         Assert.assertTrue(doList.size() == 3);
         
         //should reutnr 3 drug orders for drug1 with null encs
         doList = hffs.getDrugOrders(patient, Collections.singleton(drug1), null, false);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
+            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
         }
         Assert.assertTrue(doList.size() == 3);
         
         //should return 2 drugOrders for drug 1, because we're excluding encounter created above.
         encs.add(encounter);
         doList = hffs.getDrugOrders(patient, Collections.singleton(drug1), encs, false);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
+            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
         }
         Assert.assertTrue(doList.size() == 2);
         
         
       //should return 4 drugOrders for all drugs, because we're excluding encounter created above.
         doList = hffs.getDrugOrders(patient, null, encs, false);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
+            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
         }
         Assert.assertTrue(doList.size() == 4);
         
         //should return 5 drugOrders = all drugOrders
         doList = hffs.getDrugOrders(patient, null, null, false);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
+            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
         }
         Assert.assertTrue(doList.size() == 5);
         
@@ -118,9 +119,9 @@ public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest
         Context.getOrderService().voidOrder(dord, "");
         
         doList = hffs.getDrugOrders(patient, null, null, false);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
+            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId());
         }
         Assert.assertTrue(doList.size() == 4);
     }   
@@ -169,41 +170,41 @@ public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest
         List<Encounter> encs = new ArrayList<Encounter>();
         
         List<Order> allOrders = Context.getOrderService().getOrdersByPatient(patient);
-        System.out.println("///////   ALL DRUG ORDERS ////////////");
+        //System.out.println("///////   ALL DRUG ORDERS ////////////");
         for (Order o: allOrders){
             if (o instanceof DrugOrder){
                 DrugOrder oTmp = (DrugOrder) o;
-                System.out.println(oTmp.getOrderId() + " patientID " + oTmp.getPatient().getPatientId() + " drugId " + oTmp.getDrug().getDrugId() + " startDate" 
-                        + oTmp.getStartDate() + " discontinuedDate " + oTmp.getDiscontinuedDate() 
-                        + " autoexpireddate " + oTmp.getAutoExpireDate());
+//                ////System.out.println(oTmp.getOrderId() + " patientID " + oTmp.getPatient().getPatientId() + " drugId " + oTmp.getDrug().getDrugId() + " startDate" 
+//                        + oTmp.getStartDate() + " discontinuedDate " + oTmp.getDiscontinuedDate() 
+//                        + " autoexpireddate " + oTmp.getAutoExpireDate());
             }
         }
-        System.out.println("//////////////");
+        //System.out.println("//////////////");
         
         //should return the only two 
         List<DrugOrder> doList = hffs.getDrugOrders(patient, Collections.singleton(drug1), encs, true);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId() + " drugId " + dos.getDrug().getDrugId() + " startDate" 
-                    + dos.getStartDate() + " discontinuedDate " + dos.getDiscontinuedDate() 
-                    + " autoexpireddate " + dos.getAutoExpireDate());
+//            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId() + " drugId " + dos.getDrug().getDrugId() + " startDate" 
+//                    + dos.getStartDate() + " discontinuedDate " + dos.getDiscontinuedDate() 
+//                    + " autoexpireddate " + dos.getAutoExpireDate());
         }
         Assert.assertTrue(doList.size() == 2);
         
         //now, lets auto-expire the drug, so list should go down to 1
         DrugOrder dor = (DrugOrder) Context.getOrderService().getOrder(dordId);
-        System.out.println(dor.getOrderId() + " patientID " + dor.getPatient().getPatientId() + " drugId " + dor.getDrug().getDrugId() + " startDate" 
-                + dor.getStartDate() + " discontinuedDate " + dor.getDiscontinuedDate() 
-                + " autoexpireddate " + dor.getAutoExpireDate() + " uuid = " + dor.getUuid());
+//        //System.out.println(dor.getOrderId() + " patientID " + dor.getPatient().getPatientId() + " drugId " + dor.getDrug().getDrugId() + " startDate" 
+//                + dor.getStartDate() + " discontinuedDate " + dor.getDiscontinuedDate() 
+//                + " autoexpireddate " + dor.getAutoExpireDate() + " uuid = " + dor.getUuid());
         
         dor.setAutoExpireDate(fifteenDaysAgo);
         
         doList = hffs.getDrugOrders(patient, Collections.singleton(drug1), encs, true);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId() + " drugId " + dos.getDrug().getDrugId() + " startDate" 
-                    + dos.getStartDate() + " discontinuedDate " + dos.getDiscontinuedDate() 
-                    + " autoexpireddate " + dos.getAutoExpireDate());
+//            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId() + " drugId " + dos.getDrug().getDrugId() + " startDate" 
+//                    + dos.getStartDate() + " discontinuedDate " + dos.getDiscontinuedDate() 
+//                    + " autoexpireddate " + dos.getAutoExpireDate());
         }
         Assert.assertTrue(doList.size() == 1);
         
@@ -211,19 +212,21 @@ public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest
         //now lets push the autoexpire date into the future for the same drug order and the count should go back to 2
       //now, lets auto-expire the drug, so list should go down to 1
         dor = (DrugOrder) Context.getOrderService().getOrder(dordId);
-        System.out.println(dor.getOrderId() + " patientID " + dor.getPatient().getPatientId() + " drugId " + dor.getDrug().getDrugId() + " startDate" 
-                + dor.getStartDate() + " discontinuedDate " + dor.getDiscontinuedDate() 
-                + " autoexpireddate " + dor.getAutoExpireDate() + " uuid = " + dor.getUuid());
+//        //System.out.println(dor.getOrderId() + " patientID " + dor.getPatient().getPatientId() + " drugId " + dor.getDrug().getDrugId() + " startDate" 
+//                + dor.getStartDate() + " discontinuedDate " + dor.getDiscontinuedDate() 
+//                + " autoexpireddate " + dor.getAutoExpireDate() + " uuid = " + dor.getUuid());
         
         dor.setAutoExpireDate(inFourWeeks);
         
         doList = hffs.getDrugOrders(patient, Collections.singleton(drug1), encs, true);
-        System.out.println("SIZE IS" + doList.size());
+        //System.out.println("SIZE IS" + doList.size());
         for (DrugOrder dos : doList){
-            System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId() + " drugId " + dos.getDrug().getDrugId() + " startDate" 
-                    + dos.getStartDate() + " discontinuedDate " + dos.getDiscontinuedDate() 
-                    + " autoexpireddate " + dos.getAutoExpireDate());
+//            //System.out.println(dos.getOrderId() + " patientID " + dos.getPatient().getPatientId() + " drugId " + dos.getDrug().getDrugId() + " startDate" 
+//                    + dos.getStartDate() + " discontinuedDate " + dos.getDiscontinuedDate() 
+//                    + " autoexpireddate " + dos.getAutoExpireDate());
         }
         Assert.assertTrue(doList.size() == 2);
     }   
+    
+    
 }
