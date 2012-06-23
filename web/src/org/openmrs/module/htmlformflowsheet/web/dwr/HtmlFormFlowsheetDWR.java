@@ -19,6 +19,7 @@ import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.module.htmlformflowsheet.SingleHtmlFormPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.SingleHtmlFormPatientChartTab.Which;
 import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
@@ -127,6 +128,7 @@ public class HtmlFormFlowsheetDWR {
         EncounterType et = Context.getEncounterService().getEncounterType(encTypeId);
         Patient p = Context.getPatientService().getPatient(patientId);
         List<Encounter> eList = Context.getEncounterService().getEncounters(p, null, null, null, null, Collections.singletonList(et), null, false);
+        eList = HtmlFormFlowsheetUtil.sortEncountersAccordingToGp(eList);
         for (Encounter e : eList){
             HtmlFormFlowsheetDWREncounterObj h = new HtmlFormFlowsheetDWREncounterObj(e);
             ret.add(h);

@@ -3,7 +3,7 @@
 <module configVersion="1.0">
 	<id>htmlformflowsheet</id>
 	<name>htmlformflowsheet</name>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>PIH</author>
 	<description>
@@ -48,6 +48,22 @@
 	</globalProperty>
 	
 	<globalProperty>
+		<property>htmlformflowsheet.encountersChronology</property>
+		<defaultValue>desc</defaultValue>
+		<description>
+			Possible values here are desc and asc.  If not set, defaults to desc.
+		</description>
+	</globalProperty>
+	
+		<globalProperty>
+		<property>htmlformflowsheet.addAnotherButtonPosition</property>
+		<defaultValue>top</defaultValue>
+		<description>
+			Lets you say where in the display to render the 'add another' button.  Default is top.  Possible values:  top or bottom
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
 		<property>htmlformflowsheet.showMdrtbCatIVLink</property>
 		<defaultValue>false</defaultValue>
 		<description>
@@ -64,7 +80,6 @@
 				of the following format:   formId:programId1|programId2,formId:programId1, programIds
 		</description>
 	</globalProperty>
-	
 	<globalProperty>
 		<property>htmlformflowsheet.drugDiscontinueReason</property>
 		<defaultValue></defaultValue>

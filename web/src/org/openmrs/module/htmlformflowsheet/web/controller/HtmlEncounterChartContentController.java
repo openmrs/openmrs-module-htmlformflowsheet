@@ -40,6 +40,7 @@ import org.openmrs.module.htmlformentry.schema.ObsFieldAnswer;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetService;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -115,7 +116,7 @@ public class HtmlEncounterChartContentController implements Controller {
             encs = Context.getEncounterService().getEncounters(patient, null, null, null, null, Collections.singleton(et), null, false);
             model.put("showAllEncsWithEncType", "true");
         } 
-        
+
         //TODO:  TRIM ENCOUNTER ON NO MATCH IN FORM.
 
         // now figure out which concepts we want to display as columns
@@ -221,12 +222,10 @@ public class HtmlEncounterChartContentController implements Controller {
         if (dummyEncs.size() > 0){
             //if not in encounterListForChart, add dummy encounters (or actual) with the encounters (dangerous)?
             encs.addAll(dummyEncs);
-            Collections.sort(encs, new Comparator<Encounter>() {
-                public int compare(Encounter left, Encounter right) {
-                    return left.getEncounterDatetime().compareTo(right.getEncounterDatetime());
-                 } 
-             });
         }
+        
+        //order encounters according to gp
+        encs = HtmlFormFlowsheetUtil.sortEncountersAccordingToGp(encs);
         
         Map<Encounter, Set<DrugOrder>> encsToDrugOrders = new HashMap<Encounter, Set<DrugOrder>>();
         for (Encounter enc: encs){
@@ -337,6 +336,4 @@ public class HtmlEncounterChartContentController implements Controller {
             log.debug(field.getClass() + " not yet implemented");
         }
     }
-    
-    
 }

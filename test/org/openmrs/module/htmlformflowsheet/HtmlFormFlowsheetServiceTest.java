@@ -3,6 +3,7 @@ package org.openmrs.module.htmlformflowsheet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +15,8 @@ import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.Order;
 import org.openmrs.Patient;
-import org.openmrs.Program;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.htmlformflowsheet.web.controller.HtmlEncounterChartContentController;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest {
@@ -227,6 +228,48 @@ public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest
         }
         Assert.assertTrue(doList.size() == 2);
     }   
+    
+    
+//    @Test
+//    public void shouldReturnEncountersInAscendingThenDescendingOrder() throws Exception {
+//    	  Encounter e1 = new Encounter();
+//          e1.setEncounterDatetime(new Date(0));
+//          
+//          Encounter e2 = new Encounter();
+//          e2.setEncounterDatetime(new Date(100000000));
+//          
+//          Encounter e3 = new Encounter();
+//          e3.setEncounterDatetime(new Date(888888888));
+//          
+//          List<Encounter> encs = new ArrayList<Encounter>();
+//          //out of order
+//          encs.add(e2);
+//          encs.add(e1);
+//          encs.add(e3);
+//         
+//          //asc
+//          Collections.sort(encs, new Comparator<Encounter>() {	
+//          	public int compare(Encounter enc1, Encounter enc2){
+//        		return enc1.getEncounterDatetime().compareTo(enc2.getEncounterDatetime());
+//        	}
+//          });
+//          
+//          for (Encounter e : encs){
+//        	  System.out.println(e.getEncounterDatetime());
+//          }
+//          
+//          //desc
+//          Collections.sort(encs, new Comparator<Encounter>() {	
+//            	public int compare(Encounter enc1, Encounter enc2){
+//          		return enc2.getEncounterDatetime().compareTo(enc1.getEncounterDatetime());
+//          	}
+//           });
+//            
+//            for (Encounter e : encs){
+//          	  System.out.println(e.getEncounterDatetime());
+//            }
+//    }
+    
     
     
 }

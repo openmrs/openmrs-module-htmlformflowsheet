@@ -13,7 +13,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformflowsheet.SingleHtmlFormPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.SingleHtmlFormPatientChartTab.Which;
 import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.controller.PortletController;
 
