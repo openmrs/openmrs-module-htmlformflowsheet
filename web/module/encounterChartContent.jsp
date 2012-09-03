@@ -70,7 +70,15 @@
     	<%@ include file="addAnotherButton.jsp" %>
     </c:if>
 	<tr>
-		<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
+		<c:choose>
+			<c:when test="${model.showProvider}">
+				<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
+				<td style="color:darkblue"><c:out value="${model.providerHeader }"/></td>
+			</c:when>
+			<c:otherwise>
+				<td colspan="2" style="color:darkblue"><spring:message code="htmlformflowsheet.date" /></td>
+			</c:otherwise>
+		</c:choose>
 		<c:if test="${empty model.showHtmlFormInstead || (!empty model.showHtmlFormInstead && model.showHtmlFormInstead != 'true')}">
 			<c:forEach var="concept" items="${model.encounterChartConcepts}"><!-- Each concept is a map with the concept itself and the name string from the form-->
 				<td style="color:darkblue">
@@ -103,7 +111,7 @@
 						 <c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">
 							<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 								    name="editEncounter" 
-									onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead});"
+									onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead}, ${model.showProvider},'${model.providerHeader }');"
 									title="edit" 
 									alt="edit"/>			
 							<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
@@ -115,7 +123,7 @@
 						</td>
 						<td>
 							<c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">
-								<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId},${model.showHtmlFormInstead})">
+								<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId},${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }')">
 									<openmrs:formatDate date="${enc.encounterDatetime}"/>
 								</a>
 							</c:if>
@@ -123,6 +131,12 @@
 								<openmrs:formatDate date="${enc.encounterDatetime}"/>
 							</c:if>
 						</td>
+						
+						<c:if test="${model.showProvider }">
+							<td>
+								<c:out value="${enc.provider.givenName }"/> <c:out value="${enc.provider.familyName }"/>
+							</td>
+						</c:if>
 						
 						<c:if test="${empty model.showHtmlFormInstead || (!empty model.showHtmlFormInstead && model.showHtmlFormInstead != 'true')}">
 							<c:forEach var="conceptAndNameMap" items="${model.encounterChartConcepts}"> <!-- Set<Map<Concept,String>> -->
@@ -168,7 +182,7 @@
 														<c:if test="${empty enc.encounterId && model.readOnly == 'false'}">
 														<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 									   						 name="editEncounter" 
-															 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>', ${model.showHtmlFormInstead})"
+															 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>', ${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }')"
 															 title="edit" 
 															 alt="edit"/>
 														</c:if>	 

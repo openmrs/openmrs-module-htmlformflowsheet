@@ -79,6 +79,15 @@ public class HtmlEncounterChartContentController implements Controller {
         if (windowHeight == null || windowHeight.equals("") || windowHeight.equals("null"))
             windowHeight = "400";
         model.put("windowHeight", Integer.valueOf(windowHeight));
+        
+        if(((String)request.getParameter("showProvider")).equals("true")) {
+        	model.put("showProvider", true);
+        	model.put("providerHeader", (String)request.getParameter("providerHeader"));
+        }
+        else {
+        	model.put("showProvider", false);
+        }
+        
         Form form = HtmlFormFlowsheetWebUtils.getFormFromString(formId);
         formId = HtmlFormFlowsheetWebUtils.getFormIdAsString(form);
         String portletUUID = request.getParameter("portletUUID");

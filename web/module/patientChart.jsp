@@ -66,7 +66,7 @@
 						moduleId="htmlformflowsheet"
 						url="encounterChart${status.count}"
 						patientId="${model.patientId}"
-						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|addAnotherButtonLabel=${model.addAnotherButtonLabel}|windowHeight=${model.windowHeight}|showHtmlFormInstead=${model.showHtmlFormInstead}"
+						parameters="encounterTypeId=${tab.encounterTypeId}|readOnly=${model.readOnly}|view=${status.index}|formId=${tab.formId}|showAddAnother=${tab.showAddAnother}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|addAnotherButtonLabel=${model.addAnotherButtonLabel}|windowHeight=${model.windowHeight}|showProvider=${model.showProvider}|providerHeader=${model.providerHeader}|showHtmlFormInstead=${model.showHtmlFormInstead}"
 					/>
 
 				</c:when>
@@ -76,7 +76,7 @@
 						url="singleHtmlForm"
 						moduleId="htmlformflowsheet"
 						patientId="${model.patientId}"
-						parameters="formId=${tab.formId}|which=${tab.which}|view=${status.index}|defaultEncounterTypeId=${tab.defaultEncounterTypeId}|showAllEncsWithEncType=${model.showAllEncsWithEncType}"
+						parameters="formId=${tab.formId}|which=${tab.which}|view=${status.index}|defaultEncounterTypeId=${tab.defaultEncounterTypeId}|showAllEncsWithEncType=${model.showAllEncsWithEncType}|showProvider=${model.showProvider }|providerHeader=${model.providerHeader}"
 					/>
 				
 				</c:when>

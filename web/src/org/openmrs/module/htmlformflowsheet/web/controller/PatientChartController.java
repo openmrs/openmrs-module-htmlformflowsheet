@@ -59,6 +59,7 @@ public class PatientChartController implements Controller {
 			String fullPageStr = request.getParameter("fullPage");
 			String readOnlyStr = request.getParameter("readOnly");
 			String windowHeight = request.getParameter("windowHeight");
+			String showProvider = request.getParameter("showProvider");
 			String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
 			String showHtmlFormInsteadStr = request.getParameter("showHtmlForm");
 			String titleStr = request.getParameter("title");
@@ -92,6 +93,14 @@ public class PatientChartController implements Controller {
 		       model.put("addAnotherButtonLabel", addAnotherButtonLabel);
 		    }    
 		    
+		    if(showProvider.equals("true"))
+		    {
+		    	model.put("showProvider", true);
+		    	model.put("providerHeader", request.getParameter("providerHeader"));
+		    }
+		    else {
+		    	model.put("showProvider", false);
+		    }
 		    //redirect to a dummy html if no patientId for edit htmlform page
 			Integer patientId = null;
 			Patient patient = null;
