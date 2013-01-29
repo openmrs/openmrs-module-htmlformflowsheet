@@ -132,7 +132,7 @@ public class HtmlEncounterChartContentController implements Controller {
         Set<Map<Concept,String>> concepts = new LinkedHashSet<Map<Concept,String>>();
         List<DrugOrderField> searchDrugs = new ArrayList<DrugOrderField>();
         Map<Drug, String> drugNames = new HashMap<Drug, String>();
-        Set<Map<Concept,String>> conceptAnswers = new LinkedHashSet<Map<Concept,String>>();
+        Map<String,String> conceptAnswers = new HashMap<String,String>(); //key is questionConceptId.answerConceptId
         {
             String conceptsToShowString = (String) model.get("conceptsToShow");
             if (StringUtils.hasText(conceptsToShowString)) {
@@ -295,7 +295,7 @@ public class HtmlEncounterChartContentController implements Controller {
      * @param field
      * @param concepts
      */
-    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Set<Map<Concept,String>> conceptAnswers, List<DrugOrderField> searchDrugs, Map<Drug, String> drugNames) {
+    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Map<String,String> conceptAnswers, List<DrugOrderField> searchDrugs, Map<Drug, String> drugNames) {
         if (field instanceof ObsField) {
             ObsField of = (ObsField) field;
             Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
@@ -307,11 +307,9 @@ public class HtmlEncounterChartContentController implements Controller {
             List<ObsFieldAnswer> answerList = of.getAnswers();
             if (answerList != null && answerList.size() > 0){
                 for (ObsFieldAnswer ofa : answerList){
-                    Map<Concept,String> answConceptAndNameString = new HashMap<Concept,String>();
                     String answName = ofa.getDisplayName();
                     if (ofa.getConcept() != null){
-                        answConceptAndNameString.put(ofa.getConcept(),answName);
-                        conceptAnswers.add(answConceptAndNameString);
+						conceptAnswers.put(of.getQuestion().getConceptId() + "." + ofa.getConcept().getConceptId(),answName);
                     } 
                 }
             }

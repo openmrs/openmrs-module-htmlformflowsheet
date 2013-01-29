@@ -142,26 +142,22 @@
 							<c:forEach var="conceptAndNameMap" items="${model.encounterChartConcepts}"> <!-- Set<Map<Concept,String>> -->
 								<c:forEach var="conceptAndStrings" items="${conceptAndNameMap}"> <!-- unpacks Concept to String mapping -->
 									<td>
-										<!--  TODO:  HERE  use answerLabel if String not nothing or null --->
 										<c:set var="matched" value="false"/>
 										<c:forEach var="obs" items="${model.encounterChartObs[enc][conceptAndStrings.key.conceptId]}">
 											<c:if test="${fn:contains(usedObs,obs.uuid) == false}">
 											    <div>
 												<c:if test="${obs.valueCoded != null}">
 												    <c:set var="useConceptName" value="true"/>
-													        <c:forEach var="concept" items="${model.conceptAnswers}"><!-- Each concept is a map with the concept itself and the name string from the form-->
-																<c:forEach var="entry" items="${concept}">
-									     								<c:if test="${obs.valueCoded.conceptId == entry.key.conceptId}">
-									     									<c:if test="${!empty entry.value && entry.value != ''}">
-									     											${entry.value}
-									     											<c:set var="useConceptName" value="false"/>
-									     									</c:if>
-									     								</c:if>
-									     						</c:forEach>
-									     					</c:forEach>			
-													<c:if test="${useConceptName == 'true'}">  
-														<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
-													</c:if>	
+													<c:set var="conceptLabelKey" value="${obs.concept.conceptId}.${obs.valueCoded.conceptId}"/>
+													<c:set var="conceptLabel" value="${model.conceptAnswers[conceptLabelKey]}"/>
+													<c:choose>
+														<c:when test="${!empty conceptLabel}">
+															${conceptLabel}
+														</c:when>
+														<c:otherwise>
+															<htmlformflowsheet:conceptFormat concept="${obs.valueCoded}" bestShortName="true" />
+														</c:otherwise>
+													</c:choose>
 												</c:if>
 												<c:if test="${obs.valueCoded == null}">
 													<!-- HERE:  ugh... this is going to need a custom tag handler for valueNumerics --->
