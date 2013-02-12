@@ -14,7 +14,7 @@ import org.openmrs.Patient;
 import org.openmrs.PatientProgram;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Extension;
-import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.web.WebConstants;
 
 
@@ -56,7 +56,7 @@ public class PatientHeaderChartLinks extends Extension {
 	                    programIds.add(Integer.valueOf(programInfo));
 	                }
 	            }
-	            Form form = HtmlFormFlowsheetWebUtils.getFormFromString(formId);
+	            Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
 	            List<PatientProgram> pps = Context.getProgramWorkflowService().getPatientPrograms(p, null, null, null, null, null, false);
 	            List<Encounter> encs = Context.getEncounterService().getEncounters(p, null, null, null, Collections.singletonList(form), null, null, false);
 

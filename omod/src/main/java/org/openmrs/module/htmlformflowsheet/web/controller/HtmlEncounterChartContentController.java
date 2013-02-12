@@ -2,7 +2,6 @@ package org.openmrs.module.htmlformflowsheet.web.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -41,7 +40,6 @@ import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetService;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
-import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -88,8 +86,8 @@ public class HtmlEncounterChartContentController implements Controller {
         	model.put("showProvider", false);
         }
         
-        Form form = HtmlFormFlowsheetWebUtils.getFormFromString(formId);
-        formId = HtmlFormFlowsheetWebUtils.getFormIdAsString(form);
+        Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
+        formId = HtmlFormFlowsheetUtil.getFormIdAsString(form);
         String portletUUID = request.getParameter("portletUUID");
         String view = request.getParameter("view");
         model.put("view", view);

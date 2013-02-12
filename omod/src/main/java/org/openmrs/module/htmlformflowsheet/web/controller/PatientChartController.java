@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.openmrs.Patient;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.module.htmlformflowsheet.PatientChartConfiguration;
 import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 import org.springframework.ui.ModelMap;

@@ -10,32 +10,6 @@
            http://www.springframework.org/schema/context/spring-context-2.5.xsd
            http://www.springframework.org/schema/util
            http://www.springframework.org/schema/util/spring-util-2.0.xsd">
-           
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-	
-    <bean id="HtmlFormFlowsheetUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-    	<property name="order"><value>89</value></property>
-    	<property name="mappings">
-            <props>
-				<prop key="**/encounterChart.portlet">EncounterChartPortletController</prop>
-				<prop key="**/encounterChart*.portlet">EncounterChartPortletController</prop>
-				<prop key="**/singleHtmlForm.portlet">SingleHtmlFormPortletController</prop>
-				<prop key="module/htmlformflowsheet/patientWidgetChart.list">TestPatientChartController</prop>
-				<prop key="module/htmlformflowsheet/patientWidgetChart*.list">TestPatientChartController</prop>
-				<prop key="module/htmlformflowsheet/encounterChartContent.list">EncounterChartContentController</prop>
-			</props>
-		</property>
-	</bean>
-    
-    <bean id="EncounterChartPortletController" class="org.openmrs.module.htmlformflowsheet.web.controller.EncounterChartPortletController"/>
-    <bean id="SingleHtmlFormPortletController" class="org.openmrs.module.htmlformflowsheet.web.controller.SingleHtmlFormPortletController"/>
-    <bean id="EncounterChartContentController" class="org.openmrs.module.htmlformflowsheet.web.controller.HtmlEncounterChartContentController"/>
-    <bean id="TestPatientChartController" class="org.openmrs.module.htmlformflowsheet.web.controller.PatientChartController">
-    	<property name="configuration">
-    		<bean class="org.openmrs.module.htmlformflowsheet.PatientChartConfiguration"/>
-    	</property>
-    </bean>
-    <bean class="org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetContextAware" />
     
     <bean parent="serviceContext">
 		<property name="moduleService">
@@ -63,71 +37,5 @@
 		</property>
 	</bean>
 
-    
-    <!-- ui.spring mvc integration:
-    
-    <bean id="rwandamohUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="order"><value>50</value></property>
-        <property name="mappings">
-            <props>
-
-                <prop key="module/rwandamoh/dataentry/patient.form">dataentryPatientDashboard</prop>
-            </props>
-        </property>
-    </bean>    
-    <bean id="dataentryPatientDashboard" class="org.openmrs.module.ui.springmvc.web.PatientDashboardController">
-        <property name="app"><ref local="dataentryApp"/></property>
-        <property name="config">
-            <bean class="org.openmrs.module.ui.springmvc.web.DashboardConfiguration">
-                <property name="tabs">
-                    <list>
-                        <bean class="org.openmrs.module.ui.springmvc.web.TabConfiguration">
-                            <property name="key" value="demographics"/>
-                            <property name="label" value="demographics"/>
-                            <property name="contents">
-                                <list>
-                                    <bean class="org.openmrs.module.ui.springmvc.web.widget.ImportUrlWidget">
-                                        <property name="url" value="/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false"/>
-                                    </bean>
-                                    
-                                </list>
-                            </property>
-                        </bean>
-                        <bean class="org.openmrs.module.ui.springmvc.web.TabConfiguration">
-                            <property name="key" value="other stuff"/>
-                            <property name="label" value="other stuff"/>
-                            <property name="contents">
-                                <list>
-                                    <bean class="org.openmrs.module.ui.springmvc.web.widget.ProgramEnrollmentWidget">
-                                        <property name="title" value="HIV Program Enrollment"/>
-                                        <property name="programId" value="1"/>
-                                        <property name="outcomeWorkflowIds">
-                                            <list>
-                                                <value>1</value>
-                                            </list>
-                                        </property>
-                                        <property name="enrollmentFormIds">
-                                            <list>
-                                                <value>2</value>
-                                            </list>
-                                        </property>
-                                    </bean>
-                                    
-                                </list>
-                            </property>
-                        </bean>
-                    </list>
-                </property>
-            </bean>
-        </property>
-    </bean>
-	<bean id="dataentryApp" class="org.openmrs.module.ui.springmvc.App">
-        <property name="parentHomepageUrl" value="/module/rwandamoh/homepage.form"/>
-        <property name="name" value="HIV Flowsheet"/>
-        <property name="homepageUrl" value="/module/rwandamoh/dataentry/homepage.form"/>
-        <property name="iconFilename" value="/moduleResources/ui/springmvc/images/application64.png"/>
-    </bean>
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-    -->
     <context:component-scan base-package="org.openmrs.module.htmlformflowsheet" />
 </beans>

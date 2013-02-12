@@ -19,7 +19,7 @@ import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.handler.AbstractTagHandler;
 import org.openmrs.module.htmlformentry.handler.AttributeDescriptor;
-import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
+import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.web.WebConstants;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -67,8 +67,8 @@ public class HtmlFormFlowsheetHandler  extends AbstractTagHandler {
         Patient patient = session.getPatient();
         try {
             configuration = attributes.get("formId");
-            Form form = HtmlFormFlowsheetWebUtils.getFormFromString(configuration);
-            configuration = HtmlFormFlowsheetWebUtils.getFormIdAsString(form);
+            Form form = HtmlFormFlowsheetUtil.getFormFromString(configuration);
+            configuration = HtmlFormFlowsheetUtil.getFormIdAsString(form);
             if (configuration == null)
                 throw new RuntimeException("htmlformflowsheet tag must have a formId attribute in your htmlform xml.");
         } catch (Exception ex){

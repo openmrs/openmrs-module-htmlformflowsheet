@@ -1,506 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="EclipseModuleManager">
-    <libelement value="jar://$MODULE_DIR$/lib-common/logic-0.4.jar!/" />
-    <libelement value="file://$MODULE_DIR$/dist" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/commons-logging-1.0.4.jar!/" />
-    <libelement value="file:///openmrs-1.6.x/lib/antlr/antlr_2.7.6.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/c3p0/c3p0-0.9.1.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/commons-collections/commons-collections-3.2.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/commons-lang/commons-lang-2.4.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/dom4j/dom4j-1.6.1.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/ehcache/ehcache-1.2.4.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/hl7api/hapi-0.5.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/jakarta-log4j/log4j-1.2.15.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/jta/jta.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/mail/activation.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/mail/mail.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/simple/simple-xml-1.6.1-mod.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/liquibase/liquibase-1.9.4-mod.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/tomcat/jsp-api.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/jstl/jstl-1.1.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/dwr/dwr-205.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/jakarta-taglibs/taglibs-standard-1.1.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/xerces/xercesImpl.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/slf4j/slf4j-api-1.5.6.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/slf4j/slf4j-log4j12-1.5.6.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/asm/asm-1.5.3.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/cglib/cglib-2.1_3.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/tomcat/catalina.jar" />
-    <libelement value="file:///openmrs-1.6.x/lib/velocity/velocity-1.6-beta1.jar" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/openmrs-api-1.6.2.15986-dev.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/tests-openmrs-api-1.6.2.15986-dev.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/web-openmrs-api-1.6.2.15986-dev.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/ant-contrib-1.0b2.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/commons-collections-3.2.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/commons-io-1.4.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/commons-lang-2.4.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/commons-pool-1.2.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/servlet-api.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/spring-2.5.6.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/spring-test.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/spring-webmvc.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/dbunit-2.4.4.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/hibernate325-mod.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/hsqldb-1.8.0.10.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/junit-4.4.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/xmlunit-1.2.jar!/" />
-    <libelement value="file://$MODULE_DIR$/lib-common" />
-    <libelement value="jar://$MODULE_DIR$/lib-common/htmlformentry-1.7.3.999.jar!/" />
-    <src_description expected_position="1">
-      <src_folder value="file://$MODULE_DIR$/metadata" expected_position="1" />
-      <src_folder value="file://$MODULE_DIR$/src" expected_position="2" />
-      <src_folder value="file://$MODULE_DIR$/test" expected_position="3" />
-      <src_folder value="file://$MODULE_DIR$/web/src" expected_position="4" />
-    </src_description>
-  </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build" />
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/metadata" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="module-library">
-      <library name="logic-0.4.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/logic-0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library">
-      <library name="dist">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/dist" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-logging-1.0.4.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/commons-logging-1.0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="antlr_2.7.6.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/antlr/antlr_2.7.6.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="c3p0-0.9.1.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/c3p0/c3p0-0.9.1.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/c3p0-0.9.1-pre9.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-collections-3.2.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/commons-collections/commons-collections-3.2.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-lang-2.4.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/commons-lang/commons-lang-2.4.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="dom4j-1.6.1.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/dom4j/dom4j-1.6.1.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="ehcache-1.2.4.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/ehcache/ehcache-1.2.4.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/ehcache-1.2.4-src.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="hapi-0.5.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/hl7api/hapi-0.5.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/hapi-0.5_source_v25.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="log4j-1.2.15.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/jakarta-log4j/log4j-1.2.15.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/apache-log4j-1.2.15.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="jta.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/jta/jta.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="activation.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/mail/activation.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="mail.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/mail/mail.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="simple-xml-1.6.1-mod.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/simple/simple-xml-1.6.1-mod.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///Simple-xml-stream-clean/src" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="liquibase-1.9.4-mod.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/liquibase/liquibase-1.9.4-mod.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///liquibase-19x" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="jsp-api.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/tomcat/jsp-api.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/apache-tomcat-5.5.20-src.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="jstl-1.1.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/jstl/jstl-1.1.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/apache-tomcat-5.5.20-src.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="dwr-205.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/dwr/dwr-205.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/dwr-2.0.5-src.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="taglibs-standard-1.1.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/jakarta-taglibs/taglibs-standard-1.1.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="xercesImpl.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/xerces/xercesImpl.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="slf4j-api-1.5.6.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/slf4j/slf4j-api-1.5.6.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="slf4j-log4j12-1.5.6.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/slf4j/slf4j-log4j12-1.5.6.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="asm-1.5.3.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/asm/asm-1.5.3.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="cglib-2.1_3.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/cglib/cglib-2.1_3.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="catalina.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/tomcat/catalina.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/apache-tomcat-5.5.20-src.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="velocity-1.6-beta1.jar">
-        <CLASSES>
-          <root url="file:///openmrs-1.6.x/lib/velocity/velocity-1.6-beta1.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file:///openmrs-source/velocity-1.6-beta1.zip" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="openmrs-api-1.6.2.15986-dev.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/openmrs-api-1.6.2.15986-dev.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="tests-openmrs-api-1.6.2.15986-dev.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/tests-openmrs-api-1.6.2.15986-dev.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="web-openmrs-api-1.6.2.15986-dev.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/web-openmrs-api-1.6.2.15986-dev.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="ant-contrib-1.0b2.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/ant-contrib-1.0b2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-collections-3.2.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/commons-collections-3.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-io-1.4.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/commons-io-1.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-lang-2.4.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/commons-lang-2.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-pool-1.2.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/commons-pool-1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="servlet-api.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/servlet-api.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="spring-2.5.6.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/spring-2.5.6.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="spring-test.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/spring-test.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="spring-webmvc.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/spring-webmvc.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="dbunit-2.4.4.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/dbunit-2.4.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="hibernate325-mod.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/hibernate325-mod.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="hsqldb-1.8.0.10.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/hsqldb-1.8.0.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="junit-4.4.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/junit-4.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="xmlunit-1.2.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/xmlunit-1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="lib-common">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/lib-common" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="htmlformentry-1.7.3.999.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib-common/htmlformentry-1.7.3.999.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentry:1.7.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.api:openmrs-api:1.7.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: antlr:antlr:2.7.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.antlr:antlr-runtime:3.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.antlr:stringtemplate:3.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: asm:asm-commons:2.2.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: asm:asm-tree:2.2.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: asm:asm:1.5.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: asm:asm-util:2.2.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.databene:databene-benerator:0.5.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.databene:databene-webdecs:0.4.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.databene:databene-commons:0.4.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-logging:commons-logging:1.0.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.freemarker:freemarker:2.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: c3p0:c3p0:0.9.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: cglib:cglib-nodep:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-beanutils:commons-beanutils:1.7.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-collections:commons-collections:3.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.hibernate:hibernate:3.2.5.ga-mod" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.ehcache:ehcache:1.2.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.transaction:jta:1.0.1B" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: dom4j:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: ca.uhn.hapi:hapi:0.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: xerces:xercesImpl:2.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: log4j:log4j:1.2.15" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.liquibase:liquibase-core:1.9.4-mod" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.mail:mail:1.3.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.azeckoski:reflectutils:0.9.14" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.simpleframework:simple-xml:1.6.1-mod" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: stax:stax-api:1.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: stax:stax:1.2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:jcl-over-slf4j:1.5.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-api:1.5.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-log4j12:1.5.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-core:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-asm:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-beans:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-context:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-aop:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-expression:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-orm:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-jdbc:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-tx:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.velocity:velocity:1.6-beta1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: xml-apis:xml-apis:1.3.03" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.thoughtworks.xstream:xstream:1.3.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.web:openmrs-web:1.7.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.openmrs.test:openmrs-test:1.7.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: junit:junit:4.8.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.dbunit:dbunit:2.4.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: xmlunit:xmlunit:1.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: hsqldb:hsqldb:1.8.0.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-fileupload:commons-fileupload:1.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-io:commons-io:1.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.directwebremoting:dwr:2.0.5-mod" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: taglibs:standard:1.1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jfreechart:1.0.12" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jcommon:1.0.15" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.5.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.jackson:jackson-core-asl:1.5.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jstl:1.1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-web:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-webmvc:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-context-support:3.0.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
   </component>
 </module>
 

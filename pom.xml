@@ -12,9 +12,9 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/trunk/</connection>
-		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/trunk/</developerConnection>
-		<url>http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/trunk/</url>
+		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/</connection>
+		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/</developerConnection>
+		<url>http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/</url>
 	</scm>
 
 	<modules>
@@ -22,7 +22,19 @@
 		<module>omod</module>
 	</modules>
 
+	<properties>
+		<openMRSVersion>1.7.0</openMRSVersion>
+		<htmlformentryVersion>1.7.3</htmlformentryVersion>
+	</properties>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlformentry</artifactId>
+			<version>${htmlformentryVersion}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
 			<artifactId>openmrs-api</artifactId>
@@ -45,10 +57,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<properties>
-		<openMRSVersion>1.6.0</openMRSVersion>
-	</properties>
 
 	<build>
 		<pluginManagement>

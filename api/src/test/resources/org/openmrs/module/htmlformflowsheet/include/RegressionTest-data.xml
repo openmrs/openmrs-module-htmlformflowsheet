@@ -20,12 +20,12 @@
 
   <!-- Weight and CD4 concepts -->
   <concept concept_id="1" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="1" />
-  <concept_name voided="false" concept_name_id="1" concept_id="1" name="CD4 COUNT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1" concept_id="1" name="CD4 COUNT" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept concept_id="2" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="1"/>
-  <concept_name voided="false" concept_name_id="2" concept_id="2" name="WEIGHT (KG)" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="3" concept_id="2" name="POIDS (KG)" locale="fr" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="2" concept_id="2" name="WEIGHT (KG)" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="3" concept_id="2" name="POIDS (KG)" locale="fr" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept concept_id="3" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="1"/>
-  <concept_name voided="false" concept_name_id="4" concept_id="3" name="HEIGHT (CM)" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="4" concept_id="3" name="HEIGHT (CM)" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
 
   <!-- Weight and Height obs for our patient -->
   <obs obs_id="1" person_id="2" concept_id="2" obs_datetime="2005-01-01 00:00:00.0" value_numeric="70.0" location_id="1" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="93bf1d82-e1fe-11df-9195-001e378eb67e" />
@@ -35,9 +35,9 @@
   <concept concept_id="4" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="true" datatype_id="4"/>
   <concept concept_id="5" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="1"/>
   <concept concept_id="6" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="3"/>
-  <concept_name voided="false" concept_name_id="5" concept_id="4" name="DOSAGE CONSTRUCT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="6" concept_id="5" name="DOSE" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="7" concept_id="6" name="UNIT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="5" concept_id="4" name="DOSAGE CONSTRUCT" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="6" concept_id="5" name="DOSE" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="7" concept_id="6" name="UNIT" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept_set concept_set_id="1" concept_id="5" concept_set="4" sort_weight="1" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_set concept_set_id="2" concept_id="6" concept_set="4" sort_weight="2" creator="1" date_created="2005-01-01 00:00:00.0"/>
   
@@ -46,17 +46,17 @@
   <concept concept_id="8" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="3" uuid="32296060-03-102d-b0e3-001ec94a0cc2"/>
   <concept concept_id="9" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="6" uuid="32296060-03-102d-b0e3-001ec94a0cc3"/>
   <concept concept_id="1000" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="2" uuid="32296060-03-102d-b0e3-001ec94a0cc4"/>
-  <concept_name voided="false" concept_name_id="7" concept_id="7" name="ALLERGY CONSTRUCT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="8" concept_id="8" name="ALLERGY" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="9" concept_id="9" name="ALLERGY DATE" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="1100" concept_id="1000" name="ALLERGY CODED" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="7" concept_id="7" name="ALLERGY CONSTRUCT" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="8" concept_id="8" name="ALLERGY" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="9" concept_id="9" name="ALLERGY DATE" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1100" concept_id="1000" name="ALLERGY CODED" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept_set concept_set_id="3" concept_id="8" concept_set="7" sort_weight="1" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_set concept_set_id="4" concept_id="9" concept_set="7" sort_weight="2" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_set concept_set_id="5" concept_id="1000" concept_set="7" sort_weight="3" creator="1" date_created="2005-01-01 00:00:00.0"/>
   
   <!-- Add another allergy construct -->
  <concept concept_id="1004" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="true" datatype_id="4" uuid="42296060-03-102d-b0e3-001ec94a0cc1"/>
- <concept_name voided="false" concept_name_id="1004" concept_id="1004" name="ANOTHER ALLERGY CONSTRUCT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+ <concept_name voided="false" concept_name_id="1004" concept_id="1004" name="ANOTHER ALLERGY CONSTRUCT" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
  <concept_set concept_set_id="6" concept_id="8" concept_set="1004" sort_weight="1" creator="1" date_created="2005-01-01 00:00:00.0"/>
  <concept_set concept_set_id="7" concept_id="9" concept_set="1004" sort_weight="2" creator="1" date_created="2005-01-01 00:00:00.0"/>
  <concept_set concept_set_id="8" concept_id="1000" concept_set="1004" sort_weight="3" creator="1" date_created="2005-01-01 00:00:00.0"/>
@@ -64,7 +64,7 @@
  
  <!--  Add a HYPER-ALLERGY concept to test obsgroupb with similar answers -->
  <concept concept_id="1005" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="2" uuid="52296060-03-102d-b0e3-001ec94a0cc1"/>
- <concept_name voided="false" concept_name_id="1008" concept_id="1005" name="HYPER-ALLERGY CODED" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+ <concept_name voided="false" concept_name_id="1008" concept_id="1005" name="HYPER-ALLERGY CODED" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
  <concept_set concept_set_id="9" concept_id="1005" concept_set="7" sort_weight="4" creator="1" date_created="2005-01-01 00:00:00.0"/>
  <concept_set concept_set_id="10" concept_id="1005" concept_set="1004" sort_weight="4" creator="1" date_created="2005-01-01 00:00:00.0"/>
  
@@ -72,9 +72,9 @@
   <concept concept_id="1001" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="2" uuid="32296060-03-102d-b0e3-001ec94a0cc5"/>
   <concept concept_id="1002" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="2" uuid="32296060-03-102d-b0e3-001ec94a0cc6"/>
   <concept concept_id="1003" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="2" uuid="32296060-03-102d-b0e3-001ec94a0cc7"/>
-  <concept_name voided="false" concept_name_id="1001" concept_id="1001" name="PENICILLIN" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="1002" concept_id="1002" name="CATS" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="1003" concept_id="1003" name="OPENMRS" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1001" concept_id="1001" name="PENICILLIN" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1002" concept_id="1002" name="CATS" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1003" concept_id="1003" name="OPENMRS" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept_answer concept_answer_id="1001" concept_id="1000" answer_concept="1001" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_answer concept_answer_id="1002" concept_id="1000" answer_concept="1002" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_answer concept_answer_id="1003" concept_id="1000" answer_concept="1003" creator="1" date_created="2005-01-01 00:00:00.0"/>
@@ -138,14 +138,14 @@
   <concept concept_id="1414" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="4" uuid="32296060-03-102d-b0e3-001ec4561414"/>
   <concept concept_id="3016" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="1" uuid="32296060-03-102d-b0e3-001ec4560334"/>
   <concept concept_id="3032" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="6" uuid="32296060-03-102d-bb7e-001ec4560334"/>
-  <concept_name voided="false" concept_name_id="3032" concept_id="3032" name="DST Start Date" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="3016" concept_id="3016" name="Colonies" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="2474" concept_id="2474" name="Susceptible" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="3017" concept_id="3017" name="Intermediate" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="1441" concept_id="1441" name="Resistant" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="656" concept_id="656" name="ISONIAZID" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="767" concept_id="767" name="RIFAMPICIN" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
-  <concept_name voided="false" concept_name_id="1414" concept_id="1414" name="ETHIONAMIDE" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="3032" concept_id="3032" name="DST Start Date" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="3016" concept_id="3016" name="Colonies" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="2474" concept_id="2474" name="Susceptible" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="3017" concept_id="3017" name="Intermediate" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1441" concept_id="1441" name="Resistant" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="656" concept_id="656" name="ISONIAZID" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="767" concept_id="767" name="RIFAMPICIN" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1414" concept_id="1414" name="ETHIONAMIDE" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept_answer concept_answer_id="1008" concept_id="2474" answer_concept="656" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_answer concept_answer_id="1009" concept_id="2474" answer_concept="767" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_answer concept_answer_id="1010" concept_id="3017" answer_concept="656" creator="1" date_created="2005-01-01 00:00:00.0"/>
@@ -157,9 +157,9 @@
   <concept_answer concept_answer_id="1016" concept_id="1441" answer_concept="1414" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <!--  here are the DST parent groups -->
   <concept concept_id="3040" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="4" uuid="32296060-03-102d-b0e3-001ece375333"/>
-  <concept_name voided="false" concept_name_id="3040" concept_id="3040" name="TUBERCULOSIS DRUG SENSITIVITY TEST CONSTRUCT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="3040" concept_id="3040" name="TUBERCULOSIS DRUG SENSITIVITY TEST CONSTRUCT" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept concept_id="3025" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="4" uuid="32296060-03-102d-b0e3-001f63240333"/>
-  <concept_name voided="false" concept_name_id="3025" concept_id="3025" name="TUBERCULOSIS DRUG SENSITIVITY TEST RESULT" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="3025" concept_id="3025" name="TUBERCULOSIS DRUG SENSITIVITY TEST RESULT" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <!-- DST construct owns DST result constructs-->
   <concept_set concept_set_id="3040" concept_id="3025" concept_set="3040" sort_weight="1" creator="1" date_created="2005-01-01 00:00:00.0"/>
   <concept_set concept_set_id="3041" concept_id="3032" concept_set="3040" sort_weight="2" creator="1" date_created="2005-01-01 00:00:00.0"/>
@@ -171,11 +171,11 @@
   
   <!-- Concepts for testing datatypes -->
   <concept concept_id="1007" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="8" uuid="32296060-03-102d-b0e3-001ec94a0dd3"/>
-  <concept_name voided="false" concept_name_id="1007" concept_id="1007" name="Timestamp Test" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1007" concept_id="1007" name="Timestamp Test" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept concept_id="1008" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="6" uuid="e6660638-fce1-11df-9692-001e378eb67e"/>
-  <concept_name voided="false" concept_name_id="1009" concept_id="1008" name="Date" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" /> 
+  <concept_name voided="false" concept_name_id="1009" concept_id="1008" name="Date" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
   <concept concept_id="1009" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" is_set="false" datatype_id="7" uuid="f5396f06-fce1-11df-9692-001e378eb67e"/>
-  <concept_name voided="false" concept_name_id="1010" concept_id="1009" name="Time" locale="en" creator="1" date_created="2005-01-01 00:00:00.0" />
+  <concept_name voided="false" concept_name_id="1010" concept_id="1009" name="Time" locale="en" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" />
 
   <!-- Some drugs -->
   <drug drug_id="2" concept_id="792" name="Triomune-30" combination="true" dose_strength="1.0" units="tab(s)" creator="1" date_created="2005-02-24 00:00:00.0" retired="false" uuid="3cfcf118-931c-46f7-8ff6-7b876f0d4202"/>

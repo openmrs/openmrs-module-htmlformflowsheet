@@ -22,7 +22,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.module.htmlformflowsheet.SingleHtmlFormPatientChartTab;
 import org.openmrs.module.htmlformflowsheet.SingleHtmlFormPatientChartTab.Which;
-import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
 
 public class HtmlFormFlowsheetDWR {
 
@@ -36,9 +35,9 @@ public class HtmlFormFlowsheetDWR {
 
             //first void all schema obs in encounter
             Encounter enc = es.getEncounter(encId);
-            Form form = HtmlFormFlowsheetWebUtils.getFormFromString(formId);
-            Set<Concept> concepts = HtmlFormFlowsheetWebUtils.getAllConceptsUsedInHtmlForm(form);
-            Set<Drug> drugs = HtmlFormFlowsheetWebUtils.getAllDrugsUsedInHtmlForm(form);
+            Form form = HtmlFormFlowsheetUtil.getFormFromString(formId);
+            Set<Concept> concepts = HtmlFormFlowsheetUtil.getAllConceptsUsedInHtmlForm(form);
+            Set<Drug> drugs = HtmlFormFlowsheetUtil.getAllDrugsUsedInHtmlForm(form);
            
             
             for (Obs o : enc.getAllObs()){

@@ -15,123 +15,47 @@ package org.openmrs.module.htmlformflowsheet.activator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.Activator;
+import org.openmrs.module.BaseModuleActivator;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
-import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetContextAware;
 import org.openmrs.module.htmlformflowsheet.handlers.HtmlFormFlowsheetHandler;
-import org.openmrs.module.htmlformflowsheet.web.utils.HtmlFormFlowsheetWebUtils;
-import org.springframework.context.ApplicationContext;
-
 
 /**
  * This class contains the logic that is run every time this module
  * is either started or shutdown
  */
-public class HtmlFormFlowsheetModuleActivator implements Activator, Runnable  {
+public class HtmlFormFlowsheetModuleActivator extends BaseModuleActivator {
 
     private Log log = LogFactory.getLog(this.getClass());
 
-    /**
-     * @see org.openmrs.module.Activator#startup()
-     */
-    public final void shutdown() {
-        onShutdown();
-    }
+	@Override
+	public void started() {
+		log.info("htmlformflowsheet module started");
+	}
 
-    /**
-     * @see org.openmrs.module.Activator#shutdown()
-     */
-    public final void startup() {
-        onStartup();
-        log.info("Starting HtmlFormFlowsheet");
-        Thread contextChecker = new Thread(this);
-        contextChecker.start();
-    }
+	@Override
+	public void contextRefreshed() {
+		try {
+			HtmlFormEntryService hfes = Context.getService(HtmlFormEntryService.class);
+			hfes.addHandler("htmlformflowsheet", new HtmlFormFlowsheetHandler());
+			log.info("Successfully registered htmlformflowsheet tag with htmlformentry...");
+		}
+		catch (Exception e){
+			log.error("Failed to register htmlformflowsheet tag with htmlformentry...", e);
+		}
+	}
 
-    /**
-     * @see java.lang.Runnable#run()
-     */
-    public final void run() {
-        // Wait for context refresh to finish
+	@Override
+	public void stopped() {
+		try {
+			HtmlFormEntryService hfes = Context.getService(HtmlFormEntryService.class);
+			hfes.getHandlers().remove("htmlformflowsheet");
+			log.info("Unregistered htmlformflowsheet tag with htmlformentry...");
+		}
+		catch (Exception e) {
+			log.error("Failed to unregister htmlformflowsheet tag with htmlformentry...", e);
+		}
 
-        ApplicationContext ac = null;
-        HtmlFormEntryService fs = null;
-        try {
-            while (ac == null || fs == null) {
-                Thread.sleep(30000);
-                if (HtmlFormFlowsheetContextAware.getApplicationContext() != null){
-                    try{
-                        log.info("HtmlFormFlowsheet still waiting for app context and services to load...");
-                        ac = HtmlFormFlowsheetContextAware.getApplicationContext();
-                        fs = Context.getService(HtmlFormEntryService.class);
-                    } catch (APIException apiEx){}
-                }
-            }
-        } catch (InterruptedException ex) {}
-        try {
-            Thread.sleep(10000);
-            // Start new OpenMRS session on this thread
-            Context.openSession();
-            Context.addProxyPrivilege("View Concept Classes");
-            Context.addProxyPrivilege("View Concepts");
-            Context.addProxyPrivilege("Manage Concepts");
-            Context.addProxyPrivilege("View Global Properties");
-            Context.addProxyPrivilege("Manage Global Properties");
-            Context.addProxyPrivilege("SQL Level Access");
-            Context.addProxyPrivilege("View Forms");
-            Context.addProxyPrivilege("Manage Forms");
-            onLoad(fs);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException("Could not pre-load concepts " + ex);
-        } finally {
-            Context.removeProxyPrivilege("SQL Level Access");
-            Context.removeProxyPrivilege("View Concept Classes");
-            Context.removeProxyPrivilege("View Concepts");
-            Context.removeProxyPrivilege("Manage Concepts");
-            Context.removeProxyPrivilege("View Global Properties");
-            Context.removeProxyPrivilege("Manage Global Properties");
-            Context.removeProxyPrivilege("View Forms");
-            Context.removeProxyPrivilege("Manage Forms");
-            Context.closeSession();
-            
-            log.info("Finished loading htmlformflowsheet metadata.");
-        }   
-    }
-    
-    /**
-     * Called when module is being started
-     */
-    protected void onStartup() {        
-    }
-    
-    /**
-     * Called after module application context has been loaded. There is no authenticated
-     * user so all required privileges must be added as proxy privileges
-     */
-    protected void onLoad(HtmlFormEntryService hfes) { 
-        try {
-            HtmlFormFlowsheetWebUtils.configureTabsAndLinks();
-        } catch (Exception ex){
-            ex.printStackTrace(System.out);
-            log.error("configuration of tabs and links in htmlformflowsheet failed.");
-        }
-        try {
-            hfes.addHandler("htmlformflowsheet", new HtmlFormFlowsheetHandler());
-        } catch (Exception ex){
-            ex.printStackTrace(System.out);
-            log.error("failed to register htmlformflowsheet tag in htmlformflowsheet");
-        }
-        log.info("registering htmlformflowsheet tag...");
-    }
-    
-    /**
-     * Called when module is being shutdown
-     */
-    protected void onShutdown() {       
-    }
-
-	
+		log.info("htmlformflowsheet module stopped");
+	}
 }

@@ -16,11 +16,9 @@ import org.openmrs.Encounter;
 import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.htmlformflowsheet.web.controller.HtmlEncounterChartContentController;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 public class HtmlFormFlowsheetServiceTest extends BaseModuleContextSensitiveTest {
-    
     
     protected static final String XML_DATASET_PATH = "org/openmrs/module/htmlformflowsheet/include/";
     
