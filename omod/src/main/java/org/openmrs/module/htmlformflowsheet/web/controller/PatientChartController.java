@@ -94,7 +94,7 @@ public class PatientChartController implements Controller {
 		       model.put("addAnotherButtonLabel", addAnotherButtonLabel);
 		    }    
 		    
-		    if(showProvider.equals("true"))
+		    if("true".equals(showProvider))
 		    {
 		    	model.put("showProvider", true);
 		    	model.put("providerHeader", request.getParameter("providerHeader"));
