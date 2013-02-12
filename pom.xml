@@ -12,9 +12,9 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/</connection>
-		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/</developerConnection>
-		<url>http://svn.openmrs.org/openmrs-modules/htmlformflowsheet/</url>
+		<connection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</connection>
+		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</developerConnection>
+		<url>https://github.com/openmrs/openmrs-module-htmlformflowsheet/</url>
 	</scm>
 
 	<modules>
