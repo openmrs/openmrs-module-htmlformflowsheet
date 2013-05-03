@@ -6,7 +6,7 @@ Parameters:
 					 use the special value '*' to signify all encounters regardless of type
 	conceptsToShow: (comma-separated list of concept ids) tells what concepts to show the
 					obs of in the table. If not specified, then all concepts will be extracted
-					from the specified form (not yet implemented)
+					from the specified form
 	showAddAnother: (boolean, default = true) if 'false', there's no option for "add another"
 	formId: which form to use for the "add another"
 --%>
@@ -32,7 +32,7 @@ Parameters:
 			st = $j.URLEncode("${model.addAnotherButtonLabel}");
 		</c:if>
 		$j(document).ready(function() {
-				$j('#encounterWidget_${model.portletUUID}').load('${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&windowHeight=${model.windowHeight}&showProvider=${model.showProvider}&providerHeader=${model.providerHeader}&showHtmlFormInstead=${model.showHtmlFormInstead}&addAnotherButtonLabel='+st);
+				$j('#encounterWidget_${model.portletUUID}').load('${pageContext.request.contextPath}/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.patientId}&readOnly=${model.readOnly}&portletUUID=${model.portletUUID}&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&windowHeight=${model.windowHeight}&showProvider=${model.showProvider}&providerHeader=${model.providerHeader}&showHtmlFormInstead=${model.showHtmlFormInstead}&conceptsToShow=${model.conceptsToShow}&addAnotherButtonLabel='+st);
 		});
 	</script>
 

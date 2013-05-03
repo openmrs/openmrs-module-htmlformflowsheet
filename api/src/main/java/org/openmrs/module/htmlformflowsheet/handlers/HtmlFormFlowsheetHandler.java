@@ -11,12 +11,11 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Encounter;
+import org.openmrs.Concept;
 import org.openmrs.Form;
 import org.openmrs.Patient;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
 import org.openmrs.module.htmlformentry.FormEntrySession;
-import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.handler.AbstractTagHandler;
 import org.openmrs.module.htmlformentry.handler.AttributeDescriptor;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
@@ -43,7 +42,7 @@ import org.w3c.dom.Node;
  * showProvider (optional) -- show an additional column that shows the encounter provider name next to the date column. The value of 
  * 				attribute will be used as the display header for the provider column.
  */
-public class HtmlFormFlowsheetHandler  extends AbstractTagHandler {
+public class HtmlFormFlowsheetHandler extends AbstractTagHandler {
 
     /** The logger to use with this class */
     protected final Log log = LogFactory.getLog(getClass());
@@ -51,112 +50,89 @@ public class HtmlFormFlowsheetHandler  extends AbstractTagHandler {
     protected List<AttributeDescriptor> createAttributeDescriptors() {
 		List<AttributeDescriptor> attributeDescriptors = new ArrayList<AttributeDescriptor>();
 		attributeDescriptors.add(new AttributeDescriptor("formId", Form.class));
+		attributeDescriptors.add(new AttributeDescriptor("conceptsToShow", Concept.class));
 		return Collections.unmodifiableList(attributeDescriptors);
 	}
     
     public boolean doStartTag(FormEntrySession session, PrintWriter out, Node parent, Node node) {
-        Map<String, String> attributes = new HashMap<String, String>();        
+
+		Map<String, String> attributes = new HashMap<String, String>();
         NamedNodeMap map = node.getAttributes();
         for (int i = 0; i < map.getLength(); ++i) {
             Node attribute = map.item(i);
             attributes.put(attribute.getNodeName(), attribute.getNodeValue());
         }
-        
-        //formId
-        String configuration = null;
+
         Patient patient = session.getPatient();
-        try {
-            configuration = attributes.get("formId");
-            Form form = HtmlFormFlowsheetUtil.getFormFromString(configuration);
-            configuration = HtmlFormFlowsheetUtil.getFormIdAsString(form);
-            if (configuration == null)
-                throw new RuntimeException("htmlformflowsheet tag must have a formId attribute in your htmlform xml.");
-        } catch (Exception ex){
-            throw new IllegalArgumentException("Cannot find formId in "
-                    + attributes);
-        }
-        
-        //sharedEncounter
-        String showAllWithEncType = null;
-        try {
-            showAllWithEncType = attributes.get("sharedEncounter");
-        } catch (Exception ex){
-            
-        }
-        
-        //addAnotherButtonLabel
-        String addAnotherButtonLabel = (String) attributes.get("addAnotherButtonLabel");
-        try {
-            if (!StringUtils.isEmpty(addAnotherButtonLabel)){
-                addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
-            }    
-        } catch (Exception ex){
-            ex.fillInStackTrace();
-        }
-        
-        //for backward-compatibility:  TODO: Get rid of this soon...
-        if (StringUtils.isEmpty(addAnotherButtonLabel)){
-	        addAnotherButtonLabel = (String) attributes.get("addNewButtonLabel");
-	        try {
-	            if (!StringUtils.isEmpty(addAnotherButtonLabel)){
-	                addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
-	            }    
-	        } catch (Exception ex){
-	            ex.fillInStackTrace();
-	        }
-        }
-        
-        
-        //windowHeight
-        String windowHeight = (String) attributes.get("windowHeight");
-        
-        
-        String showProvider = "false";
-        String providerHeader = null;
-        if((String) attributes.get("showProvider") != null)
-        {
-        	showProvider = "true";
-        	providerHeader = (String) attributes.get("showProvider");
-        }
-        
-        //showHtmlForm
-        String showHtmlFormInstead = "false";
-        String showHtmlFormInsteadStr = (String) attributes.get("showHtmlForm");
-        if (!StringUtils.isEmpty(showHtmlFormInsteadStr) && showHtmlFormInsteadStr.equals("true"))
-            showHtmlFormInstead = "true";
-        
-        //readOnly
-        //defaults
-        String readOnly = "false";
-        if (session.getContext().getMode().equals(Mode.VIEW))
-            readOnly = "true";
-        //explicitly passed in:
-        String readOnlyStr = (String) attributes.get("readOnly");
-        if (readOnlyStr != null && readOnlyStr.equals("true"))
-            readOnly = "true";
-        else if (readOnlyStr != null && readOnlyStr.equals("false"))
-            readOnly = "false";
-        
-        //setup the iframe
-        if (patient != null){
-            StringBuilder sb = new StringBuilder("");
-            
-            sb.append("<iframe id='iframeFor" + configuration + "' name='iframeFor" + configuration + "'");
-            String source = "";
-            String encounterTypeAddition = "";
-            if (showAllWithEncType != null && showAllWithEncType.equals("true")){
-                encounterTypeAddition = "&showAllEncsWithEncType=" + showAllWithEncType;
-            }
-            if (!session.getContext().getMode().equals(Mode.VIEW)){
-                //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=" + readOnly + "&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&showHtmlForm=" + showHtmlFormInstead + "&windowHeight=" + windowHeight + "&showProvider=" + showProvider + "&providerHeader=" + providerHeader + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
-            } else {
-                //sb.append("  src='/openmrs/module/htmlformflowsheet/patientWidgetChart.list?readOnly=true&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + "'  ");
-                source = "'/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?readOnly=" + readOnly + "&fullPage=false&patientId=" + patient.getPatientId() + "&configuration=F:BOO:" + configuration + encounterTypeAddition + "&showHtmlForm=" + showHtmlFormInstead + "&windowHeight=" + windowHeight + "&showProvider=" + showProvider + "&providerHeader=" + providerHeader + "&addAnotherButtonLabel=" + addAnotherButtonLabel + "'";
-            }
-            sb.append(" src='/"+WebConstants.WEBAPP_NAME+"/moduleResources/htmlformflowsheet/pleaseWait.htm'  ");
-            sb.append(" width='100%' frameborder='0' scrolling='no'></iframe><br/><script>window.frames['iframeFor" + configuration + "'].innerHTML = 'please wait...'; \n function iframe"+configuration+"(){window.frames['iframeFor" + configuration + "'].location = "+source+";} \n setTimeout('iframe"+configuration+"();', 1);</script>");
-            
+
+        if (patient != null) {
+
+			// Retrieve and validate the form id that this is loading
+			String formId = null;
+			String formIdAtt = attributes.get("formId");
+			if (StringUtils.isEmpty(formIdAtt)) {
+				throw new IllegalArgumentException("You must specify a 'formId' attribute in your htmlformflowsheet tag");
+			}
+			try {
+				Form form = HtmlFormFlowsheetUtil.getFormFromString(formIdAtt);
+				formId = HtmlFormFlowsheetUtil.getFormIdAsString(form);
+			}
+			catch (Exception e) {
+				throw new IllegalArgumentException("The 'formId' attribute in your htmlformflowsheet tag is invalid", e);
+			}
+
+			// Construct the portlet to load based on the input attributes
+			StringBuilder source = new StringBuilder();
+			source.append("/"+WebConstants.WEBAPP_NAME+"/module/htmlformflowsheet/patientWidgetChart.list?patientId=" + patient.getPatientId());
+			source.append("&fullPage=false&configuration=F:BOO:" + formId);
+
+			String readOnly = attributes.get("readOnly");
+			if (StringUtils.isEmpty(readOnly)) {
+				readOnly = Boolean.toString(session.getContext().getMode().equals(Mode.VIEW));
+			}
+			source.append("&readOnly=" + readOnly);
+
+			String showHtmlForm = Boolean.toString("true".equals(attributes.get("showHtmlForm")));
+			source.append("&showHtmlForm=" + showHtmlForm);
+
+			String windowHeight = attributes.get("windowHeight");
+			source.append("&windowHeight=" + windowHeight);
+
+			if ("true".equals(attributes.get("sharedEncounter"))) {
+				source.append("&showAllEncsWithEncType=true");
+			}
+
+			boolean showProvider = attributes.get("showProvider") != null && !"false".equals(attributes.get("showProvider"));
+			if (showProvider) {
+				source.append("&showProvider=true" + showProvider);
+				if (StringUtils.isNotEmpty(attributes.get("providerHeader"))) {
+					source.append("&providerHeader=" + attributes.get("providerHeader"));
+				}
+			}
+
+			String addAnotherButtonLabel = attributes.get("addAnotherButtonLabel");
+			if (StringUtils.isEmpty(addAnotherButtonLabel)) {
+				addAnotherButtonLabel = attributes.get("addNewButtonLabel"); // TODO: Remove this when possible
+			}
+			if (StringUtils.isNotEmpty(addAnotherButtonLabel)) {
+				try {
+					addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
+				}
+				catch (Exception e) {
+					throw new IllegalArgumentException("The value of '" + addAnotherButtonLabel + "' is invalid", e);
+				}
+				source.append("&addAnotherButtonLabel="+addAnotherButtonLabel);
+			}
+
+			String conceptsToShow = attributes.get("conceptsToShow");
+			if (StringUtils.isNotEmpty(conceptsToShow)) {
+				source.append("&conceptsToShow=" + conceptsToShow);
+			}
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("<iframe id='iframeFor" + formId + "' name='iframeFor" + formId + "'");
+			sb.append(" src='/"+WebConstants.WEBAPP_NAME+"/moduleResources/htmlformflowsheet/pleaseWait.htm'  ");
+			sb.append(" width='100%' frameborder='0' scrolling='no'></iframe><br/><script>window.frames['iframeFor" + formId + "'].innerHTML = 'please wait...'; \n function iframe"+formId+"(){window.frames['iframeFor" + formId + "'].location = '"+source+"';} \n setTimeout('iframe"+formId+"();', 1);</script>");
             out.print(sb.toString());
             
         } else {
@@ -165,11 +141,7 @@ public class HtmlFormFlowsheetHandler  extends AbstractTagHandler {
         
         return true;
     }
-    
+
     public void doEndTag(FormEntrySession session, PrintWriter out, Node parent, Node node) {
-        // TODO Auto-generated method stub
-        
     }
-    
-    
 }

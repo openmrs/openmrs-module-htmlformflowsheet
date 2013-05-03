@@ -104,8 +104,16 @@
 			<c:if test="${model.foundEncounters[enc] == 'true'}">
 				<c:set var="found" value="true"/>
 	        </c:if>
-			
-			<c:if test="${found == 'true'}">
+
+		<% // MS:  Note, I have added modified the below to show the row if conceptsToShow is not empty,
+		   // because this is a new attribute, and I want to use it in conjunction with an htmlform, where I
+		   // show a list of all followup forms, but only certain fields in the summary view.
+		   // at some point we need to review whether it is a good idea or not to hide encounters with no matching
+		   // data.  I understand it is useful if you just want to show a table of something like weights, for example,
+		   // but I worry about the risk of inadvertently hiding encounters that really should be shown
+		   // TODO
+		%>
+			<c:if test="${found == 'true' || !(empty model.conceptsToShow)}">
 					<tr style="height:30px;">
 						<td style="width:38px;"> 
 						 <c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">

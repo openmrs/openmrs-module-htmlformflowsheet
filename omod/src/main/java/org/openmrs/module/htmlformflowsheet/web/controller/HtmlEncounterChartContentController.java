@@ -103,7 +103,7 @@ public class HtmlEncounterChartContentController implements Controller {
         model.put("formId", formId);
         model.put("encounterTypeId", encounterTypeId);
         model.put("encounterType", Context.getEncounterService().getEncounterType(encounterTypeId));
-        model.put("conceptsToShow", "");
+        model.put("conceptsToShow", request.getParameter("conceptsToShow"));
 
         
         //LOAD ALL ENCS
@@ -135,7 +135,10 @@ public class HtmlEncounterChartContentController implements Controller {
             String conceptsToShowString = (String) model.get("conceptsToShow");
             if (StringUtils.hasText(conceptsToShowString)) {
                 for (String idAsString : conceptsToShowString.split(",")) {
-                    Concept c = Context.getConceptService().getConcept(idAsString);
+					Concept c = Context.getConceptService().getConceptByUuid(idAsString);
+					if (c == null) {
+						c = Context.getConceptService().getConcept(idAsString);
+					}
                     Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
                     conceptAndNameString.put(c, c.getBestShortName(Context.getLocale()).getName());
                     concepts.add(conceptAndNameString);

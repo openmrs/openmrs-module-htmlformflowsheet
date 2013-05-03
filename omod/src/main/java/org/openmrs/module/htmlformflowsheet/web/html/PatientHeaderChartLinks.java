@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
 import org.openmrs.Form;
 import org.openmrs.Patient;
@@ -25,14 +26,18 @@ public class PatientHeaderChartLinks extends Extension {
         if (!Context.isAuthenticated()) {
             return "";
         }
+		String gp = Context.getAdministrationService().getGlobalProperty("htmlformflowsheet.patientChartFormIds");
+
+		if (StringUtils.isEmpty(gp)) {
+			return "";
+		}
+
         StringBuilder sbExisting = new StringBuilder("");
         StringBuilder sbNonExisting = new StringBuilder("");
         try {
 	        String patientId = this.getParameterMap().get("patientId");
 	        Patient p = Context.getPatientService().getPatient(Integer.valueOf(patientId));
-	        String gp = Context.getAdministrationService().getGlobalProperty("htmlformflowsheet.patientChartFormIds");
-	        
-	        
+
 	        for (StringTokenizer st = new StringTokenizer(gp, ","); st.hasMoreTokens(); ) {
 	        	
 	        	Map<Integer, Set<Integer>> progForms = new HashMap<Integer, Set<Integer>>();

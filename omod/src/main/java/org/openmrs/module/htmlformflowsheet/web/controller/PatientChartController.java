@@ -3,6 +3,7 @@ package org.openmrs.module.htmlformflowsheet.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
@@ -63,6 +64,8 @@ public class PatientChartController implements Controller {
 			String showProvider = request.getParameter("showProvider");
 			String showAllEncsWithEncTypeStr = request.getParameter("showAllEncsWithEncType");
 			String showHtmlFormInsteadStr = request.getParameter("showHtmlForm");
+			String conceptsToShow = request.getParameter("conceptsToShow");
+
 			String titleStr = request.getParameter("title");
 			if (showHtmlFormInsteadStr != null && showHtmlFormInsteadStr.equals("true"))
 			    showHtmlFormInstead = "true";	
@@ -102,6 +105,9 @@ public class PatientChartController implements Controller {
 		    else {
 		    	model.put("showProvider", false);
 		    }
+
+			model.put("conceptsToShow", (StringUtils.isEmpty(conceptsToShow) ? "" : conceptsToShow));
+
 		    //redirect to a dummy html if no patientId for edit htmlform page
 			Integer patientId = null;
 			Patient patient = null;
