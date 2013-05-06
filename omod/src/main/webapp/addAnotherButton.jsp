@@ -27,7 +27,7 @@
 						<c:if test="${!empty model.encounterListForChart}">
 							<tr><td style="border:0px; text-align:left"> Append a row to an existing visit: </td>
 							<td style="border:0px; text-align:left">
-							<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(${model.windowHeight});showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId},${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }' );}" id="encounterSelect_${model.portletUUID}">
+							<select class="encounterSelect" onMouseUp="if ($j(this).val() != 0){resizeIFrame${model.portletUUID}(${model.windowHeight});showSelectEncounterEditPopup('${model.portletUUID}',$j(this).val(),${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId},${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}');}" id="encounterSelect_${model.portletUUID}">
 							<option value="0"></option>
 							<c:forEach var="enc" items="${model.encounterListForChart}">
 								<option value="${enc.encounterId}">
@@ -39,7 +39,7 @@
 						<tr><td style="border:0px; text-align:left"> Start a New Encounter: </td>
 						<td style="border:0px; text-align:left">
 					</c:if>	
-						<button onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead}, ${model.showProvider},'${model.providerHeader }');"> 
+						<button onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEntryPopup('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead}, ${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}');">
 							<c:if test="${!empty model.addAnotherButtonLabel}">
 								${model.addAnotherButtonLabel}
 							</c:if>

@@ -1,4 +1,4 @@
-function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader) {
+function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow) {
 	var elem = $j('#encounterChartPopup' + uuid);
 	var iframe = $j("#encounterChartIFrame" + uuid);
 	iframe.empty();
@@ -8,7 +8,7 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 		//elem.dialog('option', 'close', function(event, ui) { window.location = jQuery.queryString(window.location.href, 'selectTab=' + tabIndex); });
 		elem.dialog('option', 'close', function(event, ui) { 
              $j('#encounterWidget_' + uuid).html("loading...");
-             var pathStr = openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1) + "&showHtmlFormInstead=" + showHtmlFormInstead + "&showProvider=" + showProvider + "&providerHeader=" + providerHeader;
+             var pathStr = openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=" +personId+ "&personId=" +personId+ "&portletUUID=" + uuid + "&encounterTypeId=" + encounterTypeId +"&view=" + tabIndex+ "&formId=" +formId+ "&count=" + (tabIndex+1) + "&showHtmlFormInstead=" + showHtmlFormInstead + "&showProvider=" + showProvider + "&providerHeader=" + providerHeader + "&conceptsToShow=" + conceptsToShow;
              if (showAllEncs)
              	pathStr = pathStr + "&showAllEncsWithEncType=true";
 			 $j('#encounterWidget_' + uuid).load(pathStr);
@@ -25,20 +25,20 @@ function loadUrlIntoEncounterChartPopup(uuid, title, url, reloadOnClose, tabInde
 	$j(iframe).attr("src", url);
 }
 
-function showEncounterPopup(uuid, encId, formId, showHtmlFormInstead, showProvider, providerHeader) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId +'&formId='+formId, false, "", "", "", formId, false, showHtmlFormInstead, showProvider, providerHeader);
+function showEncounterPopup(uuid, encId, formId, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId +'&formId='+formId, false, "", "", "", formId, false, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow);
 }
-function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, encType, showHtmlFormInstead, showProvider, providerHeader) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, encType, showHtmlFormInstead, showProvider, providerHeader);
+function showEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, encType, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, encType, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow);
 }
-function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, showHtmlFormInstead, showProvider, providerHeader) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, true, showHtmlFormInstead, showProvider, providerHeader);
+function showSelectEncounterEditPopup(uuid, encId, personId, formId, tabIndex, encounterTypeId, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=' + encId + "&formId=" + formId + "&mode=EDIT&closeAfterSubmission=closeEncounterChartPopup" + uuid, true, tabIndex, personId, encounterTypeId, formId, true, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow);
 } 
-function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader) {
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader);
+function showEntryPopup(uuid, personId, formId, tabIndex, encounterTypeId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow) {
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformentry/htmlFormEntry.form?inPopup=true&personId=' + personId + '&formId=' + formId + '&returnUrl='+openmrsContextPath+'/module/htmlformflowsheet/testChart.list%3FselectTab%3D' + tabIndex+ '&closeAfterSubmission=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow);
 }
-function showDrugOrderEditPopup(uuid, drugOrderId, personId, tabIndex, encounterTypeId, formId, showAllEncs, drugSet, showHtmlFormInstead, showProvider, providerHeader){
-	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformflowsheet/drugOrderEdit.form?patientId=' + personId + '&drugSet='+ drugSet + '&drugOrderId=' + drugOrderId + '&dialogToClose=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader);
+function showDrugOrderEditPopup(uuid, drugOrderId, personId, tabIndex, encounterTypeId, formId, showAllEncs, drugSet, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow){
+	loadUrlIntoEncounterChartPopup(uuid, '', openmrsContextPath + '/module/htmlformflowsheet/drugOrderEdit.form?patientId=' + personId + '&drugSet='+ drugSet + '&drugOrderId=' + drugOrderId + '&dialogToClose=closeEncounterChartPopup' + uuid, true, tabIndex, personId, encounterTypeId,  formId, showAllEncs, showHtmlFormInstead, showProvider, providerHeader, conceptsToShow);
 }
 
 function replaceOneChar(s,c,n){

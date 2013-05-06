@@ -48,7 +48,7 @@
 								if (!ret){
 									alert('<spring:message code="htmlformflowsheet.cantdeleteencounter" />');
 								} else {
-									$j('#encounterWidget_' + uuid).load( openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.personId}&portletUUID=" + uuid +"&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&showHtmlFormInstead=${model.showHtmlFormInstead}"); 
+									$j('#encounterWidget_' + uuid).load( openmrsContextPath + "/module/htmlformflowsheet/encounterChartContent.list?patientId=${model.personId}&portletUUID=" + uuid +"&encounterTypeId=${model.encounterTypeId}&view=${model.view}&formId=${model.formId}&count=${model.view + 1}&showAllEncsWithEncType=${model.showAllEncsWithEncType}&showHtmlFormInstead=${model.showHtmlFormInstead}&conceptsToShow=${model.conceptsToShow}");
 									repopulateEncounterSelectOptions(${model.personId}, ${model.encounterTypeId});
 								}
 							});
@@ -119,7 +119,7 @@
 						 <c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">
 							<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 								    name="editEncounter" 
-									onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead}, ${model.showProvider},'${model.providerHeader }');"
+									onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead}, ${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}');"
 									title="edit" 
 									alt="edit"/>			
 							<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
@@ -131,7 +131,7 @@
 						</td>
 						<td>
 							<c:if test="${model.readOnly == 'false' && !empty enc.encounterId}">
-								<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId},${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }')">
+								<a href="javascript:void(0)" onClick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterPopup('${model.portletUUID}', ${enc.encounterId},${model.formId},${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}')">
 									<openmrs:formatDate date="${enc.encounterDatetime}"/>
 								</a>
 							</c:if>
@@ -186,7 +186,7 @@
 														<c:if test="${empty enc.encounterId && model.readOnly == 'false'}">
 														<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 									   						 name="editEncounter" 
-															 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>', ${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }')"
+															 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>', ${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}')"
 															 title="edit" 
 															 alt="edit"/>
 														</c:if>	 

@@ -192,6 +192,8 @@ public class HtmlFormFlowsheetUtil {
 	 } catch (Exception ex){
 		 //pass
 	 }
+	 xml = xml.replace("&nbsp;", ""); // Hack to get the document to parse to valid xml
+
 	 Set<Drug> drugs = new HashSet<Drug>();
 	 try {
 		 Document doc = HtmlFormEntryUtil.stringToDocument(xml);
