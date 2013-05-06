@@ -148,9 +148,7 @@ public class HtmlEncounterChartContentController implements Controller {
                 Patient p = (Patient) model.get("patient");
                 FormEntrySession fes = null;
                 try {
-                    if (p == null)
-                        p = HtmlFormEntryUtil.getFakePerson();
-                    fes = new FormEntrySession(p, null, Mode.VIEW, htmlForm);
+					fes = HtmlFormFlowsheetUtil.createFormEntrySession(p, null, Mode.VIEW, htmlForm, null, null);
                     HtmlFormSchema schema = fes.getContext().getSchema();
                     for (HtmlFormSection section : schema.getSections()) {
                         for (HtmlFormField field : section.getFields()) {

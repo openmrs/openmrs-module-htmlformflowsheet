@@ -1,5 +1,6 @@
 package org.openmrs.module.htmlformflowsheet;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -9,8 +10,14 @@ import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.Encounter;
 import org.openmrs.Form;
+import org.openmrs.Location;
+import org.openmrs.Patient;
+import org.openmrs.Person;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.Module;
+import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.htmlformentry.FormEntryContext;
 import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
@@ -24,6 +31,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.servlet.http.HttpSession;
 
 public class HtmlFormFlowsheetUtil {
 
@@ -138,14 +147,59 @@ public class HtmlFormFlowsheetUtil {
 			return form.getFormId().toString();
 	}
 
+	public static String getCurrentHtmlFormEntryVersion() {
+		Module hfeMod = ModuleFactory.getStartedModuleById("htmlformentry");
+		if (hfeMod != null) {
+			return hfeMod.getVersion();
+		}
+		return null;
+	}
+
+	public static FormEntrySession createFormEntrySession(Form form) {
+		HtmlForm htmlForm = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
+		return createFormEntrySession(null, null, null, htmlForm, null, null);
+	}
+
+	/**
+	 * Utility method to retrieve a new FormEntrySession from htmlformentry
+	 * This is particularly useful since the API to construct a FormEntrySession
+	 * has changed over versions, and this method encapsulates the logic to deal with this
+	 */
+	public static FormEntrySession createFormEntrySession(Patient patient, Encounter encounter,
+														  FormEntryContext.Mode mode, HtmlForm htmlForm,
+														  Location defaultLocation, HttpSession session) {
+		try {
+			if (patient == null) {
+				patient = HtmlFormEntryUtil.getFakePerson();
+			}
+			if (mode == null) {
+				mode = FormEntryContext.Mode.ENTER;
+			}
+
+			// In HFE 2.3, a non-backwards-compatible change was made to the FormEntrySession constructor,
+			// which we need to work around here
+
+			if (getCurrentHtmlFormEntryVersion().compareTo("2.3") >= 0) {
+				Class[] argTypes = {Patient.class, Encounter.class, FormEntryContext.Mode.class, HtmlForm.class, Location.class, HttpSession.class};
+				Constructor c = FormEntrySession.class.getDeclaredConstructor(argTypes);
+				return (FormEntrySession) c.newInstance(patient, encounter, mode, htmlForm, defaultLocation, session);
+			}
+			else {
+				Class[] argTypes = {Patient.class, Encounter.class, FormEntryContext.Mode.class, HtmlForm.class, Location.class};
+				Constructor c = FormEntrySession.class.getDeclaredConstructor(argTypes);
+				return (FormEntrySession) c.newInstance(patient, encounter, mode, htmlForm, defaultLocation);
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Unable to construct new FormEntrySession", e);
+		}
+	}
+
 	public static Set<Concept> getAllConceptsUsedInHtmlForm(Form form){
-
-		HtmlForm htmlform = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
-
 
 		Set<Concept> concepts = new HashSet<Concept>();
 		try {
-			 FormEntrySession session = new FormEntrySession(HtmlFormEntryUtil.getFakePerson(), htmlform);
+			 FormEntrySession session = createFormEntrySession(form);
 			 HtmlFormSchema schema = session.getContext().getSchema();
 			 for (HtmlFormField hff : schema.getAllFields()){
 				 findConceptsHelper(hff, concepts);
@@ -187,8 +241,8 @@ public class HtmlFormFlowsheetUtil {
 	 HtmlForm htmlform = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
 	 String xml = htmlform.getXmlData();
 	 try {
-			FormEntrySession session = new FormEntrySession(HtmlFormEntryUtil.getFakePerson(), htmlform);
-			xml = session.createForm(xml); //this applies macros
+		 FormEntrySession session = createFormEntrySession(form);
+		 xml = session.createForm(xml); //this applies macros
 	 } catch (Exception ex){
 		 //pass
 	 }

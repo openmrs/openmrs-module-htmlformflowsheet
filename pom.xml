@@ -24,13 +24,20 @@
 
 	<properties>
 		<openMRSVersion>1.7.0</openMRSVersion>
-		<htmlformentryVersion>1.7.3</htmlformentryVersion>
+		<htmlformentryVersion>2.0.3</htmlformentryVersion>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
-			<artifactId>htmlformentry</artifactId>
+			<artifactId>htmlformentry-api</artifactId>
+			<version>${htmlformentryVersion}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlformentry-omod</artifactId>
 			<version>${htmlformentryVersion}</version>
 			<type>jar</type>
 			<scope>provided</scope>
