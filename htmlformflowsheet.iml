@@ -10,6 +10,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentry:1.7.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentry-api:2.0.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentry-omod:2.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.api:openmrs-api:1.7.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: antlr:antlr:2.7.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.antlr:antlr-runtime:3.2" level="project" />
