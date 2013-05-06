@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>htmlformflowsheet</artifactId>
-	<version>1.2.6</version>
+	<version>1.2.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>htmlformflowsheet</name>
 	<description>Parent project for htmlformflowsheet</description>
@@ -14,7 +14,7 @@
 		<connection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</connection>
 		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-htmlformflowsheet/</url>
-	  <tag>1.2.6</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<distributionManagement>
