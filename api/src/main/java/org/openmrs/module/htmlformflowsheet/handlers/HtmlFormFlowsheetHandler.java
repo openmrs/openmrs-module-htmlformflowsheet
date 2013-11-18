@@ -1,13 +1,5 @@
 package org.openmrs.module.htmlformflowsheet.handlers;
 
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +14,14 @@ import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
 import org.openmrs.web.WebConstants;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The tag handler for rendering an htmlform within a parent htmlform.
@@ -131,8 +131,9 @@ public class HtmlFormFlowsheetHandler extends AbstractTagHandler {
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("<iframe id='iframeFor" + formId + "' name='iframeFor" + formId + "'");
-			sb.append(" src='/"+WebConstants.WEBAPP_NAME+"/moduleResources/htmlformflowsheet/pleaseWait.htm'  ");
-			sb.append(" width='100%' frameborder='0' scrolling='no'></iframe><br/><script>window.frames['iframeFor" + formId + "'].innerHTML = 'please wait...'; \n function iframe"+formId+"(){window.frames['iframeFor" + formId + "'].location = '"+source+"';} \n setTimeout('iframe"+formId+"();', 1);</script>");
+            sb.append(" src='");
+            sb.append(source.toString()).append("'");
+			sb.append(" width='100%' frameborder='0' scrolling='no'></iframe>");
             out.print(sb.toString());
             
         } else {
