@@ -176,10 +176,15 @@ public class HtmlFormFlowsheetUtil {
 				mode = FormEntryContext.Mode.ENTER;
 			}
 
-			// In HFE 2.3, a non-backwards-compatible change was made to the FormEntrySession constructor,
+			// In HFE 2.0.3, a non-backwards-compatible change was made to the FormEntrySession constructor,
 			// which we need to work around here
 
-			if (getCurrentHtmlFormEntryVersion().compareTo("2.3") >= 0) {
+			if (getCurrentHtmlFormEntryVersion().compareTo("2.0.5") >= 0) {
+				Class[] argTypes = {Patient.class, Encounter.class, FormEntryContext.Mode.class, HtmlForm.class, Location.class, HttpSession.class, boolean.class, boolean.class};
+				Constructor c = FormEntrySession.class.getDeclaredConstructor(argTypes);
+				return (FormEntrySession) c.newInstance(patient, encounter, mode, htmlForm, defaultLocation, session, false, false);
+			}
+			else if (getCurrentHtmlFormEntryVersion().compareTo("2.0.3") >= 0) {
 				Class[] argTypes = {Patient.class, Encounter.class, FormEntryContext.Mode.class, HtmlForm.class, Location.class, HttpSession.class};
 				Constructor c = FormEntrySession.class.getDeclaredConstructor(argTypes);
 				return (FormEntrySession) c.newInstance(patient, encounter, mode, htmlForm, defaultLocation, session);
