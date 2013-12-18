@@ -116,7 +116,7 @@ public class HtmlFormFlowsheetHandler extends AbstractTagHandler {
 			}
 			if (StringUtils.isNotEmpty(addAnotherButtonLabel)) {
 				try {
-					addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");;
+					addAnotherButtonLabel = URLEncoder.encode(addAnotherButtonLabel, "UTF-8");
 				}
 				catch (Exception e) {
 					throw new IllegalArgumentException("The value of '" + addAnotherButtonLabel + "' is invalid", e);
