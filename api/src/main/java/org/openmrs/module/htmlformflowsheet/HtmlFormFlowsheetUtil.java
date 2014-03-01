@@ -205,6 +205,7 @@ public class HtmlFormFlowsheetUtil {
 		Set<Concept> concepts = new HashSet<Concept>();
 		try {
 			 FormEntrySession session = createFormEntrySession(form);
+			String htmlToDisplay = session.getHtmlToDisplay();
 			 HtmlFormSchema schema = session.getContext().getSchema();
 			 for (HtmlFormField hff : schema.getAllFields()){
 				 findConceptsHelper(hff, concepts);
