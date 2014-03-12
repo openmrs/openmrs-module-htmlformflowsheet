@@ -59,7 +59,7 @@
 	<c:forEach var="tab" items="${model.tabs}" varStatus="status">
 		<div id="tabContent${status.count}">
 			<c:choose>
-				<c:when test="${tab.class.simpleName == 'EncounterChartPatientChartTab'}">
+				<c:when test="${tab['class'].simpleName == 'EncounterChartPatientChartTab'}">
 
 					<openmrs:portlet
 						id="encounterChart${status.count}"
@@ -70,7 +70,7 @@
 					/>
 
 				</c:when>
-				<c:when test="${tab.class.simpleName == 'SingleHtmlFormPatientChartTab'}">
+				<c:when test="${tab['class'].simpleName == 'SingleHtmlFormPatientChartTab'}">
 					<openmrs:portlet
 						id="singleForm${status.count}" 
 						url="singleHtmlForm"
@@ -82,7 +82,7 @@
 				</c:when>
 				<c:otherwise>
 
-					<span class="error">Configuration error: don't know how to handle tab class ${tab.class.name}</span>
+					<span class="error">Configuration error: don't know how to handle tab class ${tab['class'].name}</span>
 
 				</c:otherwise>
 			</c:choose>
