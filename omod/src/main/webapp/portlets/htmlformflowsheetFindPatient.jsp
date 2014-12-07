@@ -36,11 +36,11 @@
    						if ($j('#searchBox_${model.portletUUID}').val().length > 2){
    							//verify radio buttons are selected:
    							if ($j("input[name='programs_${model.portletUUID}']:checked") == null || $j("input[name='programs_${model.portletUUID}']:checked").length == 0){
-   				   		    	alert("You must choose a program.");
+   				   		    	alert('<spring:message code="htmlformflowsheet.error.noProgramSelected" />');
    				   		  		return;
    				   		    }
    							if ($j("input[name='restrictByProgram']:checked") == null || $j("input[name='restrictByProgram']:checked").length == 0){
-   				   		    	alert("Please select a 'restrict search' option.");
+   				   		    	alert('<spring:message code="htmlformflowsheet.noSearchOptionSelected" />');
    				   		  		return;
    				   		    }
 	   						HtmlFormFlowhseetFindPatient.findPatients($j('#searchBox_${model.portletUUID}').val(), $j("input[name='restrictByProgram']:checked").val(),$j("input[name='programs_${model.portletUUID}']:checked").val() ,false, function(ret){
@@ -90,13 +90,13 @@
 	   		<c:otherwise>
 
 	   		    if ($j("input[name='programs_${model.portletUUID}']:checked") == null || $j("input[name='programs_${model.portletUUID}']:checked").length == 0){
-	   		    	alert("You must choose a program.");
+	   		    	alert('<spring:message code="htmlformflowsheet.error.noProgramSelected" />');
 	   		  		return;
 	   		    } else {
 	   		    	//get the configuration from the map and build url and then send
 	   		    	var p = $j("input[name='programs_${model.portletUUID}']:checked").val();
 	   		    	if (programLinkMap[p] == null){
-	   		    		alert("invalid programID.  Please tell your local administrator to fix the global property htmlformflowsheet.programConfigurationMap");
+	   		    		alert('<spring:message code="htmlformflowsheet.error.invalidIDadmin" />');
 	   		    		return;	
 	   		    	}	
 	   		    	window.location='${pageContext.request.contextPath}/module/htmlformflowsheet/patientWidgetChart.list?patientId=' + input + "&" + programLinkMap[p];
@@ -228,7 +228,7 @@
 									var mnString = "test";
 									if (patient.patientId != null && patient.patientId != "NaN"){
 										if (patient.attributes != null){
-												mnString = patient.attributes['Mother\'s Name'];
+												mnString = patient.attributes['<spring:message code="htmlformflowsheet.mothersname" />'];
 										}
 									} 
 									return mnString;	
@@ -255,7 +255,7 @@
 									var hcString = " ";
 									if (patient.patientId != null && patient.patientId != "NaN"){
 										if (patient.attributes != null){
-												hcString = patient.attributes['Health Center'];
+												hcString = patient.attributes['<spring:message code="htmlformflowsheet.healthcenter" />'];
 										}
 									} 
 									return hcString;	
@@ -412,7 +412,7 @@
 function useMdrtbLoadingMessage(message) {
   var loadingMessage;
   if (message) loadingMessage = message;
-  else loadingMessage = "Loading...";
+  else loadingMessage = "<spring:message code="htmlformflowsheet.Loading" />";
 
  DWREngine.setPreHook(function() {
  	showLoading = 1;
@@ -540,13 +540,13 @@ function useMdrtbLoadingMessage(message) {
 					var createPatientHtmlFormId=${model.createPatientFormId};
 					function buildURL(){
 						if ($j("input[name='createPatientProgram_${model.portletUUID}']:checked") == null || $j("input[name='createPatientProgram_${model.portletUUID}']:checked").length == 0){
-					    	alert("You must choose a program.");
+					    	alert("<spring:message code="htmlformflowsheet.error.noProgramSelected" />");
 					  		return;
 					    } else {
 					    	//get the configuration from the map and build url and then send
 					    	var p = $j("input[name='createPatientProgram_${model.portletUUID}']:checked").val();
 					    	if (createPatientLinkMap[p] == null){
-					    		alert("invalid programID.  Please check your Global Property!");
+					    		alert("<spring:message code="htmlformflowsheet.error.invalidID" />");
 					    		return;	
 					    	}	
 					    	window.location='${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?formId=' + createPatientHtmlFormId + '&mode=enter&returnUrl=${pageContext.request.contextPath}/module/htmlformflowsheet/patientWidgetChart.list?' + createPatientLinkMap[p];
@@ -557,10 +557,10 @@ function useMdrtbLoadingMessage(message) {
 	</c:if>
 	
 	<c:if test="${empty model.createPatientFormId}">
-		<br><span style="color:red;">Cannot show create patient box.  Missing the createPatientFormId in the portlet parameters.</span> <br>
+		<br><span style="color:red;"><spring:message code="htmlformflowsheet.error.missingcreatePatientFormId" /></span> <br>
 	</c:if>
 	<c:if test="${empty createPatientMapString}">
-	    <br><span style="color:red;">Cannot show create patient box.  Global property htmlformflowsheet.programConfigurationMap is empty. </span> <br>
+	    <br><span style="color:red;"><spring:message code="htmlformflowsheet.error.emptyprogramConfigurationMap" /></span> <br>
 	</c:if>
 
 

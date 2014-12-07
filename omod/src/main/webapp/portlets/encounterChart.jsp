@@ -21,7 +21,7 @@ Parameters:
 <htmlformflowsheet:htmlInclude file="/moduleResources/htmlformflowsheet/urlEncode.js" />
 	
 	<div id="encounterWidget_${model.portletUUID}" style="font-size:90%;">
-				<span>loading...</span>
+				<span><spring:message code="htmlformflowsheet.loading" /></span>
 	</div>
 	
 	

@@ -48,7 +48,7 @@
 					<c:forEach var="drug" items="${allDrugs}">
 						<option value="${drug.key.drugId}"
 							<c:if test="${model.drugOrder.drug.drugId == drug.key.drugId}">
-							      SELECTED   
+							      <spring:message code="htmlformflowsheet.selected" />   
 						    </c:if>
 						>${drug.value}</option>
 					</c:forEach>
@@ -85,7 +85,7 @@
 					<c:forEach var="reason" items="${discontinueReasons}">
 						<option value="${reason.conceptId}"
 							<c:if test="${model.drugOrder.discontinuedReason.conceptId == reason.conceptId}">
-							      SELECTED   
+							      <spring:message code="htmlformflowsheet.selected" />   
 						    </c:if>
 						>${reason.name}</option>
 					</c:forEach>
@@ -106,11 +106,11 @@
 			<td>
 				<select type="text" name="refPrn" id="prn">
 					<option value="false"
-						<c:if test="${model.drugOrder.prn == false}"> SELECTED 
+						<c:if test="${model.drugOrder.prn == false}"> <spring:message code="htmlformflowsheet.selected" />
 						</c:if>
 					><spring:message code="general.false"/></option>
 					<option value="true"
-						<c:if test="${model.drugOrder.prn == true}"> SELECTED 
+						<c:if test="${model.drugOrder.prn == true}"> <spring:message code="htmlformflowsheet.selected" />
 						</c:if>
 					><spring:message code="general.true"/></option>
 				</select>
@@ -126,11 +126,11 @@
 			<td>
 				<select type="text" name="refVoided" id="voided">
 					<option value="false"
-						<c:if test="${model.drugOrder.voided == false}"> SELECTED 
+						<c:if test="${model.drugOrder.voided == false}"> <spring:message code="htmlformflowsheet.selected" /> 
 						</c:if>
 					><spring:message code="general.false"/></option>
 					<option value="true"
-						<c:if test="${model.drugOrder.voided == true}"> SELECTED 
+						<c:if test="${model.drugOrder.voided == true}"> <spring:message code="htmlformflowsheet.selected" />
 						</c:if>
 					><spring:message code="general.true"/></option>
 				</select>
