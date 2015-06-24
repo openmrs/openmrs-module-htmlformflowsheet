@@ -36,8 +36,8 @@
 	</modules>
 
 	<properties>
-		<openMRSVersion>1.7.0</openMRSVersion>
-		<htmlformentryVersion>2.0.3</htmlformentryVersion>
+		<openMRSVersion>1.9.7</openMRSVersion>
+		<htmlformentryVersion>2.1</htmlformentryVersion>
 	</properties>
 
 	<dependencies>
@@ -48,7 +48,15 @@
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>org.openmrs.api</groupId>
+            <artifactId>openmrs-api</artifactId>
+            <version>${openMRSVersion}</version>
+            <type>jar</type>
+            <scope>test</scope>
+            <classifier>tests</classifier>
+        </dependency>
+        <dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>htmlformentry-omod</artifactId>
 			<version>${htmlformentryVersion}</version>
@@ -69,11 +77,11 @@
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.openmrs.test</groupId>
-			<artifactId>openmrs-test</artifactId>
-			<version>${openMRSVersion}</version>
-			<type>jar</type>
+        <dependency>
+            <groupId>org.openmrs.test</groupId>
+            <artifactId>openmrs-test</artifactId>
+            <version>${openMRSVersion}</version>
+            <type>pom</type>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
