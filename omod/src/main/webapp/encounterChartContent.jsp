@@ -120,11 +120,11 @@
 							<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 								    name="editEncounter" 
 									onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showEncounterEditPopup('${model.portletUUID}',${enc.encounterId}, ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterTypeId}, ${model.showAllEncsWithEncType}, ${model.showHtmlFormInstead}, ${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}');"
-									title="edit" 
-									alt="edit"/>			
+									title="<spring:message code="htmlformflowsheet.edit" />" 
+									alt="<spring:message code="htmlformflowsheet.edit" />"/>			
 							<input type="image" src="${pageContext.request.contextPath}/images/trash.gif"  
 								    name="voidEncounter" 
-									onclick="voidEncounter${model.portletUUID}('${model.portletUUID}',${enc.encounterId}, ${model.formId}, confirm('<spring:message code="Are you sure you want to delete this encounter?"/>'));" 
+									onclick="voidEncounter${model.portletUUID}('${model.portletUUID}',${enc.encounterId}, ${model.formId}, confirm('<spring:message code="htmlformflowsheet.deleteEncounters.help"/>'));" 
 									title="<spring:message code="htmlformflowsheet.deleteEncounters"/>" 
 									alt="<spring:message code="htmlformflowsheet.deleteEncounters"/>"/>
 			             </c:if>
@@ -187,8 +187,8 @@
 														<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
 									   						 name="editEncounter" 
 															 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>', ${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}')"
-															 title="edit" 
-															 alt="edit"/>
+															 title="<spring:message code="htmlformflowsheet.edit" />" 
+															 alt="<spring:message code="htmlformflowsheet.edit" />"/>
 														</c:if>	 
 														<c:if test="${!empty drugNames[drugOrder.drug]}">
 															${drugNames[drugOrder.drug]}

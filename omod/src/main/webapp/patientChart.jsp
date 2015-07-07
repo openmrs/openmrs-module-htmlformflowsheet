@@ -82,7 +82,7 @@
 				</c:when>
 				<c:otherwise>
 
-					<span class="error">Configuration error: don't know how to handle tab class ${tab['class'].name}</span>
+					<span class="error"><spring:message code="htmlformflowsheet.error.configError" /></span>
 
 				</c:otherwise>
 			</c:choose>

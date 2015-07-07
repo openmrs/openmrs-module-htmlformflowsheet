@@ -21,7 +21,7 @@
 		//does the original load...
 		<c:if test="${!empty model.encounterToDisplay.encounterId}">
 		    $j('#singleFormContentIframe_${model.portletUUID}').attr("src", "${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=${model.encounterToDisplay.encounterId}");
-			$j('#editTag_${model.portletUUID}').html("<a href='#' onClick='showSingleEntryPopupForEdit${model.portletUUID}(\"${model.portletUUID}\", ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterToDisplay.encounterId})'>edit</a>");
+			$j('#editTag_${model.portletUUID}').html("<a href='#' onClick='showSingleEntryPopupForEdit${model.portletUUID}(\"${model.portletUUID}\", ${model.personId}, ${model.formId}, ${model.view}, ${model.encounterToDisplay.encounterId})'><spring:message code="htmlformflowsheet.edit" /></a>");
 		</c:if>	
 	
 	});
@@ -66,12 +66,12 @@
 		if (reloadOnClose) {	
 			//elem.dialog('option', 'close', function(event, ui) { window.location = jQuery.queryString(window.location.href, 'selectTab=' + tabIndex); });
 				elem.dialog('option', 'close', function(event, ui) { 
-			    //$j('#htmlForm_' + uuid).html("loading...");
+			    //$j('#htmlForm_' + uuid).html('<spring:message code="htmlformflowsheet.loading" />');
 			    
 			    if (encounterId == ''){
 				    HtmlFlowsheetDWR.getNewEncounterId('${model.which}', formId, personId,function(ret){
 										if (ret != 0){
-											$j('#editTag_${model.portletUUID}').html("<a href='#' onClick='showSingleEntryPopupForEdit${model.portletUUID}(\"${model.portletUUID}\", ${model.personId}, " + formId + ", ${model.view},  " + ret + ")'>edit</a>");
+											$j('#editTag_${model.portletUUID}').html("<a href='#' onClick='showSingleEntryPopupForEdit${model.portletUUID}(\"${model.portletUUID}\", ${model.personId}, " + formId + ", ${model.view},  " + ret + ")'><spring:message code="htmlformflowsheet.edit" /></a>");
 											//$j('#htmlForm_${model.portletUUID}').load(openmrsContextPath + "/module/htmlformentry/htmlFormEntry.form?encounterId=" + ret +"&inPopup=true");
 										    $j('#singleFormContentIframe_${model.portletUUID}').attr("src", "${pageContext.request.contextPath}/module/htmlformentry/htmlFormEntry.form?inPopup=true&encounterId=" + ret);
 											$j('#fillOutFormDiv_${model.portletUUID}').html('');
@@ -110,10 +110,10 @@
 <div id="editTag_${model.portletUUID}" style="font-size:90%;position:relative;width:100%;text-align:right;"></div>
 <div id="htmlForm_${model.portletUUID}" style="font-size:90%; bottom: 0px;">
 	<c:if test="${model.encounterToDisplay != null}">
-			<iframe id="singleFormContentIframe_${model.portletUUID}" width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto"><span>loading...</span></iframe>
+			<iframe id="singleFormContentIframe_${model.portletUUID}" width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto"><span><spring:message code="htmlformflowsheet.loading" /></span></iframe>
 	</c:if>
 	<c:if test="${model.encounterToDisplay == null}">	
-	 		<div id="fillOutFormDiv_${model.portletUUID}"><a href="#" onClick="showSingleEntryPopup${model.portletUUID}('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view})">fill out form</a></div>
+	 		<div id="fillOutFormDiv_${model.portletUUID}"><a href="#" onClick="showSingleEntryPopup${model.portletUUID}('${model.portletUUID}', ${model.personId}, ${model.formId}, ${model.view})"><spring:message code="htmlformflowsheet.fillform" /></a></div>
 	 		<iframe id="singleFormContentIframe_${model.portletUUID}" width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto"></iframe>
 	</c:if>
 </div>
