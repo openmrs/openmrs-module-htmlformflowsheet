@@ -1,9 +1,5 @@
 package org.openmrs.module.htmlformflowsheet;
 
-import java.lang.reflect.Constructor;
-import java.util.*;
-import java.util.regex.Pattern;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
@@ -12,8 +8,6 @@ import org.openmrs.Encounter;
 import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Patient;
-import org.openmrs.Person;
-import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
@@ -24,15 +18,25 @@ import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
+import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
-import org.springframework.context.ApplicationContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class HtmlFormFlowsheetUtil {
 
@@ -199,6 +203,47 @@ public class HtmlFormFlowsheetUtil {
 			throw new RuntimeException("Unable to construct new FormEntrySession", e);
 		}
 	}
+
+    // This is copied from HFE version 2.6, which returns sets in we need lists in order
+
+    public static List<HtmlFormField> getAllFields(HtmlFormSchema schema) {
+        return getAllFieldsRecursiveSectionHelper(schema, new ArrayList<HtmlFormField>(), null);
+    }
+
+    private static List<HtmlFormField> getAllFieldsRecursiveSectionHelper(HtmlFormSchema schema, List<HtmlFormField> fields, HtmlFormSection section) {
+        getAllFieldsRecursiveFieldHelper(fields, section == null ? getFieldsDirectlyOnSchema(schema) : section.getFields());
+        for (HtmlFormSection s : section == null ? schema.getSections() : section.getSections()) {
+            getAllFieldsRecursiveSectionHelper(schema, fields, s);
+        }
+        return fields;
+    }
+
+    private static List<HtmlFormField> getAllFieldsRecursiveFieldHelper(List<HtmlFormField> fields, List<HtmlFormField> fieldsToAdd) {
+        if (fieldsToAdd != null) {
+            for (HtmlFormField f : fieldsToAdd) {
+                fields.add(f);
+                if (f instanceof ObsGroup) {
+                    getAllFieldsRecursiveFieldHelper(fields, ((ObsGroup) f).getChildren());
+                }
+            }
+        }
+        return fields;
+    }
+
+    // In HFE 2.6, field were added to top level of schema, but not before, so we need to use reflection for this for now
+    private static List<HtmlFormField> getFieldsDirectlyOnSchema(HtmlFormSchema schema) {
+        try {
+            Method getFieldsMethod = HtmlFormSchema.class.getMethod("getFields");
+            return (List<HtmlFormField>)getFieldsMethod.invoke(schema);
+        }
+        catch (NoSuchMethodException e) {
+            // Assume that this is due to previous version not having this method
+            return new ArrayList<HtmlFormField>();
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException("Unable to retrieve fields from htmlform schema", e);
+        }
+    }
 
 	public static Set<Concept> getAllConceptsUsedInHtmlForm(Form form){
 

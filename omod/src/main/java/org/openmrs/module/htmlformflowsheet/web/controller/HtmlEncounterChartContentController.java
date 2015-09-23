@@ -149,10 +149,8 @@ public class HtmlEncounterChartContentController implements Controller {
 					fes = HtmlFormFlowsheetUtil.createFormEntrySession(p, null, Mode.VIEW, htmlForm, null, null);
                     String htmlToDisplay = fes.getHtmlToDisplay();
                     HtmlFormSchema schema = fes.getContext().getSchema();
-                    for (HtmlFormSection section : schema.getSections()) {
-                        for (HtmlFormField field : section.getFields()) {
-                            fieldHelper(field, concepts, conceptAnswers, searchDrugs, drugNames);
-                        }
+                    for (HtmlFormField field : HtmlFormFlowsheetUtil.getAllFields(schema)) {
+                        fieldHelper(field, concepts, conceptAnswers, searchDrugs, drugNames);
                     }
                 } catch (Exception ex) {
                     log.error("Failure inspecting form " + form.getFormId() + " schema for obs " + ex);
