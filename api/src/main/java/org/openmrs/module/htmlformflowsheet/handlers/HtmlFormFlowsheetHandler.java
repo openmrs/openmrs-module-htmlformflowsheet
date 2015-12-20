@@ -38,7 +38,7 @@ import java.util.Map;
  * showHtmlForm (optional, default = 'false') If you set this to 'true', the htmlformflowsheet default table view of form observations
  *              will be substituted with a Mode.VIEW version of the rendered htmlform itself for each encounter in the table. 
  * readOnly (optional, default = 'false') -- if true, will render the htmlformflowsheet, but without the 
- *              'Add Another' button, or edit links.  in htmlformentry VIEW mode, this is always false.
+ *              'Add Another' button or edit links.  in htmlformentry VIEW mode, this is always false.
  * showProvider (optional) -- show an additional column that shows the encounter provider name next to the date column. The value of 
  * 				attribute will be used as the display header for the provider column.
  */
