@@ -45,13 +45,13 @@ public class HtmlFormFlowsheetUtil {
 	public static List<Encounter> sortEncountersAccordingToGp(List<Encounter> encs){
         String gp = Context.getAdministrationService().getGlobalProperty("htmlformflowsheet.encountersChronology");
         if (gp != null && gp.trim().equals("asc")){
-            Collections.sort(encs, new Comparator<Encounter>() {	
+            Collections.sort(encs, new Comparator<Encounter>() {
             	public int compare(Encounter enc1, Encounter enc2){
           		return enc1.getEncounterDatetime().compareTo(enc2.getEncounterDatetime());
           	}
            });
         } else {
-            Collections.sort(encs, new Comparator<Encounter>() {	
+            Collections.sort(encs, new Comparator<Encounter>() {
               	public int compare(Encounter enc1, Encounter enc2){
             		return enc2.getEncounterDatetime().compareTo(enc1.getEncounterDatetime());
             	}
@@ -142,7 +142,7 @@ public class HtmlFormFlowsheetUtil {
 	 * Simple util for getting a formId as a String, avoiding potential null pointer exceptions.
 	 *
 	 * @param form
-	 * @return
+	 * @return formId as a String
 	 */
 	public static String getFormIdAsString(Form form){
 		if (form == null || form.getFormId() == null)
