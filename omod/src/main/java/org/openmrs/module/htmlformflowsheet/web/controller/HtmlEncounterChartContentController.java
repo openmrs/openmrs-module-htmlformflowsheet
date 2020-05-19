@@ -55,7 +55,8 @@ public class HtmlEncounterChartContentController implements Controller {
             patientId = Integer.valueOf(request.getParameter("patientId"));
         } catch (Exception ex){
             log.warn("htmlformflowsheet pulling patientId out of session");
-            FormEntrySession fes = (FormEntrySession)  Context.getVolatileUserData(HtmlFormEntryController.FORM_IN_PROGRESS_KEY);
+            String formInProgressKey = HtmlFormEntryController.FORM_IN_PROGRESS_KEY;
+            FormEntrySession fes = (FormEntrySession)  HtmlFormEntryController.getVolatileUserData(formInProgressKey);
             if (fes == null || fes.getPatient() == null)
             		throw new RuntimeException("Unable to pull patientId out of URL.  Please verify patientId in the url you're using to access this page.");
             patientId = fes.getPatient().getPatientId();
@@ -109,7 +110,7 @@ public class HtmlEncounterChartContentController implements Controller {
         String showAllEncsWithEncType = request.getParameter("showAllEncsWithEncType");
         if (showAllEncsWithEncType == null || !showAllEncsWithEncType.equals("true")){
             //if showAllEncsWithEncType is false or null then restrict encounters by formId
-            encs = Context.getEncounterService().getEncounters(patient, null, null, null, Collections.singleton(form), null, null, false);
+            encs = HtmlFormFlowsheetUtil.getEncountersForPatient(patient, form,null);
             model.put("showAllEncsWithEncType", "false");
         }   else if ("*".equals(model.get("encounterTypeId"))) {
             //show all encounters
@@ -118,7 +119,7 @@ public class HtmlEncounterChartContentController implements Controller {
         } else {
             // map from encounterTypeId to list of encounters of that type 
             EncounterType et = Context.getEncounterService().getEncounterType(encounterTypeId);
-            encs = Context.getEncounterService().getEncounters(patient, null, null, null, null, Collections.singleton(et), null, false);
+            encs = HtmlFormFlowsheetUtil.getEncountersForPatient(patient, null,et);
             model.put("showAllEncsWithEncType", "true");
         } 
 
@@ -138,7 +139,7 @@ public class HtmlEncounterChartContentController implements Controller {
 						c = Context.getConceptService().getConcept(idAsString);
 					}
                     Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
-                    conceptAndNameString.put(c, c.getBestShortName(Context.getLocale()).getName());
+                    conceptAndNameString.put(c, c.getShortestName(Context.getLocale(), false).getName());
                     concepts.add(conceptAndNameString);
                 }
             } else if (form != null) {
@@ -216,7 +217,7 @@ public class HtmlEncounterChartContentController implements Controller {
     
                 if (encDummy == null){
                     encDummy = new Encounter();
-                    encDummy.setEncounterDatetime(doTmp.getStartDate());
+                    encDummy.setEncounterDatetime(doTmp.getDateActivated());
                     Context.evictFromSession(encDummy);
                 }
                 encDummy.addOrder(doTmp);

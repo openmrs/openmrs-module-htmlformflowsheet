@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Patient;
@@ -21,6 +22,7 @@ import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
+import org.openmrs.parameter.EncounterSearchCriteriaBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -30,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -318,7 +321,7 @@ public class HtmlFormFlowsheetUtil {
 						 if (Pattern.compile("\\w+-\\w+-\\w+-\\w+-\\w+").matcher(drugName.trim()).matches()) {
 							 drug = Context.getConceptService().getDrugByUuid(drugName.trim());
 						 } else {
-							 drug = Context.getConceptService().getDrugByNameOrId(drugName.trim());
+							 drug = Context.getConceptService().getDrug(drugName.trim());
 						 }
 						 if (drug != null)
 							 drugs.add(drug);
@@ -331,4 +334,17 @@ public class HtmlFormFlowsheetUtil {
 	 }
 	 return drugs;
  }
+
+	public static List<Encounter> getEncountersForPatient(Patient p, Form form, EncounterType encounterType) {
+	    EncounterSearchCriteriaBuilder b = new EncounterSearchCriteriaBuilder();
+	    b.setPatient(p);
+	    if (form != null) {
+		    b.setEnteredViaForms(Arrays.asList(form));
+	    }
+	    if (encounterType != null) {
+		    b.setEncounterTypes(Arrays.asList(encounterType));
+	    }
+	    b.setIncludeVoided(false);
+	    return Context.getEncounterService().getEncounters(b.createEncounterSearchCriteria());
+	}
 }

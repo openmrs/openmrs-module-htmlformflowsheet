@@ -1,8 +1,7 @@
 package org.openmrs.module.htmlformflowsheet.web.dwr;
 
-import java.util.Date;
-
 import org.openmrs.Encounter;
+import org.openmrs.EncounterProvider;
 import org.openmrs.api.context.Context;
 
 public class HtmlFormFlowsheetDWREncounterObj {
@@ -15,7 +14,10 @@ public class HtmlFormFlowsheetDWREncounterObj {
     public HtmlFormFlowsheetDWREncounterObj(){}
     public HtmlFormFlowsheetDWREncounterObj(Encounter enc){
         encounterId = enc.getEncounterId();
-        provider = enc.getProvider().getFamilyName() + " " + enc.getProvider().getGivenName();
+        provider = "";
+        for (EncounterProvider ep : enc.getEncounterProviders()) {
+            provider += (provider.length() == 0 ? "" : ", ") + ep.getProvider().getName();
+        }
         location = enc.getLocation().getName();
         encounterDatetime = Context.getDateFormat().format(enc.getEncounterDatetime());
      }

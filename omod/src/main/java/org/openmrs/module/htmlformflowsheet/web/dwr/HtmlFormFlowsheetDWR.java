@@ -122,11 +122,11 @@ public class HtmlFormFlowsheetDWR {
             return ret;
     }
     
-    public List<HtmlFormFlowsheetDWREncounterObj> getAllEncsByPatientAndEncType(Integer patientId, Integer encTypeId){
+    public List<HtmlFormFlowsheetDWREncounterObj> getAllEncsByPatientAndEncType(Integer patientId, Integer encTypeId) {
         List<HtmlFormFlowsheetDWREncounterObj> ret = new ArrayList<HtmlFormFlowsheetDWREncounterObj>();
         EncounterType et = Context.getEncounterService().getEncounterType(encTypeId);
         Patient p = Context.getPatientService().getPatient(patientId);
-        List<Encounter> eList = Context.getEncounterService().getEncounters(p, null, null, null, null, Collections.singletonList(et), null, false);
+        List<Encounter> eList = HtmlFormFlowsheetUtil.getEncountersForPatient(p,null, et);
         eList = HtmlFormFlowsheetUtil.sortEncountersAccordingToGp(eList);
         for (Encounter e : eList){
             HtmlFormFlowsheetDWREncounterObj h = new HtmlFormFlowsheetDWREncounterObj(e);

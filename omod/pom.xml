@@ -3,9 +3,8 @@
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>htmlformflowsheet</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>org.openmrs.module</groupId>
 	<artifactId>htmlformflowsheet-omod</artifactId>
 	<packaging>jar</packaging>
 	<name>htmlformflowsheet OMOD</name>
@@ -16,6 +15,12 @@
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>${project.parent.artifactId}-api</artifactId>
 			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>legacyui-omod</artifactId>
+			<version>${legacyuiVersion}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
