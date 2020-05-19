@@ -318,7 +318,7 @@ public class HtmlFormFlowsheetUtil {
 						 if (Pattern.compile("\\w+-\\w+-\\w+-\\w+-\\w+").matcher(drugName.trim()).matches()) {
 							 drug = Context.getConceptService().getDrugByUuid(drugName.trim());
 						 } else {
-							 drug = Context.getConceptService().getDrugByNameOrId(drugName.trim());
+							 drug = Context.getConceptService().getDrug(drugName.trim());
 						 }
 						 if (drug != null)
 							 drugs.add(drug);

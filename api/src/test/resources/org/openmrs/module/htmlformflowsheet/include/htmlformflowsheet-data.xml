@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <encounter encounter_id="10001" encounter_type="1" patient_id="2" location_id="2" form_id="1" encounter_datetime="2006-08-19 00:00:00.0" creator="1" date_created="2008-08-19 12:34:40.0" voided="false" uuid="y411fafb-e5e4-42d0-9d11-4f52e89d123r"/>
+    <encounter_provider encounter_provider_id="4" encounter_id="10001" provider_id="1" encounter_role_id="1" creator="1" date_created="2008-08-19 00:00:00.0" voided="false" uuid="4527c6c5-77a4-41b0-b7eb-564e163111e5" />
+    <orders order_id="20002" order_type_id="1" order_number="222" urgency="ROUTINE" order_action="NEW" concept_id="792" orderer="1" instructions="3x daily" date_activated="2006-08-19 00:00:00.0" date_stopped="2006-09-19 00:00:00.0" creator="1" date_created="2007-12-03 00:00:00.0" voided="false" patient_id="2" uuid="dfca4077-4911-496b-8312-856ee5d1cc26" care_setting="1" encounter_id="10001" />
+    <drug_order order_id="20002" drug_inventory_id="2" dose="1.0" dose_units="51" as_needed="false" frequency="1" dosing_type="org.openmrs.SimpleDosingInstructions" route="22" quantity="1.0" quantity_units="51" num_refills="10" dispense_as_written="0" />
+</dataset>

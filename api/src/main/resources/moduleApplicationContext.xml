@@ -15,25 +15,27 @@
 		<property name="moduleService">
 			<list>
 				<value>org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetService</value> <!-- service interface name -->
-				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-					<property name="transactionManager"><ref bean="transactionManager"/></property>
-					<property name="target">
-						<bean class="org.openmrs.module.htmlformflowsheet.impl.HtmlFormFlowsheetImpl">
-							<property name="dao">
-								<bean class="org.openmrs.module.htmlformflowsheet.db.hibernate.HibernateHtmlFormFlowsheetDAO">
-									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
-								</bean>
-							</property>	
-						</bean>
-					</property>
-					<property name="preInterceptors">
-						<ref bean="serviceInterceptors" />
-					</property>
-					<property name="transactionAttributeSource">
-						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
-					</property>
-				</bean>
+				<ref bean="htmlFormFlowsheetService"/>
 			</list>
+		</property>
+	</bean>
+
+	<bean id="htmlFormFlowsheetService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target">
+			<bean class="org.openmrs.module.htmlformflowsheet.impl.HtmlFormFlowsheetImpl">
+				<property name="dao">
+					<bean class="org.openmrs.module.htmlformflowsheet.db.hibernate.HibernateHtmlFormFlowsheetDAO">
+						<property name="sessionFactory"><ref bean="dbSessionFactory"/></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="preInterceptors">
+			<ref bean="serviceInterceptors" />
+		</property>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
 		</property>
 	</bean>
 
