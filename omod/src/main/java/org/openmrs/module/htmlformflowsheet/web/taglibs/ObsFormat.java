@@ -50,7 +50,7 @@ public class ObsFormat extends BodyTagSupport {
             } else if (abbrev.equals("NM") || abbrev.equals("SN")){
                 try {
                     ConceptNumeric cn = Context.getConceptService().getConceptNumeric(obs.getConcept().getConceptId());
-                    if (!cn.getPrecise() && obs.getValueNumeric() != null)
+                    if (!cn.getAllowDecimal() && obs.getValueNumeric() != null)
                         ret = Integer.valueOf(obs.getValueNumeric().intValue()).toString();
                     else
                         ret = o.getValueAsString(locale);     

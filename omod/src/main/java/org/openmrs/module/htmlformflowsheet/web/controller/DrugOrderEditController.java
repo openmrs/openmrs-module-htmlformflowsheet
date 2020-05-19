@@ -1,5 +1,6 @@
 package org.openmrs.module.htmlformflowsheet.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,8 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,13 +72,7 @@ public class DrugOrderEditController  {
           });
          Map<Drug,String> drugMap = new LinkedHashMap<Drug, String>();
          for (Drug drug : ret){
-             String drugName = "";
-             if (drug.getName() == null)
-                 drugName = drug.getConcept().getBestName(Context.getLocale()).getName();
-             else 
-                 drugName = drug.getName();
-             drugMap.put(drug, drugName + " (" + drug.getUnits() + ")");
-         
+             drugMap.put(drug, drug.getDisplayName());
          }
          return drugMap;
      }
@@ -180,7 +173,7 @@ public class DrugOrderEditController  {
                     if (Pattern.compile("\\w+-\\w+-\\w+-\\w+-\\w+").matcher(drugNameStr.trim()).matches()) {
                         drug = Context.getConceptService().getDrugByUuid(drugNameStr.trim());
                     } else {
-                        drug = Context.getConceptService().getDrugByNameOrId(drugNameStr.trim());           
+                        drug = Context.getConceptService().getDrug(drugNameStr.trim());
                     }
                     if (drug == null){
                         dor.setVoided(true);
@@ -207,8 +200,15 @@ public class DrugOrderEditController  {
                     } catch (Exception ex){
                         throw new RuntimeException(ex);
                     }
-                } 
-            
+                }
+
+                // TODO: This needs to be coordinated with UI updates to support new order entry api
+                // For now, we will throw an exception here, to reflect that this is unsupported
+                if (true) {
+                    throw new UnsupportedOperationException("Saving drug orders is not yet supported against openmrs 2.x");
+                }
+
+                /*
                 if (!OpenmrsUtil.nullSafeEquals(frequency, dor.getFrequency())){
                     dor.setFrequency(frequency);
                     shouldSave = true;
@@ -282,7 +282,7 @@ public class DrugOrderEditController  {
                 }
                 if (shouldSave)
                     Context.getOrderService().saveOrder(dor);
-                    
+             */
                 return "redirect:/module/htmlformflowsheet/closeDialog.form?dialogToClose=" + closeAfterSubmission;
       
     }

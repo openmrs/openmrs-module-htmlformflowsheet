@@ -1,5 +1,8 @@
 package org.openmrs.module.htmlformflowsheet.web.controller;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,16 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.openmrs.Form;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
-import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.web.controller.PortletController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -85,139 +84,11 @@ public class EncounterChartPortletController extends PortletController {
                 Integer patientId = (Integer) o;
                 if (!model.containsKey("patient")) {
                     // we can't continue if the user can't view patients
-                    if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
+                    if (Context.hasPrivilege(PrivilegeConstants.GET_PATIENTS)) {
                         Patient p = Context.getPatientService().getPatient(patientId);
                         model.put("patient", p);
                         
-                        //TODO:  for our purposes, is this necessary?  Could we restrict these by encounterType??
-                        // add encounters if this user can view them
-//                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS) && p != null)
-//                            model.put("patientEncounters", Context.getEncounterService().getEncountersByPatient(p));
-//                        
-                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS) && p != null) {
-//                            List<Obs> patientObs = Context.getObsService().getObservationsByPerson(p);
-//                            //TODO:  likewise, are all patient Obs necessary?
-//                            model.put("patientObs", patientObs);
-//                            Obs latestWeight = null;
-//                            Obs latestHeight = null;
-//                            String bmiAsString = "?";
-//                            try {
-//                                String weightString = as.getGlobalProperty("concept.weight");
-//                                ConceptNumeric weightConcept = null;
-//                                if (StringUtils.hasLength(weightString))
-//                                    weightConcept = cs.getConceptNumeric(cs.getConcept(Integer.valueOf(weightString))
-//                                            .getConceptId());
-//                                String heightString = as.getGlobalProperty("concept.height");
-//                                ConceptNumeric heightConcept = null;
-//                                if (StringUtils.hasLength(heightString))
-//                                    heightConcept = cs.getConceptNumeric(cs.getConcept(Integer.valueOf(heightString))
-//                                            .getConceptId());
-//                                for (Obs obs : patientObs) {
-//                                    if (obs.getConcept().equals(weightConcept)) {
-//                                        if (latestWeight == null
-//                                                || obs.getObsDatetime().compareTo(latestWeight.getObsDatetime()) > 0)
-//                                            latestWeight = obs;
-//                                    } else if (obs.getConcept().equals(heightConcept)) {
-//                                        if (latestHeight == null
-//                                                || obs.getObsDatetime().compareTo(latestHeight.getObsDatetime()) > 0)
-//                                            latestHeight = obs;
-//                                    }
-//                                }
-//                                if (latestWeight != null)
-//                                    model.put("patientWeight", latestWeight);
-//                                if (latestHeight != null)
-//                                    model.put("patientHeight", latestHeight);
-//                                if (latestWeight != null && latestHeight != null) {
-//                                    double weightInKg;
-//                                    double heightInM;
-//                                    if (weightConcept.getUnits().equals("kg"))
-//                                        weightInKg = latestWeight.getValueNumeric();
-//                                    else if (weightConcept.getUnits().equals("lb"))
-//                                        weightInKg = latestWeight.getValueNumeric() * 0.45359237;
-//                                    else
-//                                        throw new IllegalArgumentException("Can't handle units of weight concept: "
-//                                                + weightConcept.getUnits());
-//                                    if (heightConcept.getUnits().equals("cm"))
-//                                        heightInM = latestHeight.getValueNumeric() / 100;
-//                                    else if (heightConcept.getUnits().equals("m"))
-//                                        heightInM = latestHeight.getValueNumeric();
-//                                    else if (heightConcept.getUnits().equals("in"))
-//                                        heightInM = latestHeight.getValueNumeric() * 0.0254;
-//                                    else
-//                                        throw new IllegalArgumentException("Can't handle units of height concept: "
-//                                                + heightConcept.getUnits());
-//                                    double bmi = weightInKg / (heightInM * heightInM);
-//                                    model.put("patientBmi", bmi);
-//                                    String temp = "" + bmi;
-//                                    bmiAsString = temp.substring(0, temp.indexOf('.') + 2);
-//                                }
-//                            }
-//                            catch (Exception ex) {
-//                                if (latestWeight != null && latestHeight != null)
-//                                    log.error("Failed to calculate BMI even though a weight and height were found", ex);
-//                            }
-//                            model.put("patientBmiAsString", bmiAsString);
-                        } else {
-//                            model.put("patientObs", new HashSet<Obs>());
-                        }
-                        
-//                        // information about whether or not the patient has exited care
-//                        Obs reasonForExitObs = null;
-//                        String reasonForExitConceptString = as.getGlobalProperty("concept.reasonExitedCare");
-//                        if (StringUtils.hasLength(reasonForExitConceptString)) {
-//                            Concept reasonForExitConcept = cs.getConcept(reasonForExitConceptString);
-//                            if (reasonForExitConcept != null) {
-//                                List<Obs> patientExitObs = Context.getObsService().getObservationsByPersonAndConcept(p,
-//                                    reasonForExitConcept);
-//                                if (patientExitObs != null) {
-//                                    log.debug("Exit obs is size " + patientExitObs.size());
-//                                    if (patientExitObs.size() == 1) {
-//                                        reasonForExitObs = patientExitObs.iterator().next();
-//                                        Concept exitReason = reasonForExitObs.getValueCoded();
-//                                        Date exitDate = reasonForExitObs.getObsDatetime();
-//                                        if (exitReason != null && exitDate != null) {
-//                                            patientVariation = "Exited";
-//                                        }
-//                                    } else {
-//                                        if (patientExitObs.size() == 0) {
-//                                            log.debug("Patient has no reason for exit");
-//                                        } else {
-//                                            log.error("Too many reasons for exit - not putting data into model");
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        model.put("patientReasonForExit", reasonForExitObs);
-//                        
-//                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ORDERS) && p != null) {
-//                            List<DrugOrder> drugOrderList = Context.getOrderService().getDrugOrdersByPatient(p);
-//                            model.put("patientDrugOrders", drugOrderList);
-//                            List<DrugOrder> currentDrugOrders = new ArrayList<DrugOrder>();
-//                            List<DrugOrder> discontinuedDrugOrders = new ArrayList<DrugOrder>();
-//                            Date rightNow = new Date();
-//                            for (Iterator<DrugOrder> iter = drugOrderList.iterator(); iter.hasNext();) {
-//                                DrugOrder next = iter.next();
-//                                if (next.isCurrent() || next.isFuture())
-//                                    currentDrugOrders.add(next);
-//                                if (next.isDiscontinued(rightNow))
-//                                    discontinuedDrugOrders.add(next);
-//                            }
-//                            model.put("currentDrugOrders", currentDrugOrders);
-//                            model.put("completedDrugOrders", discontinuedDrugOrders);
-//                            
-//                            List<RegimenSuggestion> standardRegimens = Context.getOrderService().getStandardRegimens();
-//                            if (standardRegimens != null)
-//                                model.put("standardRegimens", standardRegimens);
-//                        }
-//                        
-//                        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PROGRAMS)
-//                                && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENT_PROGRAMS) && p != null) {
-//                            model.put("patientPrograms", Context.getProgramWorkflowService().getPatientPrograms(p, null,
-//                                null, null, null, null, false));
-//                            model.put("patientCurrentPrograms", Context.getProgramWorkflowService().getPatientPrograms(p,
-//                                null, null, new Date(), new Date(), null, false));
-//                        }
+                        //TODO: Could we restrict these by encounterType?? add encounters if this user can view them
                         
                         model.put("patientId", patientId);
                         if (p != null) {

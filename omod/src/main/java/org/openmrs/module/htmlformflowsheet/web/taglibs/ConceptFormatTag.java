@@ -75,9 +75,9 @@ public static final long serialVersionUID = 128234333L;
         String ret = "";
             if (concept != null){
                 if (bestName != null && bestName == true){
-                    ret = concept.getBestName(Context.getLocale()).getName();
+                    ret = concept.getName(Context.getLocale(), false).getName();
                 } else if (bestShortName != null && bestShortName == true){
-                    ret = concept.getBestShortName(Context.getLocale()).getName();
+                    ret = concept.getShortestName(Context.getLocale(), false).getName();
                 } else if (shortestName != null && shortestName == true){
                     ret = concept.getShortestName(Context.getLocale(), false).getName();
                 } else if (preferredName != null && preferredName == true){
