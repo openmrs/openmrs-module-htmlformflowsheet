@@ -31,7 +31,7 @@
 							<option value="0"></option>
 							<c:forEach var="enc" items="${model.encounterListForChart}">
 								<option value="${enc.encounterId}">
-									<openmrs:formatDate date="${enc.encounterDatetime}"/> / ${enc.provider.familyName} ${enc.provider.givenName} / (${enc.location})
+									<openmrs:formatDate date="${enc.encounterDatetime}"/> / <openmrs:format encounterProviders="${enc.providersByRoles}"/> / (${enc.location})
 								</option>	
 							</c:forEach>
 							</select></td></tr>

@@ -142,7 +142,7 @@
 						
 						<c:if test="${model.showProvider }">
 							<td>
-								<c:out value="${enc.provider.givenName }"/> <c:out value="${enc.provider.familyName }"/>
+								<openmrs:format encounterProviders="${enc.providersByRoles}"/>
 							</td>
 						</c:if>
 						
