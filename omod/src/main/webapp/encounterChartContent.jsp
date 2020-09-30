@@ -196,12 +196,12 @@
 														<c:if test="${empty drugNames[drugOrder.drug]}">
 															${drugOrder.drug.name} 
 														</c:if>
-														<c:set var="expireDate" value="${drugOrder.discontinuedDate}"/>
+														<c:set var="expireDate" value="${drugOrder.dateStopped}"/>
 														<c:if test="${empty expireDate}">
 															<c:set var="expireDate" value="${drugOrder.autoExpireDate}"/>
 														</c:if>
-														<c:if test="${enc.encounterDatetime != drugOrder.startDate || !empty expireDate}"> 
-															(<openmrs:formatDate date="${drugOrder.startDate}" /> <spring:message code="htmlformflowsheet.through" /> <c:if test="${empty expireDate}">- </c:if><c:if test="${!empty expireDate}"><openmrs:formatDate date="${expireDate}" /></c:if>)
+														<c:if test="${enc.encounterDatetime != drugOrder.effectiveStartDate || !empty expireDate}">
+															(<openmrs:formatDate date="${drugOrder.effectiveStartDate}" /> <spring:message code="htmlformflowsheet.through" /> <c:if test="${empty expireDate}">- </c:if><c:if test="${!empty expireDate}"><openmrs:formatDate date="${expireDate}" /></c:if>)
 														</c:if>
 														<c:set var="usedDrugOrders" value="${usedDrugOrders},${drugOrder.uuid}"/>
 														<br/>

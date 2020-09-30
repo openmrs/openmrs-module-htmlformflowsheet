@@ -71,13 +71,13 @@
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="refStartDate" id="startDate" value="<openmrs:formatDate date="${model.drugOrder.startDate}" />" size="10" onClick='showCalendar(this)'/>
+				<input type="text" name="refStartDate" id="startDate" value="<openmrs:formatDate date="${model.drugOrder.effectiveStartDate}" />" size="10" onClick='showCalendar(this)'/>
 			</td>
 			<td>
 				<input type="text" name="refAutoExpireDate" id="autoExpireDate" value="<openmrs:formatDate date="${model.drugOrder.autoExpireDate}" />" size="10" onClick='showCalendar(this)'/>
 			</td>
 			<td>
-				<input type="text" name="refDiscontinedDate" id="discontinuedDate" value="<openmrs:formatDate date="${model.drugOrder.discontinuedDate}" />" size="10" onClick='showCalendar(this)'/>
+				<input type="text" name="refDiscontinedDate" id="discontinuedDate" value="<openmrs:formatDate date="${model.drugOrder.dateStopped}" />" size="10" onClick='showCalendar(this)'/>
 			</td>
 			<td>  
 				<select name="refDiscontinueReason" id="discontinueReason">
