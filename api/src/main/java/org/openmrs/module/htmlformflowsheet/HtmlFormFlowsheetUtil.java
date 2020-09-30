@@ -1,5 +1,17 @@
 package org.openmrs.module.htmlformflowsheet;
 
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
@@ -17,29 +29,14 @@ import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
+import org.openmrs.module.htmlformentry.schema.DrugOrderAnswer;
+import org.openmrs.module.htmlformentry.schema.DrugOrderField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
 import org.openmrs.parameter.EncounterSearchCriteriaBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.servlet.http.HttpSession;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.regex.Pattern;
 
 public class HtmlFormFlowsheetUtil {
 
@@ -290,49 +287,24 @@ public class HtmlFormFlowsheetUtil {
 	 }
 
 	public static Set<Drug> getAllDrugsUsedInHtmlForm(Form form){
-
-	 HtmlForm htmlform = Context.getService(HtmlFormEntryService.class).getHtmlFormByForm(form);
-	 String xml = htmlform.getXmlData();
-	 try {
-		 FormEntrySession session = createFormEntrySession(form);
-		 xml = session.createForm(xml); //this applies macros
-	 } catch (Exception ex){
-		 //pass
-	 }
-	 xml = xml.replace("&nbsp;", ""); // Hack to get the document to parse to valid xml
-
-	 Set<Drug> drugs = new HashSet<Drug>();
-	 try {
-		 Document doc = HtmlFormEntryUtil.stringToDocument(xml);
-		 NodeList obsnl = doc.getElementsByTagName("drugOrder");
-
-		 if (obsnl != null){
-			 for (int i = 0; i < obsnl.getLength(); i++){
-				 Node node = obsnl.item(i);
-				 NamedNodeMap nnm = node.getAttributes();
-				 Node strNode = nnm.getNamedItem("drugNames");
-				 if (strNode != null){
-					 String drugNamesString = strNode.getNodeValue();
-					 StringTokenizer tokenizer = new StringTokenizer(drugNamesString, ",");
-					 while (tokenizer.hasMoreElements()) {
-						 String drugName = (String) tokenizer.nextElement();
-						 Drug drug = null;
-						 // pattern to match a uuid, i.e., five blocks of alphanumerics separated by hyphens
-						 if (Pattern.compile("\\w+-\\w+-\\w+-\\w+-\\w+").matcher(drugName.trim()).matches()) {
-							 drug = Context.getConceptService().getDrugByUuid(drugName.trim());
-						 } else {
-							 drug = Context.getConceptService().getDrug(drugName.trim());
-						 }
-						 if (drug != null)
-							 drugs.add(drug);
-					 }
-				 }
-			 }
-		 }
-	 } catch (Exception ex){
-		 throw new RuntimeException(ex);
-	 }
-	 return drugs;
+		Set<Drug> drugs = new HashSet<Drug>();
+		try {
+			FormEntrySession session = createFormEntrySession(form);
+			String htmlToDisplay = session.getHtmlToDisplay();
+			HtmlFormSchema schema = session.getContext().getSchema();
+			for (HtmlFormField hff : getAllFields(schema)) {
+				if (hff instanceof DrugOrderField) {
+					DrugOrderField dof = (DrugOrderField) hff;
+					for (DrugOrderAnswer doa : dof.getDrugOrderAnswers()) {
+						drugs.add(doa.getDrug());
+					}
+				}
+			}
+		}
+		catch (Exception ex){
+			throw new RuntimeException(ex);
+		}
+		return drugs;
  }
 
 	public static List<Encounter> getEncountersForPatient(Patient p, Form form, EncounterType encounterType) {
