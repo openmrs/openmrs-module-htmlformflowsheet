@@ -182,14 +182,7 @@
 											<c:forEach var="drugOrder" items="${model.encounterToDrugOrderMap[enc]}">
 												<!-- look for concept match in drugOrders -->
 												<c:if test="${fn:contains(conceptAndStrings.key.uuid, drugOrder.drug.name) == true}">
-													<c:if test="${fn:contains(usedDrugOrders,drugOrder.uuid) == false}">	
-														<c:if test="${empty enc.encounterId && model.readOnly == 'false'}">
-														<input type="image" src="${pageContext.request.contextPath}/images/file.gif"  
-									   						 name="editEncounter" 
-															 onclick="resizeIFrame${model.portletUUID}(${model.windowHeight});showDrugOrderEditPopup('${model.portletUUID}', ${drugOrder.orderId}, ${model.personId}, ${model.view}, ${model.encounterTypeId}, ${model.formId},${model.showAllEncsWithEncType}, '<c:forEach var='drugOption' items='${model.drugSet}'>${drugOption.drugId},</c:forEach>', ${model.showHtmlFormInstead},${model.showProvider},'${model.providerHeader }','${model.conceptsToShow}')"
-															 title="edit" 
-															 alt="edit"/>
-														</c:if>	 
+													<c:if test="${fn:contains(usedDrugOrders,drugOrder.uuid) == false}">
 														<c:if test="${!empty drugNames[drugOrder.drug]}">
 															${drugNames[drugOrder.drug]}
 														</c:if>

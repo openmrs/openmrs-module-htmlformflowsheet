@@ -14,7 +14,7 @@
 		<connection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</connection>
 		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-htmlformflowsheet/</url>
-	  <tag>1.2.8</tag>
+	    <tag>HEAD</tag>
   </scm>
 
 	<distributionManagement>
@@ -38,7 +38,7 @@
 	<properties>
 		<openMRSVersion>2.3.0</openMRSVersion>
 		<openMRSMinorVersion>2.3</openMRSMinorVersion>
-		<htmlformentryVersion>3.9.2</htmlformentryVersion>
+		<htmlformentryVersion>4.0.0-SNAPSHOT</htmlformentryVersion>
 		<legacyuiVersion>1.6.0</legacyuiVersion>
 	</properties>
 
