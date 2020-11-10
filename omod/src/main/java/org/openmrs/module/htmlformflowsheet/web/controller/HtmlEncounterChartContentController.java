@@ -1,5 +1,15 @@
 package org.openmrs.module.htmlformflowsheet.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
@@ -20,7 +30,6 @@ import org.openmrs.module.htmlformentry.schema.DrugOrderAnswer;
 import org.openmrs.module.htmlformentry.schema.DrugOrderField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
-import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsFieldAnswer;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
@@ -31,17 +40,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class HtmlEncounterChartContentController implements Controller {
 
@@ -236,7 +234,7 @@ public class HtmlEncounterChartContentController implements Controller {
         Map<Encounter, Set<DrugOrder>> encsToDrugOrders = new HashMap<Encounter, Set<DrugOrder>>();
         for (Encounter enc: encs){
             for (Order o : enc.getOrders()){
-                if (o instanceof DrugOrder){
+                if (o instanceof DrugOrder && !o.isVoided()){
                     if (!encsToDrugOrders.containsKey(enc))
                         encsToDrugOrders.put(enc, new LinkedHashSet<DrugOrder>());
                     Set<DrugOrder> oSet = encsToDrugOrders.get(enc);
@@ -266,7 +264,7 @@ public class HtmlEncounterChartContentController implements Controller {
             if (enc.getOrders() != null && found == false){
                 Set<Order> oSet = enc.getOrders();
                 for (Order o : oSet){
-                    if (o instanceof DrugOrder){
+                    if (o instanceof DrugOrder && !o.isVoided()){
                         for (Map<Concept,String> m : concepts){
                             Concept c = m.keySet().iterator().next();
                             DrugOrder drugO = (DrugOrder) o;
