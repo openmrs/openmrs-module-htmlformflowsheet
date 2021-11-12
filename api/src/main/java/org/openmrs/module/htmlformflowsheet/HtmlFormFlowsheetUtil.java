@@ -30,12 +30,12 @@ import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.htmlformentry.schema.DrugOrderAnswer;
-import org.openmrs.module.htmlformentry.schema.DrugOrderField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSection;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
+import org.openmrs.module.htmlformentry.schema.OrderField;
 import org.openmrs.parameter.EncounterSearchCriteriaBuilder;
 
 public class HtmlFormFlowsheetUtil {
@@ -293,8 +293,8 @@ public class HtmlFormFlowsheetUtil {
 			String htmlToDisplay = session.getHtmlToDisplay();
 			HtmlFormSchema schema = session.getContext().getSchema();
 			for (HtmlFormField hff : getAllFields(schema)) {
-				if (hff instanceof DrugOrderField) {
-					DrugOrderField dof = (DrugOrderField) hff;
+				if (hff instanceof OrderField) {
+					OrderField dof = (OrderField) hff;
 					for (DrugOrderAnswer doa : dof.getDrugOrderAnswers()) {
 						drugs.add(doa.getDrug());
 					}

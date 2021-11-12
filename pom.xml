@@ -39,7 +39,7 @@
 	<properties>
 		<openMRSVersion>2.3.0</openMRSVersion>
 		<openMRSMinorVersion>2.3</openMRSMinorVersion>
-		<htmlformentryVersion>3.13.1</htmlformentryVersion>
+		<htmlformentryVersion>4.0.0</htmlformentryVersion>
 		<legacyuiVersion>1.6.0</legacyuiVersion>
 	</properties>
 

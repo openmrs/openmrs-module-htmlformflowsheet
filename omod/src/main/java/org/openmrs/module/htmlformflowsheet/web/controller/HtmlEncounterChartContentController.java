@@ -27,12 +27,12 @@ import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentry.schema.DrugOrderAnswer;
-import org.openmrs.module.htmlformentry.schema.DrugOrderField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormField;
 import org.openmrs.module.htmlformentry.schema.HtmlFormSchema;
 import org.openmrs.module.htmlformentry.schema.ObsField;
 import org.openmrs.module.htmlformentry.schema.ObsFieldAnswer;
 import org.openmrs.module.htmlformentry.schema.ObsGroup;
+import org.openmrs.module.htmlformentry.schema.OrderField;
 import org.openmrs.module.htmlformentry.web.controller.HtmlFormEntryController;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetService;
 import org.openmrs.module.htmlformflowsheet.HtmlFormFlowsheetUtil;
@@ -125,7 +125,7 @@ public class HtmlEncounterChartContentController implements Controller {
 
         // now figure out which concepts we want to display as columns
         Set<Map<Concept,String>> concepts = new LinkedHashSet<Map<Concept,String>>();
-        List<DrugOrderField> searchDrugs = new ArrayList<DrugOrderField>();
+        List<OrderField> searchDrugs = new ArrayList<OrderField>();
         Map<Drug, String> drugNames = new HashMap<Drug, String>();
         Map<String,String> conceptAnswers = new HashMap<String,String>(); //key is questionConceptId.answerConceptId
         {
@@ -187,7 +187,7 @@ public class HtmlEncounterChartContentController implements Controller {
         
         //use searchDrugs to build list of drugOrders, order by start_date asc, exclude encounters already in the list
         Set<Drug> drugSet = new HashSet<Drug>();
-        for (DrugOrderField df : searchDrugs){
+        for (OrderField df : searchDrugs){
             for (DrugOrderAnswer doa : df.getDrugOrderAnswers()){
                 if (doa.getDrug() != null)
                     drugSet.add(doa.getDrug());
@@ -290,7 +290,7 @@ public class HtmlEncounterChartContentController implements Controller {
      * @param field
      * @param concepts
      */
-    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Map<String,String> conceptAnswers, List<DrugOrderField> searchDrugs, Map<Drug, String> drugNames) {
+    private void fieldHelper(HtmlFormField field, Set<Map<Concept,String>> concepts, Map<String,String> conceptAnswers, List<OrderField> searchDrugs, Map<Drug, String> drugNames) {
         if (field instanceof ObsField) {
             ObsField of = (ObsField) field;
             Map<Concept,String> conceptAndNameString = new HashMap<Concept,String>();
@@ -313,8 +313,8 @@ public class HtmlEncounterChartContentController implements Controller {
             for (HtmlFormField ofInner:og.getChildren()){
                 fieldHelper(ofInner, concepts, conceptAnswers, searchDrugs, drugNames);
             }
-        } else if (field instanceof DrugOrderField){
-            DrugOrderField dof = (DrugOrderField) field;
+        } else if (field instanceof OrderField){
+            OrderField dof = (OrderField) field;
             searchDrugs.add(dof);
             {
                 //SUPER HACK -- adding drug matching key to concept UUID field.  These Concepts are never meant to be saved...
