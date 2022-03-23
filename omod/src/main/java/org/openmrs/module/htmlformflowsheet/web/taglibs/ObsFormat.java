@@ -61,7 +61,7 @@ public class ObsFormat extends BodyTagSupport {
                 ret = o.getValueAsString(locale);
             }    
         }
-        return ret;
+        return ret == null ? "" : ret;
     }
 
     public Obs getObs() {
