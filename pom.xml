@@ -12,11 +12,11 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</connection>
-		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-htmlformflowsheet/</developerConnection>
+		<connection>scm:git:git@github.com:openmrs/openmrs-module-htmlformflowsheet.git</connection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-htmlformflowsheet.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-htmlformflowsheet/</url>
-	    <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<distributionManagement>
 		<repository>
